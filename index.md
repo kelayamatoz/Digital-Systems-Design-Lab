@@ -10,6 +10,8 @@
 
 [FAQs](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/common-issues.md)
 
+[Spatial Documentation](https://spatial-lang.org/)
+
 ## Contact
 [Slack Link](http://ee109-spr1718.slack.com/)
 
