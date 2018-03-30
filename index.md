@@ -10,4 +10,5 @@
 
 ## Contact
 ### [Slack Link](http://ee109-spr1718.slack.com/)
+### [Stanford Canvas](canvas.stanford.edu)
 ### TA: <tianzhao@stanford.edu>
