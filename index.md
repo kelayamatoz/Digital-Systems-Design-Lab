@@ -7,6 +7,8 @@
 
 [Lab 2: Advanced Usage of Spatial](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab2.md)
 
+[Lab 2 Submission](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab2_submission.md)
+
 ## Notes 
 [Helpful Instructions when Working with Spatial](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/spatial-cheatsheet.md)
 
