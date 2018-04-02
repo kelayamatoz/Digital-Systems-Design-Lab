@@ -25,11 +25,16 @@ make arria10 | tee make.log
 
 ### Spatial Flags
 ```bash
---sim: generates design for simulation
---synth: generates design for synthesis
---instrumentation: inserts instrumentation registers for synthesis. You can use this option for improving performance.
---retime: inserts retiming registers in your design. This helps your design to meet timing constraints.
---multifile=N: splits your design file into multiple smaller files. Usually you will not need this feature; however if your design becomes quite large (e.g. State-of-the-art neural networks), you will need to enable this flag.
+# Generates design for simulation
+--sim
+# Generates design for synthesis
+--synth
+# Inserts instrumentation registers for synthesis. You can use this option for improving performance.
+--instrumentation
+# Inserts retiming registers in your design. This helps your design to meet timing constraints.
+--retime
+# Splits your design file into multiple smaller files. Usually you will not need this feature; however if your design becomes quite large (e.g. State-of-the-art neural networks), you will need to enable this flag. N is usually set to 5.
+--multifile=N
 ```
 
 ### Basic Spatial Template
