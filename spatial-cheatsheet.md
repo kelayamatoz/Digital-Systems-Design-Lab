@@ -2,9 +2,10 @@
 ```bash
 # Goto Spatial main directory
 cd ~/spatial-lang
-# Godo app directory of Spatial
+# Goto the app directory of Spatial
 cd ~/spatial-lang/apps/src
 # Simulate an app foo with Scala backend
+cd ~/spatial-lang
 bin/spatial foo --sim
 # Run Scala sim
 cd ~/spatial-lang/
@@ -20,6 +21,15 @@ make vcs && bash run.sh arg0 arg1 ...
 make vcs-clean
 # Prepare bitstream that runs on Arria10 SoC:
 make arria10 | tee make.log
+```
+
+### Spatial Flags
+```bash
+--sim: generates design for simulation
+--synth: generates design for synthesis
+--instrumentation: inserts instrumentation registers for synthesis. You can use this option for improving performance.
+--retime: inserts retiming registers in your design. This helps your design to meet timing constraints.
+--multifile=N: splits your design file into multiple smaller files. Usually you will not need this feature; however if your design becomes quite large (e.g. State-of-the-art neural networks), you will need to enable this flag.
 ```
 
 ### Basic Spatial Template
