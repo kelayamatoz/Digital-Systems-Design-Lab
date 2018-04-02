@@ -3,6 +3,8 @@
 ## Laboratory Links: 
 [Lab 1: Basic Usage of Spatial](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab1.md)
 
+[Lab 1 Submission](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab1_submission.md)
+
 [Lab 2: Advanced Usage of Spatial](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab2.md)
 
 ## Notes 

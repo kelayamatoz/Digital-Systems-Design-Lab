@@ -68,7 +68,7 @@ object Lab2Part1SimpleMemReduce extends SpatialApp {
 }
 ```
 
-## Your turn
+## Your Turn
 * Synthesize the example application. Report on the resource utilization and
 cycle counts.
 * We also have a MemFold controller, which operates the same way as fold but
@@ -473,3 +473,7 @@ With the information from instrumentation results, can you set the parallelizati
 
 In the next lab, we will cover how to use RegFile, LUTs, ShiftRegisters, and
 Streaming interfaces.
+
+
+## Extra Credits (5 points out of 100)
+* In lecture, we covered about how to tune the parallelization factors of controllers to improve the performance of dot product. Can you do the same for GEMM? What is the fewest number of cycles you can achieve? What is the resource utilization? What is your reasoning on choosing your embedded memory size and parallelization factors? 
