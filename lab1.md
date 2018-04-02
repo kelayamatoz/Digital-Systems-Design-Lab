@@ -533,4 +533,4 @@ Compared to Foreach, Reduce and Fold allow users to write more precise code. Mor
 MemFold and MemReduce perform the same way as Fold and Reduce; however they are used to operate on on-chip memories. We will cover more details of these two controllers in the next lab.
 
 ## Submission
-* Please fill in the lab1_submission.md. After completing the lab, you can leave this file in your home directory on tucson.  We will collect the submission file after the deadline.
+* Please fill in the lab1_submission.md. After completing the lab, you can upload this file in your home directory on tucson.  We will collect the submission file after the deadline.
