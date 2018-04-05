@@ -190,7 +190,9 @@ ls
 The chisel folder contains the RTL code generated from your design. Here are the commands to run VCS simulation: 
 
 ```bash
+# make vcs simulation binary, then redirect the console output to vcs.log
 make vcs > vcs.log
+# run vcs simulation, then redirect the console output to dramsim.log. 
 bash run.sh 3 5 > dramsim.log
 ```
 
@@ -198,6 +200,11 @@ VCS simulation would start. After the simulation finishes, you will see the foll
 ![vcs](./img/vcs.png)
 
 ![dramsim](./img/dramsimre.png)
+
+You can also view the simulation result by running
+```bash
+cat dramsim.log
+```
 
 The VCS simulation result states that your app is simulated successfully and ran for 3 cycles. Now we can clean up the VCS simulation directory.
 
