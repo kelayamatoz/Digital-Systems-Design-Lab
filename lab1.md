@@ -199,12 +199,11 @@ bash run.sh 3 5 > dramsim.log
 VCS simulation would start. After the simulation finishes, you will see the following messages: 
 ![vcs](./img/vcs.png)
 
-![dramsim](./img/dramsimre.png)
-
-You can also view the simulation result by running
+To view the simulation result, run:
 ```bash
 cat dramsim.log
 ```
+![dramsim](./img/dramsimre.png)
 
 The VCS simulation result states that your app is simulated successfully and ran for 3 cycles. Now we can clean up the VCS simulation directory.
 
