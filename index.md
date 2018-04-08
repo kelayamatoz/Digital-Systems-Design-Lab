@@ -1,24 +1,32 @@
-# [EE109 Laboratory Instructions](https://github.com/kelayamatoz/ee109-arria10-labs/tree/master)
+## About EE109
 
-## Laboratory Links: 
-[Lab 1: Basic Usage of Spatial](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab1.md)
+The design of integrated digital systems encompassing both customized software and hardware. Software / hardware design tradeoffs. Algorithm design for pipelining and parallelism. System latency and throughput tradeoffs. FPGA optimization techniques. Integration with external systems and smart devices. Firmware configuration and embedded system considerations. Enrollment limited to 25; preference to graduating seniors. Prerequisites: 180 (formerly 108B), and CS 106B or X.
 
-[Lab 1 Submission](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab1_submission.md)
+**Laboratory Links:**
+* [Lab 1: Basic Usage of Spatial](lab1.md)
 
-[Lab 2: Advanced Usage of Spatial](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab2.md)
+* [Lab 1 Submission](lab1_submission.md)
 
-[Lab 2 Submission](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/lab2_submission.md)
+* [Lab 2: Advanced Usage of Spatial](lab2.md)
 
-## Notes 
-[Helpful Instructions when Working with Spatial](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/spatial-cheatsheet.md)
+* [Lab 2 Submission](lab2_submission.md)
 
-[FAQs](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/common-issues.md)
+**Notes on Spatial**
+* [Helpful Instructions when Working with Spatial](spatial-cheatsheet.md)
 
-[Spatial Documentation](https://spatial-lang.org/)
+* [FAQs](common-issues.md)
 
-## Contact
-[Slack Link](http://ee109-spr1718.slack.com/)
+* [Spatial Documentation](https://spatial-lang.org/)
 
-[Stanford Canvas](https://canvas.stanford.edu/)
+**Using Github**
+* [How to use Git and Github](https://www.udacity.com/course/how-to-use-git-and-github--ud775)
 
-TA: <tianzhao@stanford.edu>
+* [Codecademy Learn Git](https://www.codecademy.com/learn/learn-git)
+
+**Using vim**
+* [CS107 Guide to vim](https://web.stanford.edu/class/cs107/guide/vim.html)
+
+**Contact**
+* [Slack Link](http://ee109-spr1718.slack.com/)
+
+* [Stanford Canvas](https://canvas.stanford.edu/)
