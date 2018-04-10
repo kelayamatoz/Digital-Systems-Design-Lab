@@ -372,7 +372,7 @@ Cycle count is not the only aspect that shows how good your design is. Moreover,
 After the synthesis finishes, go to ~/spatial-lang/gen/Lab1Part2DramSramExample/verilog-arria10/output_files. The resource utilization report is named "pr_alternate_fit.fit.summary", and it contains information that looks like this: 
 ```bash
 cd ~/spatial-lang/gen/Lab1Part2DramSramExample/verilog-arria10/output_files
-cat pr_alternate_fit
+cat pr_alternate_fit.fit.summary
 ```
 
 ```bash
