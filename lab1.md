@@ -403,7 +403,7 @@ It indicates that your design uses 15% of logic and 7% of on-chip memory.
 In Spatial, [FIFO](http://spatial-lang.readthedocs.io/en/latest/api/hw/onchip/fifo.html?highlight=FIFO) and [FILO](http://spatial-lang.readthedocs.io/en/latest/api/hw/onchip/filo.html?highlight=FILO) can be thought of as queue and stack. 
 
 ### Demo
-Here is an example of using FIFO: 
+Here is some syntax of using FIFO functions: 
 ```scala
 // Create a FIFO called f1 with type T and with size tileSize
 val f1 = FIFO[T](tileSize)
@@ -418,7 +418,7 @@ f1.peek()
 // 
 ```
 
-Here is an example of using FILO:
+Here is some syntax of using FILO functions:
 ```scala
 // Create a FILO called f1 with type T and with size tileSize
 val f1 = FILO[T](tileSize)
