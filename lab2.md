@@ -186,14 +186,11 @@ val lut_ijmn = lut(i,j,m,n)
 ```
 
 ## Your Turn
-* Please use the LUT syntax to implement the app in Lab2Part4LUT. What we want
+* Please use the LUT syntax to implement the app in Lab2Part4LUT. The LUT is 3 by 3 filled with integers from 1 to 9.  What we want
 to do here is that given a LUT, the user will provide a base value, index i and
-index j. The output should be base + LUT(i,j).
+index j. The output should be base value + LUT(i,j).
 
-### A More Involved Application: GEMM
-A large part of this section is borrowed from the official [Spatial tutorial](http://spatial-lang.readthedocs.io/en/latest/tutorial/gemm.html). 
-You can visit the Spatial GEMM example for more information.
-
+### Your First Full-Size Application: GEMM
 General Matrix Multiply (GEMM) is a common algorithm in linear algebra, machine learning,
 statistics, and many other domains. It provides a more interesting trade-off space than
 the previous tutorial, as there are many ways to break up the computation. This includes
@@ -280,7 +277,6 @@ one for each dimension of tiling and one for each dimension within the tile.
 Considering the tiling loops first, this particular animation shows that we are treating the N dimension
 as the innermost loop, followed by the M dimension, and finally the K dimension. Below shows the nested 
 loops along with the data structures and their tile transfers required within each scope.  
-Remember that you may add parallelization wherever you please:
 ```scala
 Accel {
   Foreach(K by tileK){kk => 
@@ -365,13 +361,7 @@ respectively:
           tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n)
           tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
 
-          MemFold(tileC_sram)(numel_k by 1 par 2){k => 
-            val tileK_local = SRAM[T](tileM, tileN)
-            Foreach(numel_m by 1, numel_n by 1 par 4){(i,j) => 
-              tileK_local(i,j) = tileA_sram(i,k) * tileB_sram(k,j)
-            }
-            tileK_local
-          }{_+_}
+          // Your code here
 
           c(mm::mm+numel_m, nn::nn+numel_n) store tileC_sram
         }
@@ -402,16 +392,10 @@ if we chose to parallelize the loading of tileB_sram by 8 while also parallelizi
           val numel_n = min(tileN.to[Int], N - nn)
           val tileB_sram = SRAM[T](tileK, tileN)
           val tileC_sram = SRAM.buffer[T](tileM, tileN)
-          tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n par 8)
+          tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n)
           tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
 
-          MemFold(tileC_sram)(numel_k by 1 par 2){k => 
-            val tileK_local = SRAM[T](tileM, tileN)
-            Foreach(numel_m by 1, numel_n by 1){(i,j) => 
-              tileK_local(i,j) = tileA_sram(i,k) * tileB_sram(k,j)
-            }
-            tileK_local
-          }{_+_}
+          // Your code here
 
           c(mm::mm+numel_m, nn::nn+numel_n) store tileC_sram
         }
