@@ -21,13 +21,14 @@ cycle counts. The example application is stored as Lab2Part3BasicCondFSM.
 * Let's try a different example. Here is the description: 
 
 Example: Fill an SRAM of size 32 using the following rules: 
-* If index of the SRAM is greater than or equal to 16: 
-  * If index < 8, set the element at 31 - index to be index * 2
-  * Otherwise, set the element at 31 - index to be index + 2
-* If state is smaller than 16:
-  * If index == 16, set the element at index - 16 to 17.
-  * If index == 17, set the element at index - 16 to reg.value * 2.
-  * Otherwise, set the elementat index - 16 to be the value of the index.
+* If the index of the SRAM is smaller than 8
+  * Set the element at index to be index
+* If the index of the SRAM is within \[8, 16\)
+  * Set the element at index to be index * 2
+* If the index of the SRAM is within \[16, 24\)
+  * Set the element at index to be index * 3
+* Otherwise
+  * Set the element at index to be index * 4
 
 You can modify Lab2Part3BasicCondFSM to implement this new example. Please save
 this new example as Lab2Part3BasicCondFSMAlt. 
