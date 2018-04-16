@@ -194,9 +194,8 @@ index j. The output should be base value + LUT(i,j).
 General Matrix Multiply (GEMM) is a common algorithm in linear algebra, machine learning,
 statistics, and many other domains. It provides a more interesting trade-off space than
 the previous tutorial, as there are many ways to break up the computation. This includes
-using blocking, inner products, outer products, and systolic array techniques. In this tutorial,
-we will demonstrate how to build a blocked GEMM app that uses outer products, and leave it to the
-user to try and build a GEMM version that uses inner products. 
+using blocking, outer products, and systolic array techniques. In this tutorial,
+we will demonstrate how to build a blocked GEMM app that uses outer products.
 
 ## Data Setup and Validation
 Let's start by creating the data structures above the Accel that we will set up the matrices and compute the 
