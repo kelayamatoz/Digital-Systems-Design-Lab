@@ -1,4 +1,4 @@
-# Laboratory Exercise 2: Designing Algorithm Specific Hardwares Using Spatial
+# Laboratory Exercise 3: Design Algorithm Specific Hardwares Using Spatial
 In the last two labs, we went through a few examples of how to use Spatial. Our major focus was to get you familiarized with the basic functionalities of Spatial. In this lab, we would like to help you design and implement algorithms that are widely used in the real world. The goal is to provide you with examples that organize all the component we have learnt so far, and prepare you ready for the final project.
 
 Compared to the last two labs, in this lab we will focus more on the algorithm side of the task instead of on the details of your implementation. We will first describe how the algorithm operates. Then it is up to your choice of picking the correct elements and fill in the provided templates. 
@@ -21,5 +21,4 @@ Here is an overview of what it would look like in hardware:
 2. For each element in the column:
   - We first reset the register file. Let's say that the register file is Kh by Kw.
   - For each row in the register file, 
-
 
