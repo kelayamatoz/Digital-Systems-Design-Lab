@@ -19,6 +19,13 @@ For this 2D convolution, we also introduce the lookup table (LUT). This is a rea
 ## Your Turn:
 Given the two kernels and the input data, perform 2 2-D convolution on the image. You can add your implementation to Lab3Part1Convolution. Report on the resource utilization and cycle counts of your design. 
 
+To test your application, you can use the following arguments: 
+```bash 
+64 64
+```
+
+This pair of arguments will create an image of 64 by 64.
+
 
 ## Implementation of Needleman-Wunsch
 In class, we have already gone through the details of NW algorithm. In this lab, we will be focusing on implementing this algorithm. NW algorithm contains two stages, one for creating the score table and the other for tracing back the path that gives the most matches.
