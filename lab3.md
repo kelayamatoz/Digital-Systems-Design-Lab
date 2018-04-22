@@ -40,6 +40,8 @@ val MISMATCH_SCORE = -1
 val GAP_SCORE = -1
 ```
 
+When populating the score matrix, each entry would be an nw_tuple struct that stores the score at the current location and the path it takes from the last position (SKIPA, SKIPB, or ALIGN). Later in the second stage of NW, you will be using the ptr information to reconstruct the path.
+
 #### Your Turn:
 Write the code that will traverse the matrix from top-left to bottom-right and update each entry of the score matrix.
 
@@ -48,6 +50,14 @@ Now we can traverse the score matrix, starting from the bottom right. We will us
 
 #### Your Turn:
 Write the code that can traceback from the bottom-right to the top-left of the score matrix. You can add your implementation in Lab3Part2NW. Report on the resource utilization and cycle counts of your NW implementation.
+
+To test your implementation, you can use the following two sequences as test arguments: 
+```bash
+# Sequence A
+tcgacgaaataggatgacagcacgttctcgt 
+# Sequence B
+ttcgagggcgcgtgtcgcggtccatcgacat
+```
 
  
 ## Extra Credits (5 points out of 100)
