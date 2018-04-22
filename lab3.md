@@ -1,7 +1,7 @@
-# Laboratory Exercise 3: Design Algorithm Specific Hardwares Using Spatial
+# Laboratory Exercise 3: Algorithm Specific Hardware Design
 In the last two labs, we went through a few examples of how to use Spatial. Our major focus was to get you familiarized with the basic functionalities of Spatial. In this lab, we would like to help you design and implement algorithms that are widely used in the real world. The goal is to provide you with examples that organize all the component we have learnt so far, and prepare you ready for the final project.
 
-Compared to the last two labs, in this lab we will focus more on the algorithm side of the task instead of on the details of your implementation. We will first describe how the algorithm operates. Then it is up to your choice of picking the correct elements and fill in the provided templates. 
+Compared to the last two labs, in this lab we will focus more on the algorithm side of the task instead of on the details of the implementation. We will first describe how the algorithm works. Then it is your task to pick the correct elements and implement the algorithm using the provided templates. 
 
 ## Convolution
 In class, we went through an example of performing a 1D convolution. In this example, we will be working on figuring out how to perform a 2D convolution on an image. Namely, we would like to implement a Sobel filter such that given an image of N by M, we would convolve each pixel of the image with a horizontal kernel and a vertical kernel as described [here](https://en.wikipedia.org/wiki/Sobel_operator)
@@ -27,8 +27,8 @@ To test your application, you can use the following arguments:
 This pair of arguments will create an image of 64 by 64. 
 
 
-## Implementation of Needleman-Wunsch
-In class, we have already gone through the details of NW algorithm. In this lab, we will be focusing on implementing this algorithm. NW algorithm contains two stages, one for creating the score table and the other for tracing back the path that gives the most matches.
+## Implementation of [Needleman-Wunsch (NW)](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm)
+In class, we have covered the details of NW algorithm. In this lab, we will be focusing on implementing this algorithm. NW algorithm contains two stages, one for creating the score table and the other for tracing back the path that gives the most matches.
 
 ### Score Matrix Population
 In this first section, we will make a forward pass to fill out the score matrix. In this algorithm, we need to embed two pieces of information in each matrix entry: the score at that entry and the direction to travel to achieve that score (N, W, or NW). We will start by defining a new struct that can contain this tuple up above our main():
@@ -70,3 +70,4 @@ These two sequences should have roughly 90% match.
  
 ## Extra Credits (5 points out of 100)
 * Can you add parallelization factors on your controllers to improve the performance of Convolution and NW? If you can, what's the improvement in performance? If you cannot, state the reasons. 
+  
