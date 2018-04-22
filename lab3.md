@@ -17,14 +17,14 @@ It is also possible now to see why we must set a hard cap on the number of colum
 For this 2D convolution, we also introduce the lookup table (LUT). This is a read-only memory whose values are known at compile time. It is implemented using registers and muxes to index into it. In this example, we will be using the LUTs to store the two kernels.
 
 ## Your Turn:
-Given the two kernels and the input data, perform 2 2-D convolution on the image. You can add your implementation to Lab3Part1Convolution. Report on the resource utilization and cycle counts of your design. 
+Given the two kernels and the input data, perform 2 2-D convolution on the image. You can add your implementation to Lab3Part1Convolution. Report the resource utilization and cycle counts of your design. 
 
 To test your application, you can use the following arguments: 
 ```bash 
 64 64
 ```
 
-This pair of arguments will create an image of 64 by 64.
+This pair of arguments will create an image of 64 by 64. 
 
 
 ## Implementation of Needleman-Wunsch
@@ -56,7 +56,7 @@ Write the code that will traverse the matrix from top-left to bottom-right and u
 Now we can traverse the score matrix, starting from the bottom right. We will use a FIFO to store the aligned result, and a finite state machine (FSM) to handle the back trace and complete when the FIFOs are filled. The state in the FSM starts at 0, which we use for the state to trace back through the matrix. When we either hit the top edge or the left edge of the score matrix, we jump to state 1 which is used to pad both of the FIFOs until they fill up. Once the FSM detects that they are full, it exits and the results are stored to DRAM. The branch conditions can be implemented using the if/else if/else statements. 
 
 #### Your Turn:
-Write the code that can traceback from the bottom-right to the top-left of the score matrix. You can add your implementation in Lab3Part2NW. Report on the resource utilization and cycle counts of your NW implementation.
+Write the code that can traceback from the bottom-right to the top-left of the score matrix. You can add your implementation in Lab3Part2NW. Report the resource utilization and cycle counts of your NW implementation.
 
 To test your implementation, you can use the following two sequences as test arguments: 
 ```bash
@@ -65,6 +65,7 @@ tcgacgaaataggatgacagcacgttctcgt
 # Sequence B
 ttcgagggcgcgtgtcgcggtccatcgacat
 ```
+These two sequences should have roughly 90% match. 
 
  
 ## Extra Credits (5 points out of 100)
