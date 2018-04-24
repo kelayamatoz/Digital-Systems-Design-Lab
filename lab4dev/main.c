@@ -1,18 +1,11 @@
-/*************************************************************************
-*       main.c
-*
- ************************************************************************/
+// Some key code snipptes have been borrowed from the designs published at the rocketboard.org: 
+// https://rocketboards.org/foswiki/Projects/VideoAndImageProcessingWithArria10SoCDevkit
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/*=======================================================================
-                                        INCLUDE FILES
-=======================================================================*/
-/* Standard Include Files */
 #include <errno.h>
-
-/* Verification Test Environment Include Files */
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -106,18 +99,6 @@ static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
         }
     }
 }
-
-
-#ifdef __DEBUG__
-static void print_pixelformat(char *prefix, int val)
-{
-    printf("%s: %c%c%c%c\n", prefix ? prefix : "pixelformat",
-           val & 0xff,
-           (val >> 8) & 0xff,
-           (val >> 16) & 0xff,
-           (val >> 24) & 0xff);
-}
-#endif
 
 static int start_capturing(int fd_v4l)
 {
@@ -259,12 +240,6 @@ static int v4l_stream_test(int fd_v4l)
         exit(3);
     }
 
-#ifdef __DEBUG__
-    printf("%dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel );
-#endif
-
-    screensize = 0;
-
     /* Figure out the size of the screen in bytes */
     screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
 
@@ -281,15 +256,7 @@ static int v4l_stream_test(int fd_v4l)
         printf("get format failed\n");
         return -1;
     }
-#ifdef __DEBUG__
-    else
-    {
-        printf("\t Width = %d", fmt.fmt.pix.width);
-        printf("\t Height = %d", fmt.fmt.pix.height);
-        printf("\t Image size = %d\n", fmt.fmt.pix.sizeimage);
-        printf("\t pixelformat = %d\n", fmt.fmt.pix.pixelformat);
-    }
-#endif
+
     if (start_capturing(fd_v4l) < 0)
     {
         printf("start_capturing failed\n");
@@ -308,19 +275,6 @@ static int v4l_stream_test(int fd_v4l)
         }
 
         yuyv_to_rgb32(g_out_width, g_out_height, buffers[buf.index].start, bgr_buff);
-#if 0
-        hindex=0;
-        for(y=0; y < fmt.fmt.pix.height; y++) {
-            for(x=0; x < fmt.fmt.pix.width ; x++) {
-
-                location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +(y+vinfo.yoffset) * finfo.line_length;
-
-                *((unsigned long*)(fbp + location)) = bgr_buff[hindex] ;
-
-                hindex++;
-            }
-        }
-#endif
         memcpy(fbp, bgr_buff, (vinfo.xres * vinfo.yres * vinfo.bits_per_pixel)/8);
 
         if (ioctl (fd_v4l, VIDIOC_QBUF, &buf) < 0) {
