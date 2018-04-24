@@ -15,19 +15,23 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <asm/types.h>
+
 #include <linux/videodev2.h>
 #include <sys/mman.h>
 #include <string.h>
 #include <malloc.h>
 #include <linux/fb.h>
 
+#include <netdb.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
-#define CAP_IMG_ORIG       1
-#define CAP_IMG_GRAYSCALE  2
-#define CAP_IMG_CANNY      3
+#define BUFLEN 2048
+#define SERVICE_PORT 21234
 
-
-#define TEST_BUFFER_NUM 32
+#define TEST_BUFFER_NUM 8
 #define SAT(c) \
    if (c & (~255)) { if (c < 0) c = 0; else c = 255; }
 
@@ -85,7 +89,6 @@ static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
             SAT(r);
             SAT(g);
             SAT(b);
-
             *dst++ = ((unsigned int) alpha) << 24 |  (r << 16) | (g << 8) | b;
 
             r = y2 + cr;
@@ -95,7 +98,6 @@ static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
             SAT(g);
             SAT(b);
             *dst++ = ((unsigned int) alpha) << 24 |  (r << 16) | (g << 8) | b;
-
         }
     }
 }
@@ -206,6 +208,37 @@ static int v4l_capture_setup(void)
 
 static int v4l_stream_test(int fd_v4l)
 {
+    // TODO: Add networking component here
+    struct sockaddr_in myaddr, remaddr;
+    int fd, inet, slen=sizeof(remaddr);
+    char messagebuf[BUFLEN];
+    int recvlen;
+    char *server = "172.24.72.54";
+
+    if ((fd=socket(AF_INET, SOCK_DGRAM, 0)) == -1)
+        return 0;
+
+    // Set up the network infra
+    memset((char *) &myaddr, 0, sizeof(myaddr));
+    myaddr.sin_family = AF_INET;
+    myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    myaddr.sin_port = htons(0);
+
+    if (bind(fd, (struct sockaddr *)&myaddr, sizeof(myaddr)) < 0)
+    {
+        perror("bind failed");
+        return 0;
+    }
+
+    memset((char *) &remaddr, 0, sizeof(remaddr));
+    remaddr.sin_family = AF_INET;
+    remaddr.sin_port = htons(SERVICE_PORT);
+    if (inet_aton(server, &remaddr.sin_addr) == 0) 
+    {
+        fprintf(stderr, "inet_aton() failed\n");
+        exit(1);
+    }
+
     struct v4l2_buffer buf;
     struct v4l2_format fmt;
     struct fb_var_screeninfo vinfo;
