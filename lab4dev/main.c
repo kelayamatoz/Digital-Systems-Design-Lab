@@ -1,4 +1,4 @@
-// Some key code snipptes have been borrowed from the designs published at the rocketboard.org: 
+// Some key code snipptes have been borrowed from the designs published at the rocketboard.org:
 // https://rocketboards.org/foswiki/Projects/VideoAndImageProcessingWithArria10SoCDevkit
 
 #ifdef __cplusplus
@@ -65,6 +65,8 @@ static char cmd[512];
 
 static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
 {
+    // TODO: Your job to do the color space conversion
+    // TODO: How to calculate the adjacent one?
     unsigned char *s;
     unsigned long *d;
     int l, c, alpha = 0x0;
@@ -233,7 +235,7 @@ static int v4l_stream_test(int fd_v4l)
     memset((char *) &remaddr, 0, sizeof(remaddr));
     remaddr.sin_family = AF_INET;
     remaddr.sin_port = htons(SERVICE_PORT);
-    if (inet_aton(server, &remaddr.sin_addr) == 0) 
+    if (inet_aton(server, &remaddr.sin_addr) == 0)
     {
         fprintf(stderr, "inet_aton() failed\n");
         exit(1);
@@ -333,7 +335,23 @@ static int v4l_stream_test(int fd_v4l)
 
 int main(int argc, char **argv)
 {
+
+  int fp = 0;
+  char brightness_char[100] = "/sys/class/leds/a10sycon_led0/brightness";
+  if ((fp = open(brightness_char, O_RDWR, 0)) < 0)
+  {
+    printf("Failed to change the brightness");
+  }
+  else
+  {
+    write(fp, "1", sizeof("1"));
+    close(fp);
+  }
+
+    return 0;
+
     int fd_v4l, option = 0, img_sel = 0;
+
     fd_v4l = v4l_capture_setup();
     v4l_stream_test(fd_v4l);
     return 0;

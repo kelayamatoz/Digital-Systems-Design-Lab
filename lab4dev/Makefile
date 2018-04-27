@@ -1,8 +1,10 @@
 CC=arm-linux-gnueabihf-gcc
 
 BINARY_NAME=video_stream.out
+# BINARY_NAME=receiver.out
 
 API_OBJS= main.c
+# API_OBJS=receiver.c
 
 LIBS= -lpthread
 
@@ -15,7 +17,7 @@ all : $(BINARY_NAME)
 
 .PHONY  : clean
 
-clean   :
+clean  :
 	  rm -f *.o $(BINARY_NAME)
 
 %.o : %.c
