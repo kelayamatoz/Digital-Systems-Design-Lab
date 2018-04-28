@@ -124,6 +124,7 @@ static int start_capturing(int fd_v4l)
 
         buffers[i].length = buf.length;
         buffers[i].offset = (size_t) buf.m.offset;
+        printf("Allocating buffer of size %zu...\n", buffers[i].length);
         buffers[i].start = mmap (NULL, buffers[i].length,
                                  PROT_READ | PROT_WRITE, MAP_SHARED,
                                  fd_v4l, buffers[i].offset);

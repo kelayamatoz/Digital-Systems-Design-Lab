@@ -44,7 +44,8 @@ int main(int argc, char **argv)
 		if (recvlen > 0) {
 			buf[recvlen] = 0;
 			// printf("received message: \"%s\" (%d bytes)\n", buf, recvlen);
-      printf("received message: (%d bytes)\n", recvlen);
+            printf("received message: (%d bytes)\n", recvlen);
+            printf("first message: %zu", *buf);
 		}
 		else
 			printf("uh oh - something went wrong!\n");
