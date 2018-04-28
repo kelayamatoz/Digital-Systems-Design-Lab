@@ -22,6 +22,7 @@ extern "C" {
 #include <malloc.h>
 #include <linux/fb.h>
 
+// TODO: clean up the camera.c code and redundant code
 #include <netdb.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -37,7 +38,7 @@ extern "C" {
 #define SAT(c) \
   if (c & (~255)) { if (c < 0) c = 0; else c = 255; }
 
-char *server = "172.24.72.94";
+char *server = "172.24.72.54";
 
 struct testbuffer
 {
@@ -63,50 +64,6 @@ int g_capture_mode = 0;
 char g_v4l_device[100] = "/dev/video0";
 char g_fb_device[100] = "/dev/fb0";
 char g_file_name[100] = "Capture.jpg";
-
-/* Global Variables */
-static char cmd[512];
-
-static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
-{
-    // TODO: Your job to do the color space conversion
-    // TODO: How to calculate the adjacent one?
-    unsigned char *s;
-    unsigned long *d;
-    int l, c, alpha = 0x0;
-    int r, g, b, cr, cg, cb, y1, y2;
-
-    l = height;
-    s = src;
-    d = dst;
-    while (l--) {
-        c = width >> 1;
-        while (c--) {
-            y1 = *s++;
-            cb = ((*s - 128) * 454) >> 8;
-            cg = (*s++ - 128) * 88;
-            y2 = *s++;
-            cr = ((*s - 128) * 359) >> 8;
-            cg = (cg + (*s++ - 128) * 183) >> 8;
-
-            r = y1 + cr;
-            b = y1 + cb;
-            g = y1 - cg;
-            SAT(r);
-            SAT(g);
-            SAT(b);
-            *dst++ = ((unsigned int) alpha) << 24 |  (r << 16) | (g << 8) | b;
-
-            r = y2 + cr;
-            b = y2 + cb;
-            g = y2 - cg;
-            SAT(r);
-            SAT(g);
-            SAT(b);
-            *dst++ = ((unsigned int) alpha) << 24 |  (r << 16) | (g << 8) | b;
-        }
-    }
-}
 
 static int start_capturing(int fd_v4l)
 {
@@ -215,7 +172,7 @@ static int v4l_capture_setup(void)
 
 static int v4l_stream_test(int fd_v4l)
 {
-    // Network client part
+    // Create network client 
     struct sockaddr_in myaddr, remaddr;
     int netfd, neti, netslen=sizeof(remaddr);
     char netbuf[NETBUFSIZE]; /* message buffer */
@@ -333,8 +290,6 @@ static int v4l_stream_test(int fd_v4l)
             printf("VIDIOC_QBUF failed\n");
             break;
         }
-
-        printf("sent one frame...\n\n");
     }
 
     if (stop_capturing(fd_v4l) < 0)
@@ -353,7 +308,6 @@ static int v4l_stream_test(int fd_v4l)
 int main(int argc, char **argv)
 {
     int fd_v4l, option = 0, img_sel = 0;
-
     fd_v4l = v4l_capture_setup();
     v4l_stream_test(fd_v4l);
     return 0;

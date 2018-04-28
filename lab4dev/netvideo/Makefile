@@ -8,7 +8,7 @@ camera: camera.c
 	$(CC) $(UTEST_CFLAGS) camera.c -o camera $(LIBS)
 
 display: display.c
-	$(CC) $(UTEST_CFLAGS) display.c -o display$(LIBS)
+	$(CC) $(UTEST_CFLAGS) display.c -o display $(LIBS)
 
 
 .PHONY  : clean

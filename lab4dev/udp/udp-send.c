@@ -17,7 +17,7 @@ int main(void)
 	char buf[BUFLEN];	/* message buffer */
 	int recvlen;		/* # bytes in acknowledgement message */
 	/* change this to use a different server */
-  char *server = "172.24.72.94";
+  char *server = "172.24.72.54";
 
 	if ((fd=socket(AF_INET, SOCK_DGRAM, 0)) == -1)
 
