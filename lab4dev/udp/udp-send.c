@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define BUFLEN 2048
+#define BUFLEN 61441 /* This would need 30 packets to fill a frame */
 #define SERVICE_PORT 21234
 
 int main(void)
@@ -36,6 +36,7 @@ int main(void)
   char *message = "Thirsty Thursday.";
   strcpy(buf, message);
   printf("%s", buf);
+  memset(buf + strlen(message), '+', BUFLEN - 1 - strlen(message));
   
 	/* now define remaddr, the address to whom we want to send messages */
 	/* For convenience, the host address is expressed as a numeric IP address */
@@ -54,12 +55,12 @@ int main(void)
 		exit(1);
 	}
 
-	/* now receive an acknowledgement from the server */
-	recvlen = recvfrom(fd, buf, BUFLEN, 0, (struct sockaddr *)&remaddr, &slen);
-    if (recvlen >= 0) {
-    	buf[recvlen] = 0;	/* expect a printable string - terminate it */
-        printf("received message: \"%s\"\n", buf);
-	}
+	// /* now receive an acknowledgement from the server */
+	// recvlen = recvfrom(fd, buf, BUFLEN, 0, (struct sockaddr *)&remaddr, &slen);
+ //    if (recvlen >= 0) {
+ //    	buf[recvlen] = 0;	/* expect a printable string - terminate it */
+ //        printf("received message: \"%s\"\n", buf);
+	// }
 
 	close(fd);
 	return 0;

@@ -8,10 +8,9 @@
 #include "port.h"
 #include <unistd.h>
 
-#define BUFSIZE 2048
+#define BUFSIZE 61441
 
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	struct sockaddr_in myaddr;	/* our address */
 	struct sockaddr_in remaddr;	/* remote address */
@@ -44,7 +43,8 @@ main(int argc, char **argv)
 		recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
 		if (recvlen > 0) {
 			buf[recvlen] = 0;
-			printf("received message: \"%s\" (%d bytes)\n", buf, recvlen);
+			// printf("received message: \"%s\" (%d bytes)\n", buf, recvlen);
+      printf("received message: (%d bytes)\n", recvlen);
 		}
 		else
 			printf("uh oh - something went wrong!\n");
