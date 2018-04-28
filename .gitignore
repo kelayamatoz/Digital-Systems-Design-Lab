@@ -1,2 +1,5 @@
 *.swp
 *.out
+*.log
+.DS_Store
+._.DS_Store

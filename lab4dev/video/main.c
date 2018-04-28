@@ -1,4 +1,4 @@
-// Some key code snipptes have been borrowed from the designs published at the rocketboard.org: 
+// Some key code snipptes have been borrowed from the designs published at the rocketboard.org:
 // https://rocketboards.org/foswiki/Projects/VideoAndImageProcessingWithArria10SoCDevkit
 
 #ifdef __cplusplus
@@ -33,7 +33,7 @@ extern "C" {
 
 #define TEST_BUFFER_NUM 8
 #define SAT(c) \
-   if (c & (~255)) { if (c < 0) c = 0; else c = 255; }
+  if (c & (~255)) { if (c < 0) c = 0; else c = 255; }
 
 struct testbuffer
 {
@@ -65,6 +65,8 @@ static char cmd[512];
 
 static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
 {
+    // TODO: Your job to do the color space conversion
+    // TODO: How to calculate the adjacent one?
     unsigned char *s;
     unsigned long *d;
     int l, c, alpha = 0x0;
@@ -122,6 +124,7 @@ static int start_capturing(int fd_v4l)
 
         buffers[i].length = buf.length;
         buffers[i].offset = (size_t) buf.m.offset;
+        printf("Allocating buffer of size %zu...\n", buffers[i].length);
         buffers[i].start = mmap (NULL, buffers[i].length,
                                  PROT_READ | PROT_WRITE, MAP_SHARED,
                                  fd_v4l, buffers[i].offset);
@@ -208,37 +211,6 @@ static int v4l_capture_setup(void)
 
 static int v4l_stream_test(int fd_v4l)
 {
-    // TODO: Add networking component here
-    struct sockaddr_in myaddr, remaddr;
-    int fd, inet, slen=sizeof(remaddr);
-    char messagebuf[BUFLEN];
-    int recvlen;
-    char *server = "172.24.72.54";
-
-    if ((fd=socket(AF_INET, SOCK_DGRAM, 0)) == -1)
-        return 0;
-
-    // Set up the network infra
-    memset((char *) &myaddr, 0, sizeof(myaddr));
-    myaddr.sin_family = AF_INET;
-    myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    myaddr.sin_port = htons(0);
-
-    if (bind(fd, (struct sockaddr *)&myaddr, sizeof(myaddr)) < 0)
-    {
-        perror("bind failed");
-        return 0;
-    }
-
-    memset((char *) &remaddr, 0, sizeof(remaddr));
-    remaddr.sin_family = AF_INET;
-    remaddr.sin_port = htons(SERVICE_PORT);
-    if (inet_aton(server, &remaddr.sin_addr) == 0) 
-    {
-        fprintf(stderr, "inet_aton() failed\n");
-        exit(1);
-    }
-
     struct v4l2_buffer buf;
     struct v4l2_format fmt;
     struct fb_var_screeninfo vinfo;
@@ -277,7 +249,7 @@ static int v4l_stream_test(int fd_v4l)
     screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
 
     /* Map the device to memory */
-    fbp = (char *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED,fbfd, 0);
+    fbp = (char *) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED,fbfd, 0);
     if ((int)fbp == -1) {
         printf("Error failed to map framebuffer device to memory.\n");
         exit(4);
@@ -302,7 +274,7 @@ static int v4l_stream_test(int fd_v4l)
         memset(&buf, 0, sizeof (buf));
         buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         buf.memory = V4L2_MEMORY_MMAP;
-        if (ioctl (fd_v4l, VIDIOC_DQBUF, &buf) < 0)	{
+        if (ioctl (fd_v4l, VIDIOC_DQBUF, &buf) < 0) {
             printf("VIDIOC_DQBUF failed.\n");
             break;
         }
@@ -329,13 +301,11 @@ static int v4l_stream_test(int fd_v4l)
     return 0;
 }
 
-
-
 int main(int argc, char **argv)
 {
     int fd_v4l, option = 0, img_sel = 0;
+
     fd_v4l = v4l_capture_setup();
     v4l_stream_test(fd_v4l);
     return 0;
 }
-
