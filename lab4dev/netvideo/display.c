@@ -49,16 +49,12 @@ int g_in_width = 1280;
 int g_in_height = 720;
 int g_out_width = 1280;
 int g_out_height = 720;
-int g_top = 0;
-int g_left = 0;
-int g_input = 0;
 int g_capture_count = 100;
 int g_rotate = 0;
 int g_cap_fmt = V4L2_PIX_FMT_YUYV;
 int g_camera_framerate = 30;
 int g_extra_pixel = 0;
 int g_capture_mode = 0;
-char g_v4l_device[100] = "/dev/video0";
 char g_fb_device[100] = "/dev/fb0";
 char g_file_name[100] = "Capture.jpg";
 
@@ -153,11 +149,6 @@ static int v4l_stream_test()
     unsigned int t,x,y;
     unsigned long size, bytes_read;
 
-    if ((fbfd = open(g_fb_device, O_RDWR, 0)) < 0)
-    {
-        printf("Unable to open %s\n", g_v4l_device);
-        return 0;
-    }
 
     /* Get fixed screen information */
     if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
@@ -185,10 +176,8 @@ static int v4l_stream_test()
     bgr_buff = (long *) malloc (sizeof(long) * g_out_width * g_out_height * 4);
     yuv_buff = (char *) malloc (sizeof(char) * g_out_width * g_out_height * 2);
     size_t packetsize = NETBUFSIZE - 1;
-    // more than 80% information of a packet has been received
 
     for(;;) {
-        // Try to receive a frame. Order of when the frame arrives might be weird...
         char packetiter = 0;
         for (packetiter; packetiter < NUMPACKFRAME; packetiter ++)
         {

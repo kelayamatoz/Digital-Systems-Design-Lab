@@ -22,7 +22,6 @@ extern "C" {
 #include <malloc.h>
 #include <linux/fb.h>
 
-// TODO: clean up the camera.c code and redundant code
 #include <netdb.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -33,10 +32,7 @@ extern "C" {
 #define SERVICE_PORT 21234
 #define NETBUFSIZE 61441
 #define NUMPACKFRAME 30
-
 #define TEST_BUFFER_NUM 8
-#define SAT(c) \
-  if (c & (~255)) { if (c < 0) c = 0; else c = 255; }
 
 char *server = "172.24.72.54";
 
@@ -52,18 +48,9 @@ int g_in_width = 1280;
 int g_in_height = 720;
 int g_out_width = 1280;
 int g_out_height = 720;
-int g_top = 0;
-int g_left = 0;
-int g_input = 0;
-int g_capture_count = 100;
-int g_rotate = 0;
 int g_cap_fmt = V4L2_PIX_FMT_YUYV;
 int g_camera_framerate = 30;
-int g_extra_pixel = 0;
-int g_capture_mode = 0;
 char g_v4l_device[100] = "/dev/video0";
-char g_fb_device[100] = "/dev/fb0";
-char g_file_name[100] = "Capture.jpg";
 
 static int start_capturing(int fd_v4l)
 {
@@ -172,7 +159,7 @@ static int v4l_capture_setup(void)
 
 static int v4l_stream_test(int fd_v4l)
 {
-    // Create network client 
+    // Create network client
     struct sockaddr_in myaddr, remaddr;
     int netfd, neti, netslen=sizeof(remaddr);
     char netbuf[NETBUFSIZE]; /* message buffer */
@@ -188,15 +175,12 @@ static int v4l_stream_test(int fd_v4l)
     if (bind(netfd, (struct sockaddr *)&myaddr, sizeof(myaddr)) < 0) {
         perror("bind failed");
         return 0;
-    }       
+    }
 
-    /* now define remaddr, the address to whom we want to send messages */
-    /* For convenience, the host address is expressed as a numeric IP address */
-    /* that we will convert to a binary format via inet_aton */
     memset((char *) &remaddr, 0, sizeof(remaddr));
     remaddr.sin_family = AF_INET;
     remaddr.sin_port = htons(SERVICE_PORT);
-    if (inet_aton(server, &remaddr.sin_addr)==0) 
+    if (inet_aton(server, &remaddr.sin_addr)==0)
     {
         fprintf(stderr, "inet_aton() failed\n");
         exit(1);
@@ -208,10 +192,7 @@ static int v4l_stream_test(int fd_v4l)
     struct fb_var_screeninfo vinfo;
     struct fb_fix_screeninfo finfo;
     long screensize, index;
-    int fbfd = 0;
-    char *fbp;
     unsigned char Bmp, dummy, red, blue, green, alpha;
-    long *bgr_buff;
     FILE * fd_y_file = 0;
     int i,hindex,j;
     unsigned long int location = 0, BytesPerLine = 0;
@@ -219,33 +200,6 @@ static int v4l_stream_test(int fd_v4l)
     unsigned int t,x,y;
     unsigned long size, bytes_read;
 
-    if ((fbfd = open(g_fb_device, O_RDWR, 0)) < 0)
-    {
-        printf("Unable to open %s\n", g_v4l_device);
-        return 0;
-    }
-
-    /* Get fixed screen information */
-    if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
-        printf("Error reading fixed information.\n");
-        exit(2);
-    }
-
-    /* Get variable screen information */
-    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
-        printf("Error reading variable information.\n");
-        exit(3);
-    }
-
-    /* Figure out the size of the screen in bytes */
-    screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
-
-    /* Map the device to memory */
-    fbp = (char *) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED,fbfd, 0);
-    if ((int)fbp == -1) {
-        printf("Error failed to map framebuffer device to memory.\n");
-        exit(4);
-    }
 
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (ioctl(fd_v4l, VIDIOC_G_FMT, &fmt) < 0)
@@ -260,7 +214,6 @@ static int v4l_stream_test(int fd_v4l)
         return -1;
     }
 
-    bgr_buff = (long *) malloc (sizeof(long) * fmt.fmt.pix.width * fmt.fmt.pix.height * 4);
     size_t packetsize = NETBUFSIZE - 1;
 
     for(;;) {
@@ -272,9 +225,6 @@ static int v4l_stream_test(int fd_v4l)
             break;
         }
 
-        // Total size: 1280 * 720 * 2 bytes = 1843200 for a frame
-        // 61440 for a packet
-        // 30 packets / frame
         char packetind = 0;
         for(packetind; packetind < NUMPACKFRAME; packetind ++)
         {
@@ -299,9 +249,6 @@ static int v4l_stream_test(int fd_v4l)
         return -1;
     }
 
-    free(bgr_buff);
-    munmap(fbp, screensize);
-    close(fbfd);
     close(fd_v4l);
     return 0;
 }
