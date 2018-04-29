@@ -1,6 +1,12 @@
 # Laboratory Exercise 4: Embedded Linux Programming
 In the last three labs, we covered the details of building an accelerator on FPGA. In this lab, we are going to cover some details about building embedded softwares on Linux. This lab will be separated into three sections. In the first section, you will need to write a piece of software that enables on-board video streaming. In the second section, you will learn about establishing client-to-server communication using UDP protocol. In the third section, you will be working on creating a remote video system by combining your knowledge about UDP, camera driver and framebuffer driver.
 
+Before starting working on the rest of the lab, you will need to navigate to the work directory of this lab first: 
+```
+cd lab4dev
+```
+The folders for the rest of the labs are stored here. 
+
 ## Realtime Video Streaming
 The working directory of this section is in ```./video```. 
 
