@@ -8,17 +8,15 @@
 #include "port.h"
 #include <unistd.h>
 
-#define BUFSIZE 61441
-
 int main(int argc, char **argv)
 {
-	struct sockaddr_in myaddr;	/* our address */
-	struct sockaddr_in remaddr;	/* remote address */
+	struct sockaddr_in myaddr;	                /* our address */
+	struct sockaddr_in remaddr;	                /* remote address */
 	socklen_t addrlen = sizeof(remaddr);		/* length of addresses */
-	int recvlen;			/* # bytes received */
-	int fd;				/* our socket */
-	int msgcnt = 0;			/* count # of messages we received */
-	unsigned char buf[BUFSIZE];	/* receive buffer */
+	int recvlen;			                    /* # bytes received */
+	int fd;				                        /* our socket */
+	int msgcnt = 0;			                    /* count # of messages we received */
+	unsigned char buf[BUFSIZE];	                /* receive buffer */
 
 	/* create a UDP socket */
 	if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
@@ -43,9 +41,8 @@ int main(int argc, char **argv)
 		recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
 		if (recvlen > 0) {
 			buf[recvlen] = 0;
-			// printf("received message: \"%s\" (%d bytes)\n", buf, recvlen);
             printf("received message: (%d bytes)\n", recvlen);
-            printf("first message: %zu", *buf);
+            printf("first char: %c", *buf);
 		}
 		else
 			printf("uh oh - something went wrong!\n");
