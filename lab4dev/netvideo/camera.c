@@ -5,36 +5,10 @@
 extern "C" {
 #endif
 
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <asm/types.h>
-
+#include "port.h"
 #include <linux/videodev2.h>
-#include <sys/mman.h>
-#include <string.h>
-#include <malloc.h>
-#include <linux/fb.h>
 
-#include <netdb.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-#define BUFLEN 2048
-#define SERVICE_PORT 21234
-#define NETBUFSIZE 61441
-#define NUMPACKFRAME 30
 #define TEST_BUFFER_NUM 8
-
-char *server = "172.24.72.54";
 
 struct testbuffer
 {
@@ -44,8 +18,6 @@ struct testbuffer
 };
 
 struct testbuffer buffers[TEST_BUFFER_NUM];
-int g_in_width = 1280;
-int g_in_height = 720;
 int g_out_width = 1280;
 int g_out_height = 720;
 int g_cap_fmt = V4L2_PIX_FMT_YUYV;
@@ -101,6 +73,7 @@ static int start_capturing(int fd_v4l)
     return 0;
 }
 
+
 static int stop_capturing(int fd_v4l)
 {
     enum v4l2_buf_type type;
@@ -115,6 +88,7 @@ static int stop_capturing(int fd_v4l)
     }
     return 0;
 }
+
 
 static int v4l_capture_setup(void)
 {
@@ -157,7 +131,7 @@ static int v4l_capture_setup(void)
 }
 
 
-static int v4l_stream_test(int fd_v4l)
+static int camera(int fd_v4l)
 {
     // Create network client
     struct sockaddr_in myaddr, remaddr;
@@ -189,17 +163,6 @@ static int v4l_stream_test(int fd_v4l)
     // Video stream
     struct v4l2_buffer buf;
     struct v4l2_format fmt;
-    struct fb_var_screeninfo vinfo;
-    struct fb_fix_screeninfo finfo;
-    long screensize, index;
-    unsigned char Bmp, dummy, red, blue, green, alpha;
-    FILE * fd_y_file = 0;
-    int i,hindex,j;
-    unsigned long int location = 0, BytesPerLine = 0;
-    unsigned long pixel;
-    unsigned int t,x,y;
-    unsigned long size, bytes_read;
-
 
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (ioctl(fd_v4l, VIDIOC_G_FMT, &fmt) < 0)
@@ -253,10 +216,10 @@ static int v4l_stream_test(int fd_v4l)
     return 0;
 }
 
+
 int main(int argc, char **argv)
 {
-    int fd_v4l, option = 0, img_sel = 0;
-    fd_v4l = v4l_capture_setup();
-    v4l_stream_test(fd_v4l);
+    int fd_v4l = v4l_capture_setup();
+    camera(fd_v4l);
     return 0;
 }

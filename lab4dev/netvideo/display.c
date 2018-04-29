@@ -5,30 +5,9 @@
 extern "C" {
 #endif
 
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <asm/types.h>
-
-#include <linux/videodev2.h>
-#include <sys/mman.h>
-#include <string.h>
-#include <malloc.h>
+#include "port.h"
 #include <linux/fb.h>
 
-#include <netdb.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-#define BUFLEN 2048
 #define SERVICE_PORT 21234
 #define NETBUFSIZE 61441
 #define NUMPACKFRAME 30
@@ -37,29 +16,9 @@ extern "C" {
 #define SAT(c) \
   if (c & (~255)) { if (c < 0) c = 0; else c = 255; }
 
-struct testbuffer
-{
-    unsigned char *start;
-    size_t offset;
-    unsigned int length;
-};
-
-struct testbuffer buffers[TEST_BUFFER_NUM];
-int g_in_width = 1280;
-int g_in_height = 720;
 int g_out_width = 1280;
 int g_out_height = 720;
-int g_capture_count = 100;
-int g_rotate = 0;
-int g_cap_fmt = V4L2_PIX_FMT_YUYV;
-int g_camera_framerate = 30;
-int g_extra_pixel = 0;
-int g_capture_mode = 0;
 char g_fb_device[100] = "/dev/fb0";
-char g_file_name[100] = "Capture.jpg";
-
-/* Global Variables */
-static char cmd[512];
 
 static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
 {
@@ -103,7 +62,7 @@ static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
 }
 
 
-static int v4l_stream_test()
+static int display()
 {
     // Create network server
     struct sockaddr_in myaddr;  /* our address */
@@ -132,23 +91,19 @@ static int v4l_stream_test()
 
 
     // fb
-    struct v4l2_buffer buf;
-    struct v4l2_format fmt;
     struct fb_var_screeninfo vinfo;
     struct fb_fix_screeninfo finfo;
     long screensize, index;
     int fbfd = 0;
     char *fbp;
-    unsigned char Bmp, dummy, red, blue, green, alpha;
     long *bgr_buff;
     char *yuv_buff;
-    FILE * fd_y_file = 0;
-    int i,hindex,j;
-    unsigned long int location = 0, BytesPerLine = 0;
-    unsigned long pixel;
-    unsigned int t,x,y;
-    unsigned long size, bytes_read;
 
+    if ((fbfd = open(g_fb_device, O_RDWR, 0)) < 0)
+    {
+        printf("Unable to open %s\n", g_fb_device);
+        return 0;
+    }
 
     /* Get fixed screen information */
     if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
@@ -204,6 +159,6 @@ static int v4l_stream_test()
 
 int main(int argc, char **argv)
 {
-    v4l_stream_test();
+    display();
     return 0;
 }
