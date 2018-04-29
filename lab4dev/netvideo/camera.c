@@ -261,6 +261,7 @@ static int v4l_stream_test(int fd_v4l)
     }
 
     bgr_buff = (long *) malloc (sizeof(long) * fmt.fmt.pix.width * fmt.fmt.pix.height * 4);
+    size_t packetsize = NETBUFSIZE - 1;
 
     for(;;) {
         memset(&buf, 0, sizeof(buf));
@@ -278,7 +279,7 @@ static int v4l_stream_test(int fd_v4l)
         for(packetind; packetind < NUMPACKFRAME; packetind ++)
         {
             memset(netbuf, packetind, 1);
-            memcpy(netbuf + 1, buffers[buf.index].start + packetind * NETBUFSIZE, NETBUFSIZE);
+            memcpy(netbuf + 1, buffers[buf.index].start + packetind * packetsize, packetsize);
             if (sendto(netfd, netbuf, NETBUFSIZE, 0, (struct sockaddr *)&remaddr, netslen) == -1)
             {
                 perror("sendto");
