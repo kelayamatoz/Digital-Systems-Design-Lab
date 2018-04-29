@@ -1,4 +1,4 @@
-# Laboratory Exercise 2 Submission
+# Laboratory Exercise 3 Submission
 Student Name 1:
 
 Student Name 2:
