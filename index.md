@@ -4,12 +4,19 @@ The design of integrated digital systems encompassing both customized software a
 
 **Laboratory Links:**
 * [Lab 1: Basic Usage of Spatial](lab1.md)
+
 * [Lab 1 Submission](lab1_submission.md)
+
 * [Lab 2: Advanced Usage of Spatial](lab2.md)
+
 * [Lab 2 Submission](lab2_submission.md)
+
 * [Lab 3: Algorithm-Specific Hardware Design](lab3.md)
+
 * [Lab 3 Submission](lab3_submission.md)
+
 * [Lab 4: Embedded Linux Programming](lab4.md)
+
 * [Lab 4 Submission](lab4_submission.md)
 
 
@@ -18,11 +25,14 @@ The design of integrated digital systems encompassing both customized software a
 
 **Notes on Spatial**
 * [Helpful Instructions when Working with Spatial](spatial-cheatsheet.md)
+
 * [FAQs](common-issues.md)
+
 * [Spatial Documentation](https://spatial-lang.org/)
 
 **Using Github**
 * [How to use Git and Github](https://www.udacity.com/course/how-to-use-git-and-github--ud775)
+
 * [Codecademy Learn Git](https://www.codecademy.com/learn/learn-git)
 
 **Using vim**
@@ -30,4 +40,5 @@ The design of integrated digital systems encompassing both customized software a
 
 **Contact**
 * [Slack Link](http://ee109-spr1718.slack.com/)
+
 * [Stanford Canvas](https://canvas.stanford.edu/)
