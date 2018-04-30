@@ -131,6 +131,8 @@ The ```src``` buffer contains one frame fetched from the camera device, and the 
     - g = k - Cg
     - Value of ARGB pixel = alpha \| r \| g \| b, where each channel is a byte. 
     - Write the current ARGB pixel back to ```dst```
+
+
 After completing the color-space conversion function, you can compile your implementation by running: 
 ```bash
 make clean && make
@@ -176,12 +178,12 @@ After you finish your implementation, you can generate the binary files by calli
 make clean && make 
 ```
 
-You can test your implementation by running the two binaries on a client FPGA and a server FPGA. 
+You can test your implementation by running ```udp-send``` on a client FPGA and ```udp-recv``` on a server FPGA. 
 
 ## Video Streaming through Network
 The working directory of this section is in ```./netvideo```.
 
-In this section, your task is to combine the knowledge of UDP protocol and camera / frame buffer device drivers, and design a way to pass video frames from one FPGA board (the *camera board*) to another (the *display board*). We will only provide general instructions in this section, since you already have all the pieces needed to build the streaming system from working the first two sections. 
+In this section, your task is to combine the knowledge of UDP protocol and camera / frame buffer device drivers, and design a way to pass video frames from one FPGA board (the *camera board*) to another (the *display board*). We will only provide general instructions in this section, since you already have all the pieces needed to build the streaming system from the first two sections. 
 
 There are a few questions we need to answer before starting implementing the system: 
 - A UDP packet can only hold up to 65,507 bytes, which is much smaller than the size of a frame. How are we going to send a frame via UDP?
@@ -198,5 +200,5 @@ make clean && make
 You can test your implementation by running ```./camera``` on the *camera* board and ```./display``` on the *display* board.
 
 ## Extra Credits (5 points out of 100) 
-* In [UDP Communication](#udp-communication), you are asked to only display the first character of the received message. Can you modify the code such that you can display the whole message? 
+* In [UDP Communication](#udp-communication), the current implementation can only display the first character of the received message. Can you modify the code such that you can display the whole message? 
 * In [Video Streaming through Network](#video-streaming-through-network), the frame rate at the receiver side is limited due to the fact that we can only fit a fraction of the frame in a UDP packet. Is there a way to increase the frame rate? If so, how would you approach it? 
