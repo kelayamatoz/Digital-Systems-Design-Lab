@@ -122,14 +122,14 @@ The ```src``` buffer contains one frame fetched from the camera device, and the 
     - r = m + Cr
     - b = m + Cb
     - g = m - Cg
-    - Value of ARGB pixel = alpha | r | g | b, where each channel is a byte. 
+    - Value of ARGB pixel = alpha \| r \| g \| b, where each channel is a byte. 
     - Write the current ARGB pixel back to ```dst```
 
 - Calculate the second ARGB pixel
     - r = k + Cr
     - b = k + Cb
     - g = k - Cg
-    - Value of ARGB pixel = alpha | r | g | b, where each channel is a byte. 
+    - Value of ARGB pixel = alpha \| r \| g \| b, where each channel is a byte. 
     - Write the current ARGB pixel back to ```dst```
 After completing the color-space conversion function, you can compile your implementation by running: 
 ```bash
