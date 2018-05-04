@@ -23,6 +23,19 @@ The design of integrated digital systems encompassing both customized software a
 **Project Directions**
 * [Project Proposal Guidelines](project_proposal.md)
 
+* [Milestone 1: Software Demo](milestone1.md)
+
+* [Milestone 1 Submission](milestone1_submission.md)
+
+* [Milestone 2: Spatial Simulation](milestone2.md)
+
+* [Milestone 2 Submission](milestone2_submission.md)
+
+* [Milestone 3: Deploying Apps](milestone3.md)
+
+* [Milestone 3 Submission](milestone3_submission.md)
+
+
 **Notes on Spatial**
 * [Helpful Instructions when Working with Spatial](spatial-cheatsheet.md)
 

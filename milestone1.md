@@ -1,0 +1,2 @@
+# Milestone 1: Software Demonstration
+In this milestone, your task is to provide a software implementation of the application you want to work on, and provide us with a demo. For example, if you are working on a filter, please provide us with an implementation of the filter in any programming language you like. Please also give us a short description on the application and the instructions on how to run the application.
