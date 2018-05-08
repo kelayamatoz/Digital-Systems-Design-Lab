@@ -2,6 +2,13 @@
 
 The design of integrated digital systems encompassing both customized software and hardware. Software / hardware design tradeoffs. Algorithm design for pipelining and parallelism. System latency and throughput tradeoffs. FPGA optimization techniques. Integration with external systems and smart devices. Firmware configuration and embedded system considerations. Enrollment limited to 25; preference to graduating seniors. Prerequisites: 180 (formerly 108B), and CS 106B or X.
 
+**Reference Designs:**
+* [MachSuite](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/MachSuite.scala)
+
+* [Matrix Multiplications, Products](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/Products.scala)
+
+* [Basic Spatial Component Examples](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/UnitTests.scala)
+
 **Laboratory Links:**
 * [Lab 1: Basic Usage of Spatial](lab1.md)
 
