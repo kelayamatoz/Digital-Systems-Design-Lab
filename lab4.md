@@ -168,11 +168,10 @@ This is usually due to the fact that the camera driver needs a reset. You can si
 The working directory of this section is in ```./udp```. 
 
 In class, we covered an example of building a UDP server and a UDP client. In this section, we will be implementing a server-client pair. We have already provided a detailed explanation of what needs to be done in Lecture 07. Besides the provided material, there are also some lab-specific details: 
-- The IP address of the server can be modified in ```port.h```. 
+- The IP addresses of the server and the client can be modified in ```port.h```. 
+- For this session, we have the following IP addresses avaiable to assign for the server and the client: 172.24.89.54 and 172.24.89.137.
 - Your task is to send a string called ```Thirsty Thursday``` from the client to the server. 
     - The server needs to always listen to the port 21234, which is the port number that the client would send a message to. 
-- You will need to update the IP addresses of your client and your server in ```port.h```.
-
 After you finish your implementation, you can generate the binary files by calling: 
 ```bash
 make clean && make 
