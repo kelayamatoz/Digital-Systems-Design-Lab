@@ -162,7 +162,7 @@ Allocating buffer of size 1843200...
 VIDIOC_STREAMON error
 start_capturing failed
 ```
-This is usually due to the fact that the camera driver needs a reset. You can simply rerun the app to reset the camera driver. If your app is implemented correctly, you will see a live video displayed on the monitor. 
+This is usually due to the fact that the camera driver needs a reset. You can simply rerun the app to reset the camera driver. If your app is implemented correctly, you will see a live video displayed on the monitor. The monitor, the camera and the boards are located in Room 129 of Packard Building. If you do not have access to Room 129, please send an email with your student ID to the class TA.  
 
 ## UDP Communication
 The working directory of this section is in ```./udp```. 
