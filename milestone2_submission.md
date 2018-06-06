@@ -10,7 +10,3 @@
 # Please attach the Scala functional simulation result here.
 ```
 
-## VCS Simulation Result
-```bash
-# Please attach the VCS simulation result here.
-```
