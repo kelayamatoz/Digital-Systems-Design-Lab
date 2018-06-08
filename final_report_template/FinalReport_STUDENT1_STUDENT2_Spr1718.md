@@ -9,19 +9,19 @@ STUDENT_NAME_1, STUDENT_NAME_2
 - Appendix
 
 ## Application Overview
-```scala
+```
 // Add an overview of your application here.
 ```
 
 ## Software Simulation 
-```scala
+```
 // Add an overview of your software simulation here.
 // If you have references to some urls, you can add the them like this: 
 // [this is a link to a webpage](https://en.wikipedia.org/wiki/Sobel_operator)
 ```
 
 ## Hardware Implementation
-```scala
+```
 // Add an overview of your haredware implementation here.
 // If you want to attach an image of your system diagram, you can leave the image in the 
 // img folder, and add it like this: 
@@ -30,7 +30,7 @@ STUDENT_NAME_1, STUDENT_NAME_2
 ```
 
 ## Design Tradeoffs
-```scala
+```
 // Discuss your tradeoffs between the design choices you've made
 ```
 
