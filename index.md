@@ -42,7 +42,7 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Milestone 3 Submission](milestone3_submission.md)
 
-* [Final Project Report Template](final_report_template)
+* [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md)
 
 
 **Notes on Spatial**

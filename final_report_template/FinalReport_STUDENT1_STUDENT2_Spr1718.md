@@ -17,7 +17,7 @@ STUDENT_NAME_1, STUDENT_NAME_2
 ```scala
 // Add an overview of your software simulation here.
 // If you have references to some urls, you can add the them like this: 
-[this is a link to a webpage](https://en.wikipedia.org/wiki/Sobel_operator)
+// [this is a link to a webpage](https://en.wikipedia.org/wiki/Sobel_operator)
 ```
 
 ## Hardware Implementation
@@ -25,7 +25,7 @@ STUDENT_NAME_1, STUDENT_NAME_2
 // Add an overview of your haredware implementation here.
 // If you want to attach an image of your system diagram, you can leave the image in the 
 // img folder, and add it like this: 
-![system_diagram](./img/system_diagram.jpg)
+// ![system_diagram](./img/system_diagram.jpg)
 
 ```
 
