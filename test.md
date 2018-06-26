@@ -15,7 +15,6 @@ Click connect, and the VPN would ask for your password:
 ![image](./img/pw.png)
 
 Enter your password, and choose an option for the two-step authentication:
-
 ![image](./img/duo.png)
 
 After you successfully connect to Stanford network, you can now proceed to connect to tucson, which is a server that hosts the environment for running Spatial. 
@@ -44,6 +43,8 @@ The apps are hosted under apps/src. In this example, we are going to run Scala s
 cd apps/src
 vi lab3.scala
 ```
+
+If you prefer using other editors, you can remotely mount the network drive by following this [tutorial](./sshfs.md)
 
 The implementation of 2D Convolution is under: 
 ```scala
