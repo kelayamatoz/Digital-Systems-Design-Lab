@@ -59,6 +59,3 @@ Simple 1 sample render of the scene demonstrating rendering reading traingle inf
 
 ![DRAM Render](https://i.imgur.com/Oy8i8sN.png)
 
-## Acknowledgments
-We would like to thank our TA Tian Zhao for his help debugging and supporting our app within the Spatial framework. Without his assistence, we would never have been able to progress as far as we did with this project.
-Additional thanks to Professor Kunle Olukotun for his guidance during the project and for leading an interesting course focused on the cutting edge of digital design.

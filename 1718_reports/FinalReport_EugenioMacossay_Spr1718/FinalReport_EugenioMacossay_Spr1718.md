@@ -34,9 +34,3 @@ In terms of code, the Spatial code would be more readable if there was a reduce 
 
 Finally, data had to be preprocessed in MATLAB since no real camera is connected to the FPGA. The pictures are flattened after being decimated, and then the data for the pictures was concatenated for each picture.Additionally, processing the colors can be parallelized, so a single function was written and called in parallel in Spatial. 
 
-## Appendix
-I loved the class in the sense that I got to put a lot into practice. However, the lectures could involve each of us writing code while it is being explained. That could help (maybe pilot that?)
-
-I am also quite sad that I was by myself for the project. I wanted to do something that felt more of a complete project, but unfortunately that is the way life is.
-
-Having said that, I am extremely grateful for how great both of you were. You were always supportive and attentive to my needs and capacities. I have never had another class like this.
