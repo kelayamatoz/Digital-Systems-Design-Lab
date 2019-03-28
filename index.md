@@ -7,15 +7,15 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Tutorial 1: Mount a Remote File System](sshfs.md)
 
-**Reference Designs:**
+<!-- **Reference Designs:**
 * [MachSuite](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/MachSuite.scala)
 
 * [Matrix Multiplications, Products](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/Products.scala)
 
-* [Basic Spatial Component Examples](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/UnitTests.scala)
+* [Basic Spatial Component Examples](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/UnitTests.scala) -->
 
 **Laboratory Links:**
-* [Lab 1: Basic Usage of Spatial](lab1.md)
+<!-- * [Lab 1: Basic Usage of Spatial](lab1.md)
 
 * [Lab 1 Submission](lab1_submission.md)
 
@@ -29,7 +29,7 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Lab 4: Embedded Linux Programming](lab4.md)
 
-* [Lab 4 Submission](lab4_submission.md)
+* [Lab 4 Submission](lab4_submission.md) -->
 
 
 **Project Directions**
@@ -50,6 +50,7 @@ The design of integrated digital systems encompassing both customized software a
 * [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md)
 
 **Past Year Reports**
+
 **2017-18**
 * [MNIST Recognition using Support Vector Machine and Deep Neural Network](1718_reports/FinalReport_Akshay_Andrea_Spr1718/FinalReport_Akshay_Andrea_Spr1718.md)
 
@@ -60,7 +61,7 @@ The design of integrated digital systems encompassing both customized software a
 * [Tracking Centroids in Video Frames](1718_reports/FinalReport_EugenioMacossay_Spr1718/FinalReport_EugenioMacossay_Spr1718.md)
 
 **Notes on Spatial**
-* [Helpful Instructions when Working with Spatial](spatial-cheatsheet.md)
+<!-- * [Helpful Instructions when Working with Spatial](spatial-cheatsheet.md) -->
 
 * [FAQs](common-issues.md)
 
@@ -75,6 +76,6 @@ The design of integrated digital systems encompassing both customized software a
 * [CS107 Guide to vim](https://web.stanford.edu/class/cs107/guide/vim.html)
 
 **Contact**
-* [Slack Link](http://ee109-spr1718.slack.com/)
+* [Slack Link](http://ee109-spr1819.slack.com/)
 
 * [Stanford Canvas](https://canvas.stanford.edu/)
