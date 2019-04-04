@@ -1,18 +1,18 @@
 # Laboratory Exercise 2: Advanced Usage of Spatial
-In the last lab, we went through the basics of Spatial. In this lab, we are going to explore more advanced features of Spatial.
+In the last lab, we went through the basics of Spatial. In this lab, we are going to explore more advanced features in Spatial.
 
-We will first go through the usage of more advanced controllers. Then we will use the controllers to build an app that performs matrix multiplication. After we finish the app, we will learn about how to improve the performance of your app by making it parallel. We will also learn about how to use the tools Spatial provides to optimize the application.
+We will first go through the details of using controllers. Then we will use the controllers to build an app for accelerating matrix multiplication. We will also learn about how to improve the performance of your via parallelization and fine-tuning.
 
-More specifically, we will be covering the usage of the following elements:
+More specifically, the elements used in this lab are:
 
 Controllers: MemReduce, MemFold, FSM
 
-On-Chip Memories: LUT
+On-chip memory components: LUT
 
-Features for Optimizing Applications: Instrumentation, Choosing Parallelization
+Tools for optimizing applications: instrumentation, fine-tuning the parallelization factors.
 
 ## MemReduce, MemFold
-MemReduce is very similar to Reduce, but different in the sense that Reduce operates on a register while MemReduce operates on a piece of on-chip memory (SRAM). If we take a step back and try to understand the two controllers from an abstract level, we will see that Reduce is designed for scalars and MemReduce is designed for tensors. Here is the syntax for using MemReduce:
+A Reduce controller operates on a single register. In contrast, a MemReduce controller operates on a piece of on-chip memory (SRAM). From a high-level point of view, Reduce is designed for scalar operations and MemReduce is designed for tensor operations. You can use MemReduce by using the following syntax:
 
 ```scala
 // Create a MemReduce Controller
@@ -21,7 +21,7 @@ MemReduce(accum_sram)(N by n){ i =>
 }{// binary operator}
 ```
 
-For example, you can add a list of arrays using MemReduce: 
+For example, you can add a list of arrays by using MemReduce:
 ```scala
 // Create an SRAM to store the reduced results
 val a = SRAM[Int](16)
@@ -37,15 +37,14 @@ MemReduce(a)(-5 until 5 by 1) { i =>
 }
 ```
 
-We can compile a Spatial App that further demonstrate this example: 
+The end-to-end application will look like:
 ```scala
 // MemReduce
-object Lab2Part1SimpleMemReduce extends SpatialApp { 
+@spatial object Lab2Part1SimpleMemReduce extends SpatialApp {
 
   val N = 16.to[Int]
 
-  @virtualize
-  def main() {
+  def main(args: Array[String]): Unit = {
     val out = DRAM[Int](16)
     Accel {
       val a = SRAM[Int](16)
@@ -71,25 +70,25 @@ object Lab2Part1SimpleMemReduce extends SpatialApp {
 ## Your Turn
 * Synthesize the example application. Report on the resource utilization and
 cycle counts.
-* We also have a MemFold controller, which operates the same way as fold but
-work with memories. In this part of the exercise, we would like to reimplement
-Lab2Part1SimpleMemReduce using MemFold. You can put your implementation under Lab2Part2SimpleMemFold.
+* We also have a MemFold controller, which looks very similar to fold but operates on memories.
+In this part of the exercise, your task is to reimplement
+Lab2Part1SimpleMemReduce using MemFold.
+You can put your implementation under Lab2Part2SimpleMemFold.
 
 Make sure that you intialize your SRAM before passing it to the MemFold
 controller. Like Fold, MemFold assumes that you have intialized your MemFold
-SRAM. 
+SRAM beforehand.
 
 ## FSM
-Spatial also supports Finite State Machine by providing an FSM controller. It
-has the following syntax: 
+Spatial also supports using Finite State Machine by instantiating an FSM controller. It
+has the following syntax:
 ```scala
 FSM[Int]{// constraints on the state} { state =>
   // Body of the state machine
 }{ // rules for updating the state }
 ```
 
-For example, you can write the following example using an FSM controller:
-Example: Fill an SRAM of size 32 using the following rules: 
+For example, if you want to fill an SRAM of size 32 using the following rules: 
 * If index of the SRAM is greater than or equal to 16: 
   * If index == 16, set the element at index - 16 to 17.
   * If index == 17, set the element at index - 16 to reg.value.
@@ -98,9 +97,7 @@ Example: Fill an SRAM of size 32 using the following rules:
   * If index < 8, set the element at 31 - index to be index
   * Otherwise, set the element at 31 - index to be index + 1
 
-As you have observed, there are quite a few transitions of states as we iterate
-through the SRAM. An FSM controller would handle the transitions nicely.
-Here is how it is implemented in Spatial: 
+You will need to implement it in Spatial that looks like:
 ```scala
 reg := 16
 FSM[Int]{state => state < 32} { state =>
@@ -117,12 +114,11 @@ FSM[Int]{state => state < 32} { state =>
 }{state => state + 1}
 ```
 
-An example of the complete app looks as follows: 
+An example of the end-to-end application looks like:
 ```scala
-object Lab2Part3BasicCondFSM extends SpatialApp { 
+@spatial object Lab2Part3BasicCondFSM extends SpatialApp {
 
-  @virtualize
-  def main() {
+  def main(args: Array[String]): Unit = {
     val dram = DRAM[Int](32)
     Accel {
       val bram = SRAM[Int](32)
@@ -158,9 +154,9 @@ object Lab2Part3BasicCondFSM extends SpatialApp {
 ## Your Turn
 * Synthesize the example application. Report on the resource utilization and
 cycle counts. The example application is stored as Lab2Part3BasicCondFSM.
-* Let's try a different example. Here is the description: 
+* Let's try a different example. Here is the set of rules:
 
-Example: Fill an SRAM of size 32 using the following rules: 
+Fill an SRAM of size 32 using the following rules:
 * If the index of the SRAM is smaller than 8
   * Set the element at index to be index
 * If the index of the SRAM is within \[8, 16\)
@@ -169,17 +165,17 @@ Example: Fill an SRAM of size 32 using the following rules:
   * Set the element at index to be index * 3
 * Otherwise
   * Set the element at index to be index * 4
-  
+
 You can modify Lab2Part3BasicCondFSM to implement this new example. Please save
-this new example as Lab2Part3BasicCondFSMAlt. 
+this example as Lab2Part3BasicCondFSMAlt.
 
 
 ### LUT
-In Spatial, a LUT has the following syntax: 
+A LUT has the following syntax:
 ```scala
 val lut = LUT[Type](N0,N1, ..., Nm)(const0.to[T], const1.to[T], ...)
 ```
-This would create a LUT of m dimensions. You can access an element in lut by
+This creates a LUT of m dimensions. You can access an element in lut by
 using: 
 ```scala
 val lut_ijmn = lut(i,j,m,n)
@@ -195,19 +191,17 @@ General Matrix Multiply (GEMM) is a common algorithm in linear algebra, machine 
 statistics, and many other domains. It provides a more interesting trade-off space than
 the previous tutorial, as there are many ways to break up the computation. This includes
 using blocking, outer products, and systolic array techniques. In this tutorial,
-we will demonstrate how to build a blocked GEMM app that uses outer products.
+we will demonstrate how to build a blocked GEMM application using outer products.
 
 ## Data Setup and Validation
-Let's start by creating the data structures above the Accel that we will set up the matrices and compute the 
+Let's start by creating the data structures above the Accel that we will set up the matrices and compute the
 gold check. We will expose the dimensions of the matrices as command-line arguments.
 ```scala
 import spatial.dsl._
-import org.virtualized._
 
-object GEMM extends SpatialApp {
+@spatial object GEMM extends SpatialApp {
 
-  @virtualize
-  def main() {
+  def main(args: Array[String]): Unit = {
   
     type T = FixPt[TRUE,_24,_8]
     
@@ -460,4 +454,4 @@ Streaming interfaces.
 
 
 ## Extra Credits (5 points out of 100)
-* In lecture, we covered about how to tune the parallelization factors of controllers to improve the performance of dot product. Can you do the same for GEMM? What is the fewest number of cycles you can achieve? What is the resource utilization? What is your reasoning on choosing your embedded memory size and parallelization factors? 
+* In lecture, we covered about how to tune the parallelization factors of controllers to improve the performance of dot product. Can you do the same for GEMM? What is the fewest number of cycles you can achieve? What is the resource utilization? What is your reasoning on choosing your embedded memory size and parallelization factors?
