@@ -13,10 +13,10 @@ mkdir spatial
 
 Then, run the following commands to mount the Spatial test folder onto your local computer:
 ```bash
-sshfs spatial@tucson.stanford.edu:/home/spatial/spatial-lang/ ./spatial -o allow_other
+sshfs YOUR_USER_NAME@tucson.stanford.edu:/home/spatial/spatial/ ./spatial -o allow_other
 ```
 
-You will be prompted for a password. The password is spatial.
+You will be prompted for your password.
 
 After you mount the test folder, you can view the test folder in your Finder. The test folder is named OSXFUSE Volume 1:
 ![image](./img/finder.png)
