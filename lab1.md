@@ -22,6 +22,11 @@ Tucson is the main server that we will be using to host our development environm
 cd ~/spatial
 ```
 
+If you haven't installed Spatial before, run the following command to install it:
+```bash
+make && make install && make publish
+```
+
 Under the spatial directory, the apps/src directory stores the source code of Spatial apps. The gen directory contains the generated FPGA projects. To start developing apps, go to apps/src:
 ```bash
 cd apps/src
