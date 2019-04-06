@@ -184,7 +184,7 @@ The chisel folder contains the RTL code generated from your design. Here are the
 
 ```bash
 # make vcs simulation binary, then redirect the console output to vcs.log
-make vcs > vcs.log
+make > vcs.log
 # run vcs simulation, then redirect the console output to dramsim.log. 
 bash run.sh 3 5 > dramsim.log
 ```
