@@ -244,7 +244,7 @@ Lab1Part1RegExample.tar.gz is a compressed file. Once you login, you will need t
 ```bash
 x Lab1Part1RegExample.tar.gz
 cd Lab1Part1RegExample
-./Top 32 32
+bash run.sh 32 32
 ```
 
 <!-- If your design runs successfully, you will see the following message: -->
