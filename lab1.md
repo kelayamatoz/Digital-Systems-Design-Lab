@@ -1,4 +1,7 @@
 # Laboratory Exercise 1: Basic Usage of Spatial
+
+Project Due: Wednesday 04/11/2019 11:59 PM
+
 This is an introductory exercise that involves using Spatial controllers and memories to design circuits. In this section, you will be building a few Spatial applications using the following elements:
 
 Off-Chip Memory: DRAM
