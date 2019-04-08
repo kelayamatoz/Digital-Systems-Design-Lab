@@ -240,7 +240,7 @@ ssh YOUR_NAME@holodeck-zc706.stanford.edu
 ```
 <!-- <img src="./img/scp.png" width="70%" height="60%"> -->
 
-Lab1Part1RegExample.tar.gz is a compressed file. Once you login, you will need to first decompress it. After the decompression finishes, you can run the design by using the "Top" executable:
+Lab1Part1RegExample.tar.gz is a compressed file. Once you login, you will need to first decompress it. After the decompression finishes, you can run the design by:
 ```bash
 x Lab1Part1RegExample.tar.gz
 cd Lab1Part1RegExample
