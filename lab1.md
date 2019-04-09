@@ -1,4 +1,7 @@
 # Laboratory Exercise 1: Basic Usage of Spatial
+
+Project due: 04/10/2019 11:59 pm
+
 This is an introductory exercise that involves using Spatial controllers and memories to design circuits. In this section, you will be building a few Spatial applications using the following elements:
 
 Off-Chip Memory: DRAM
@@ -184,7 +187,7 @@ The chisel folder contains the RTL code generated from your design. Here are the
 
 ```bash
 # make vcs simulation binary, then redirect the console output to vcs.log
-make vcs > vcs.log
+make > vcs.log
 # run vcs simulation, then redirect the console output to dramsim.log. 
 bash run.sh 3 5 > dramsim.log
 ```
@@ -237,11 +240,11 @@ ssh YOUR_NAME@holodeck-zc706.stanford.edu
 ```
 <!-- <img src="./img/scp.png" width="70%" height="60%"> -->
 
-Lab1Part1RegExample.tar.gz is a compressed file. Once you login, you will need to first decompress it. After the decompression finishes, you can run the design by using the "Top" executable:
+Lab1Part1RegExample.tar.gz is a compressed file. Once you login, you will need to first decompress it. After the decompression finishes, you can run the design by:
 ```bash
 x Lab1Part1RegExample.tar.gz
 cd Lab1Part1RegExample
-./Top 32 32
+bash run.sh 32 32
 ```
 
 <!-- If your design runs successfully, you will see the following message: -->
