@@ -1,12 +1,12 @@
 # Laboratory Exercise 3: Algorithm Specific Hardware Design
-In the last two labs, we went through a few examples of how to use Spatial. Our major focus was to get you familiarized with the basic functionalities of Spatial. In this lab, we would like to help you design and implement algorithms that are widely used in the real world. The goal is to provide you with examples that organize all the component we have learnt so far, and prepare you ready for the final project.
+The last two labs give you some background information on how to design an accelerator. In this lab, we will design and implement an accelerator for a real-world application.
 
-Compared to the last two labs, in this lab we will focus more on the algorithm side of the task instead of on the details of the implementation. We will first describe how the algorithm works. Then it is your task to pick the correct elements and implement the algorithm using the provided templates. 
+In this lab, we focus more on the algorithm side. We will first describe how the algorithm works. It is your task to pick the right elements and implement the algorithm using the provided templates.
 
 ## Convolution
-In class, we went through an example of performing a 1D convolution. In this example, we will be working on figuring out how to perform a 2D convolution on an image. Namely, we would like to implement a Sobel filter such that given an image of N by M, we would convolve each pixel of the image with a horizontal kernel and a vertical kernel as described [here](https://en.wikipedia.org/wiki/Sobel_operator)
+In class, we went through an example of performing a 1D convolution. In this example, we will be working on figuring out how to perform a 2D convolution on an image. Namely, we would like to implement a Sobel filter. Given an image of N by M, we convolve each pixel of the image with a horizontal kernel and a vertical kernel as described [here](https://en.wikipedia.org/wiki/Sobel_operator)
 
-First, we will introduce a LineBuffer memory structure. A LineBuffer is a special case on an N-buffered 1D SRAM exposed to the user. It allows one or more rows of DRAM to be buffered into on-chip memory while previous rows can be accessed in a logically-rotating way. A LineBuffer is generally coupled with a shift register, and the animation below shows the specific usage of this pair in this tutorial.
+First, we introduce a LineBuffer memory structure. A LineBuffer is a special case on an N-buffered 1D SRAM exposed to the user. It allows one or more rows of DRAM to be buffered into an on-chip memory while the previous rows can be accessed in a logically-rotating way. A LineBuffer is generally coupled with a shift register, and the animation below shows the specific usage of this pair in this tutorial.
 
 ![image](./img/lbsr.gif)
 
@@ -69,5 +69,4 @@ These two sequences should have roughly 90% match.
 
  
 ## Extra Credits (5 points out of 100)
-* Can you add parallelization factors on your controllers to improve the performance of Convolution and NW? If you can, what's the improvement in performance? If you cannot, state the reasons. 
-  
+* In the last lab, we show that parallelization can improve the performance of running a matrix multiplication application. Can you take the same approach for Convoluation and for NW? If you can, what's the improvement in performance? If you cannot, why?

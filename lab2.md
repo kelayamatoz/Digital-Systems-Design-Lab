@@ -1,5 +1,5 @@
 # Laboratory Exercise 2: Advanced Usage of Spatial
-In the last lab, we went through the basics of Spatial. In this lab, we are going to explore more advanced features in Spatial.
+In this lab, we are going to explore more advanced features in Spatial.
 
 We will first go through the details of using controllers. Then we will use the controllers to build an app for accelerating matrix multiplication. We will also learn about how to improve the performance of your via parallelization and fine-tuning.
 
@@ -83,9 +83,9 @@ SRAM beforehand.
 Spatial also supports using Finite State Machine by instantiating an FSM controller. It
 has the following syntax:
 ```scala
-FSM[Int]{// constraints on the state} { state =>
+FSM(INIT_CONDITION){CONSTRAINTS_ON_STATE} { state =>
   // Body of the state machine
-}{ // rules for updating the state }
+}{ // rules for generating the next state }
 ```
 
 For example, if you want to fill an SRAM of size 32 using the following rules: 
@@ -100,7 +100,7 @@ For example, if you want to fill an SRAM of size 32 using the following rules:
 You will need to implement it in Spatial that looks like:
 ```scala
 reg := 16
-FSM[Int]{state => state < 32} { state =>
+FSM(0)(state => state < 32) { state =>
   if (state < 16) {
     if (state < 8) {
       bram(31 - state) = state // 16:31 [7, 6, ... 0]
@@ -124,7 +124,7 @@ An example of the end-to-end application looks like:
       val bram = SRAM[Int](32)
       val reg = Reg[Int](0)
       reg := 16
-      FSM[Int]{state => state < 32} { state =>
+      FSM(0)(state => state < 32) { state =>
         if (state < 16) {
           if (state < 8) {
             bram(31 - state) = state // 16:31 [7, 6, ... 0]
@@ -176,7 +176,7 @@ A LUT has the following syntax:
 val lut = LUT[Type](N0,N1, ..., Nm)(const0.to[T], const1.to[T], ...)
 ```
 This creates a LUT of m dimensions. You can access an element in lut by
-using: 
+using:
 ```scala
 val lut_ijmn = lut(i,j,m,n)
 ```
@@ -186,7 +186,7 @@ val lut_ijmn = lut(i,j,m,n)
 to do here is that given a LUT, the user will provide a base value, index i and
 index j. The output should be base value + LUT(i,j).
 
-### Your First Full-Size Application: GEMM
+### Designing An Accelerator for Matrix Multiplication
 General Matrix Multiply (GEMM) is a common algorithm in linear algebra, machine learning,
 statistics, and many other domains. It provides a more interesting trade-off space than
 the previous tutorial, as there are many ways to break up the computation. This includes
@@ -281,7 +281,7 @@ Accel {
       Foreach(N by tileN){nn =>
         val numel_n = min(tileN.to[Int], N - nn)
         val tileB_sram = SRAM[T](tileK, tileN)
-        val tileC_sram = SRAM.buffer[T](tileM, tileN)
+        val tileC_sram = SRAM[T](tileM, tileN).buffer
         tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n)
         tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
 
@@ -298,7 +298,7 @@ Note that we must compute the ``numel_*`` values to handle the edge cases correc
 do not evenly divide the full matrices.
 
 Also note that we declare ``tileC_sram`` as a `.buffer` SRAM.  If you do not declare it this way,
-then the compiler will throw an error about this and explain the issue.  You will learn more about
+the compiler will throw an error about this and explain the issue.  You will learn more about
 this in the `Advanced Buffering`
 
 Next, we will implement the full outer product of the tiles that we have brought into the chip.
@@ -310,9 +310,7 @@ implement this design. As a little hint, you should first think of the proper
 controller to use. We would first populate an SRAM using tileB_sram and
 tileC_sram. Then we would coalesce the result numel_k times. You can add your implementation to Lab2Part5GEMM.
 
-
 ## Advanced Buffering
-
 This Accel above already implements coarse-grain pipelining at various levels.  For example, the controller whose counter is ``nn`` has 
 three stages in it.  The first stage loads ``tileB_sram`` and ``tileC_sram`` in parallel, the second stage performs the ``MemFold`` 
 into ``tileC_sram``, and the third stage writes the resulting ``tileC_sram`` back into the appropriate region of DRAM.  This is an
@@ -320,7 +318,7 @@ example where the compiler will create a triple-buffer for ``tileC_sram`` in ord
 when this coarse-grain pipeline fills up and executes.  
 
 If you had not declared ``tileC_sram`` as a `.buffer` SRAM, then the compiler is suspicious of your code.  This is because it is generally
-very easy when specifying pipelined hardware to accidentally create loop-carry dependency issues.  Specifically, in this code, it sees that 
+very easy when specifying pipelined hardware to accidentally create loop-carry dependency issues.  Specifically, in this code, it sees that
 you write to the SRAM in the first stage, and then write to it again in the second stage.  It is very easy, even for advanced users, to
 write this kind of structure without realizing it and then receive an incorrect result when using a cycle-accurate simulator of the hardware
 because of values "rotating" through the buffer inadvertently.
@@ -350,7 +348,7 @@ respectively:
         Foreach(N by tileN){nn =>
           val numel_n = min(tileN.to[Int], N - nn)
           val tileB_sram = SRAM[T](tileK, tileN)
-          val tileC_sram = SRAM.buffer[T](tileM, tileN)
+          val tileC_sram = SRAM[T](tileM, tileN).buffer
           tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n)
           tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
 
@@ -364,7 +362,7 @@ respectively:
 ```
 
 Now let's look at what happens to ``tileB_sram``.  It's first and second indices are both parallelized.
-Index ``j`` is vectorized by 4, while index ``k`` is duplicated for two different values of k when the 
+Index ``j`` is vectorized by 4, while index ``k`` is duplicated for two different values of k when the
 loop is unrolled by 2.  This means we must bank ``tileB_sram`` in both the horizontal and vertical dimensions
 in order to guarantee that all 8 of these accesses will be able to touch unique banks every time we read from this memory.
 The animation below demonstrates how we hierarchically bank this SRAM.
@@ -384,7 +382,7 @@ if we chose to parallelize the loading of tileB_sram by 8 while also parallelizi
         Foreach(N by tileN){nn =>
           val numel_n = min(tileN.to[Int], N - nn)
           val tileB_sram = SRAM[T](tileK, tileN)
-          val tileC_sram = SRAM.buffer[T](tileM, tileN)
+          val tileC_sram = SRAM[T](tileM, tileN).buffer
           tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n)
           tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
 
@@ -416,9 +414,7 @@ get optimal performance, it is important to balance the stages in your pipelines
 by eyeballing your code, there is a way to get actual execution cycles on a controller-by-controller basis using
 a Spatial/special feature called "instrumentation."
 
-To turn on instrumentation hooks, use the ``bin/spatial <app name> --synth --instrument`` flag when compiling the app.  This flag
-injects performance counters that count the number of cycles each controller is enabled, as well as the number of times a particular
-controller is done.  Note that performance counters will only be injected in the --synth backend.
+To turn on instrumentation hooks, use the ``bin/spatial <app name> --synth --fpga=VCS --instrument`` option when compiling the app.  This flag injects performance counters that count the number of cycles each controller is enabled, as well as the number of times a particular controller is done.  Note that performance counters will only be injected in the --synth backend.
 
 Once you compile your app, you should run it normally with the run.sh script.  You may notice that there are some extra lines
 that are spitting out information about the app.  Running the run.sh script created a file in your current directory called
@@ -447,7 +443,7 @@ to the user to figure out how to use parallelizations and rewrite portions of th
 and get better performance.
 
 ## Your Turn:
-With the information from instrumentation results, can you set the parallelization differently to  get the fewest clock cyle for your GEMM? What's the best number you can get?
+With the information from instrumentation results, can you set the parallelization differently to  get the fewest clock cycle for your GEMM? What's the best number you can get?
 
 In the next lab, we will cover how to use RegFile, LUTs, ShiftRegisters, and
 Streaming interfaces.
