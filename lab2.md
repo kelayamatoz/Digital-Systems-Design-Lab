@@ -421,7 +421,7 @@ that are spitting out information about the app.  Running the run.sh script crea
 `instrumentation.txt`, which will be used to populate a visualization of your app.  Let's start by opening up the controller tree:
 
 ```bash
-google-chrome controller_tree.html # Or whatever your favorite browser is (firefox, etc.)
+google-chrome ./info/controller_tree.html # Or whatever your favorite browser is (firefox, etc.)
 ```
 
 You will get a screen that looks like this:
@@ -443,7 +443,7 @@ to the user to figure out how to use parallelizations and rewrite portions of th
 and get better performance.
 
 ## Your Turn:
-With the information from instrumentation results, can you set the parallelization differently to  get the fewest clock cycle for your GEMM? What's the best number you can get?
+With the information from instrumentation results, can you set the parallelization differently to  get the fewest clock cycle for your GEMM? What is the smallest cycle number you can get after tuning the application?
 
 In the next lab, we will cover how to use RegFile, LUTs, ShiftRegisters, and
 Streaming interfaces.
