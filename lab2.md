@@ -83,7 +83,7 @@ SRAM beforehand.
 Spatial also supports using Finite State Machine by instantiating an FSM controller. It
 has the following syntax:
 ```scala
-FSM(INIT_CONDITION){CONSTRAINTS_ON_STATE} { state =>
+FSM(// initial condition)(// constraint on the state) { state =>
   // Body of the state machine
 }{ // rules for generating the next state }
 ```
