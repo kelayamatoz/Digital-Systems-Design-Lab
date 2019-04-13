@@ -6,7 +6,7 @@ This is an introductory exercise that involves using Spatial controllers and mem
 
 Off-Chip Memory: DRAM
 
-On-Chip Memories: Register, SRAM, FIFO, FILO
+On-Chip Memories: Register, SRAM, FIFO
 
 Registers: ArgIn, ArgOut Registers, Register
 
