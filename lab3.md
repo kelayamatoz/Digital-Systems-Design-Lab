@@ -1,10 +1,10 @@
 # Laboratory Exercise 3: Algorithm Specific Hardware Design
-The last two labs give you some background information on how to design an accelerator. In this lab, we will design and implement an accelerator for a real-world application.
+The last two labs give you some background information on how to design an accelerator. In this lab, we will design and implement accelerators for real-world applications.
 
-In this lab, we focus more on the algorithm side. We will first describe how the algorithm works. It is your task to pick the right elements and implement the algorithm using the provided templates.
+In this lab, we focus more on the algorithm side. We will first describe how the algorithm works. Then, it is your task to pick the right elements and implement the algorithm.
 
 ## Convolution
-In class, we went through an example of performing a 1D convolution. In this example, we will be working on figuring out how to perform a 2D convolution on an image. Namely, we would like to implement a Sobel filter. Given an image of N by M, we convolve each pixel of the image with a horizontal kernel and a vertical kernel as described [here](https://en.wikipedia.org/wiki/Sobel_operator)
+In class, we went through an example of performing a 1D convolution. In this example, we will be implementing an accelerator for performing 2D convolution on an image, e.g. a Sobel filter. Given an image of N by M, we convolve each pixel of the image with a horizontal kernel and a vertical kernel as described [here](https://en.wikipedia.org/wiki/Sobel_operator).
 
 First, we introduce a LineBuffer memory structure. A LineBuffer is a special case on an N-buffered 1D SRAM exposed to the user. It allows one or more rows of DRAM to be buffered into an on-chip memory while the previous rows can be accessed in a logically-rotating way. A LineBuffer is generally coupled with a shift register, and the animation below shows the specific usage of this pair in this tutorial.
 
@@ -17,17 +17,16 @@ It is also possible now to see why we must set a hard cap on the number of colum
 For this 2D convolution, we also introduce the lookup table (LUT). This is a read-only memory whose values are known at compile time. It is implemented using registers and muxes to index into it. In this example, we will be using the LUTs to store the two kernels.
 
 ## Your Turn:
-Given the two kernels and the input data, perform 2 2-D convolution on the image. You can add your implementation to Lab3Part1Convolution. Report the resource utilization and cycle counts of your design. 
+Given the two kernels and the input data, perform 2 2-D convolution on the image. You can add your implementation to Lab3Part1Convolution. Report the resource utilization and cycle counts of your design.
 
-To test your application, you can use the following arguments: 
-```bash 
+To test your application, you can use the following arguments:
+```bash
 64 64
 ```
 
-This pair of arguments will create an image of 64 by 64. 
+This pair of arguments will create an image of 64 by 64.
 
-
-## Implementation of [Needleman-Wunsch (NW)](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm)
+## Implementing the [Needleman-Wunsch (NW)](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm) Algorithm
 In class, we have covered the details of NW algorithm. In this lab, we will be focusing on implementing this algorithm. NW algorithm contains two stages, one for creating the score table and the other for tracing back the path that gives the most matches.
 
 ### Score Matrix Population
@@ -65,8 +64,8 @@ tcgacgaaataggatgacagcacgttctcgt
 # Sequence B
 ttcgagggcgcgtgtcgcggtccatcgacat
 ```
-These two sequences should have roughly 90% match. 
+These two sequences should have roughly 70% match. 
 
- 
+
 ## Extra Credits (5 points out of 100)
-* In the last lab, we show that parallelization can improve the performance of running a matrix multiplication application. Can you take the same approach for Convoluation and for NW? If you can, what's the improvement in performance? If you cannot, why?
+* In the last lab, we show that parallelization can improve the performance of a matrix multiplication application. Can you take the same approach for Convoluation and for NW? If you can, what's the improvement in performance? If you cannot, why?
