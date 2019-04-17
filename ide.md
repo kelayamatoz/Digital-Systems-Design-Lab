@@ -50,7 +50,9 @@ sbt "runMain APP_NAME --synth --fpga=zynq"
 The rest of the flags is the same as how you run "bin/spatial".
 
 ### Troubleshooting
-If you see an error that looks like: 
+
+If you see an error that looks like:
+
 ![image](./img/erroreg.png)
 
-This means your Java version is too old. You need to update your Java to JDK 8. Please see the instructions on the [spatial website](https://spatial-lang.org/).
+The error log means that your Java version is too old. You need to update your Java to JDK 8. Please see the instructions on the [spatial website](https://spatial-lang.org/).

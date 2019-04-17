@@ -36,7 +36,6 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Lab 4 Submission](lab4_submission.md) -->
 
-
 **Project Directions**
 * [Project Proposal Guidelines](project_proposal.md)
 
