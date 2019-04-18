@@ -26,11 +26,11 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Lab 2 Submission](lab2_submission.md)
 
-<!-- **Laboratory Links:**
-
 * [Lab 3: Algorithm-Specific Hardware Design](lab3.md)
 
 * [Lab 3 Submission](lab3_submission.md)
+
+<!-- **Laboratory Links:**
 
 * [Lab 4: Embedded Linux Programming](lab4.md)
 
