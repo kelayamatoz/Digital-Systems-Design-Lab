@@ -1,18 +1,17 @@
 # Laboratory Exercise 4: Embedded Linux Programming
-This lab focuses on practicing embedded linux programming techniques. It is separated into three sections. In the first section, you will need to write a piece of software that enables on-board video streaming. In the second section, you will learn about establishing client-to-server communication using UDP protocol. In the third section, you will be working on creating a remote video system by combining your knowledge about UDP, camera driver and framebuffer driver.
+This lab focuses on practicing embedded linux programming techniques. It is separated into three sections. In the first section, you will need to implement on-board video streaming. In the second section, you will learn about establishing client-to-server communication via the UDP protocol. In the third section, you will be working on implementing a remote video system by combining your knowledge about UDP, the camera driver and the framebuffer driver.
 
-Before starting working on the rest of the lab, you will need to navigate to the work directory of this lab first:
+Before starting working on the rest of the lab, you will need to navigate to the directory of this lab
 ```
-cd lab4dev
+cd lab4
 ```
-The folders for the rest of the labs are stored here. 
 
 ## Realtime Video Streaming
 The working directory of this section is in ```./video```.
 
-In class, we covered the details of registering device drivers of the on-board camera and the DisplayPort frame buffer. More specifically, both the on-board camera and the frame buffer are revealed to the developer as files. To read / write to the files, one need to memory-map the files. The memory-map process would return the developer with a pointer that points to the device memory of the camera / the frame buffer. 
+In class, we covered the details of registering device drivers of the on-board camera and the DisplayPort frame buffer. More specifically, both the on-board camera and the frame buffer are revealed to the developer as files. To read / write to the files, one need to memory-map the files. The memory-map process would return the developer with a pointer that points to the device memory of the camera / the frame buffer.
 
-For example, in order to register a frame buffer and write to it, one will need to call the following procedures: 
+For example, in order to register a frame buffer and write to it, one will need to call the following procedures:
 ```c
     char g_fb_device[100] = "/dev/fb0";
     struct fb_var_screeninfo vinfo;
@@ -52,7 +51,8 @@ For example, in order to register a frame buffer and write to it, one will need 
         exit(4);
     }
 ```
-After memory-mapping the two devices, one would have obtained two pointers. One pointer would point to the device memory of the camera, and the other would point to the device memory of the frame buffer. In order to transmit a frame of data from the camera to the frame buffer, one would need to call a memcpy. However, since the camera and the framebuffer are using different color formats, we would need to implement a color-space translation function called ```yuyv_to_rgb32```. Your task in this section would be to implement the translation function. Let's take a look at the ```yuyv_to_rgb32``` function:
+
+After memory-mapping the two devices, one would have obtained two pointers. One pointer points to the device memory of the camera, and the other points to the device memory of the frame buffer. In order to transmit a frame of data from the camera to the frame buffer, one would need to call a memcpy. However, since the camera and the framebuffer are using different color formats, we would need to implement a color-space translation function called ```yuyv_to_rgb32```. Your task in this section would be to implement the translation function. Let's take a look at the ```yuyv_to_rgb32``` function:
 
 ```c
 static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
@@ -110,7 +110,7 @@ static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
 ```
 The ```src``` buffer contains one frame fetched from the camera device, and the ```dst``` buffer will be sent to the frame buffer after the colorspace conversion is completed. To smooth the edges between pixels, in this function we will be processing two consecutive pixels a time instead of one pixel a time. In other words, at each pixel position, we will bring in two YUV pixels and create two ARGB pixels side-by-side. Let's say we start at the ```n```th YUV pixel. The YUV values at pixel ```n```, ```n+1``` are ```m```, ```k```, respectively. Here is a step-by-step guide on how to complete the conversion: 
 
-- Calculate Cb, Cg of the ```n```th pixel by using: 
+- Calculate Cb, Cg of the ```n```th pixel by using:
     - Cb = ((m - 128) * 454) >> 8
     - Cg = (m - 128) * 88
 
@@ -122,18 +122,18 @@ The ```src``` buffer contains one frame fetched from the camera device, and the 
     - r = m + Cr
     - b = m + Cb
     - g = m - Cg
-    - Value of ARGB pixel = alpha \| r \| g \| b, where each channel is a byte. 
+    - Value of ARGB pixel = alpha \| r \| g \| b, where each channel is a byte.
     - Write the current ARGB pixel back to ```dst```
 
 - Calculate the second ARGB pixel
     - r = k + Cr
     - b = k + Cb
     - g = k - Cg
-    - Value of ARGB pixel = alpha \| r \| g \| b, where each channel is a byte. 
+    - Value of ARGB pixel = alpha \| r \| g \| b, where each channel is a byte.
     - Write the current ARGB pixel back to ```dst```
 
 
-After completing the color-space conversion function, you can compile your implementation by running: 
+After completing the color-space conversion function, you can compile your implementation by running:
 ```bash
 make clean && make
 ```
@@ -148,7 +148,7 @@ You will need to ```scp``` this binary to the FPGA board that's connected to a c
 ./video_stream.out
 ```
 
-Due to a few board issues, sometimes the camera device driver may not respond to your command instantaneously. For example, the following errors may show up: 
+Due to a few board issues, sometimes the camera device driver may not respond to your command instantaneously. For example, the following errors may show up:
 ```bash
 root@arria10:~# ./video_stream.out
 Allocating buffer of size 1843200...
@@ -162,35 +162,35 @@ Allocating buffer of size 1843200...
 VIDIOC_STREAMON error
 start_capturing failed
 ```
-This is usually due to the fact that the camera driver needs a reset. You can simply rerun the app to reset the camera driver. If your app is implemented correctly, you will see a live video displayed on the monitor. The monitor, the camera and the boards are located in Room 129 of Packard Building. If you do not have access to Room 129, please send an email with your student ID to the class TA.  
+This is usually due to the fact that the camera driver needs a reset. You can simply rerun the app to reset the camera driver. If your app is implemented correctly, you will see a live video displayed on the monitor. The monitor, the camera and the boards are located in the lab space of EE 109 at the Packard Building. If you do not have access to the lab space, please send an email with your student ID to the class TA.
 
 ## UDP Communication
-The working directory of this section is in ```./udp```. 
+The working directory of this section is in ```./udp```.
 
 In class, we covered an example of building a UDP server and a UDP client. In this section, we will be implementing a server-client pair. We have already provided a detailed explanation of what needs to be done in Lecture 07. Besides the provided material, there are also some lab-specific details: 
 - The IP addresses of the server and the client can be modified in ```port.h```. 
-- For this session, we have the following IP addresses avaiable to assign for the server and the client: 172.24.89.54 and 172.24.89.137.
+- For this session, we have the following IP addresses assigned for the server and the client: 172.24.72.94 and 172.24.72.54.
 - Your task is to send a string called ```Thirsty Thursday``` from the client to the server. 
-    - The server needs to always listen to the port 21234, which is the port number that the client would send a message to. 
-After you finish your implementation, you can generate the binary files by calling: 
+    - The server needs to always listen to the port 21234, which is the port number that the client would send a message to.
+After you finish your implementation, you can generate the binary files by calling:
 ```bash
 make clean && make 
 ```
 
-You can test your implementation by running ```udp-send``` on a client FPGA and ```udp-recv``` on a server FPGA. 
+You can test your implementation by running ```udp-send``` on the client and ```udp-recv``` on the server.
 
 ## Video Streaming through Network
-The working directory of this section is in ```./netvideo```.
+Please navigate to ```./netvideo``` to work on this section.
 
-In this section, your task is to combine the knowledge of UDP protocol and camera / frame buffer device drivers, and design a way to pass video frames from one FPGA board (the *camera board*) to another (the *display board*). We will only provide general instructions in this section, since you already have all the pieces needed to build the streaming system from the first two sections. 
+In this section, your task is to combine the knowledge of UDP protocol and camera / frame buffer device drivers, and design a way to pass video frames from one FPGA board (the *camera board*) to another (the *display board*). We will only provide a few high-level guidelines in this section, since you already have all the pieces needed to build the streaming system from the first two sections.
 
-There are a few questions we need to answer before starting implementing the system: 
+There are a few questions we need to answer before starting implementing the system:
 - A UDP packet can only hold up to 65,507 bytes, which is much smaller than the size of a frame. How are we going to send a frame via UDP?
-    - Hint: since the frame stream is continuous, we would not need all the frame information to reconstruct one.  
+    - Hint: since the frame stream is continuous, we would not need all the frame information to reconstruct one.
 - When filling the UDP packet with pixels, what pixel format should we choose?
-- Do we need any metadata in the packet? 
+- Do we need any metadata in the packet?
 
-You will need to update the IP addresses of your client and your server in ```port.h```. 
+You will need to update the IP addresses of your client and your server in ```port.h```.
 
 After you finish your implementation, you can generate the binary files by calling: 
 ```bash
