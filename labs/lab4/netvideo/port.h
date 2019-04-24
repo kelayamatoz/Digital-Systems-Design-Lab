@@ -1,5 +1,5 @@
 
-char *server = "172.24.72.94";
+char *server = "172.24.89.140";
 
 #define SERVICE_PORT 21234
 #define NETBUFSIZE 61441

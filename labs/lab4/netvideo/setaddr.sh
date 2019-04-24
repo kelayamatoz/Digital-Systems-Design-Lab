@@ -1,5 +1,5 @@
-displayaddr=172.24.72.54
-cameraaddr=172.24.72.94
+displayaddr=172.24.89.138
+cameraaddr=172.24.89.140
 
 sed -i "s/char \*server = .*/char \*server = \"${displayaddr}\";/g" port.h
 sed -i "s/scp display root@.*/scp display root\@${displayaddr}:~\//g" upload.sh

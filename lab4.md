@@ -1,10 +1,24 @@
 # Laboratory Exercise 4: Embedded Linux Programming
 This lab focuses on practicing embedded linux programming techniques. It is separated into three sections. In the first section, you will need to implement on-board video streaming. In the second section, you will learn about establishing client-to-server communication via the UDP protocol. In the third section, you will be working on implementing a remote video system by combining your knowledge about UDP, the camera driver and the framebuffer driver.
 
-Before starting working on the rest of the lab, you will need to navigate to the directory of this lab
+The source code is under lab4 directory.
+
+We prepare two FPGA boards for this lab. The boards IP addresses are: `172.24.89.138` and `172.24.89.140`.
+
+The board with the IP address `172.24.89.140` is connected to a camera and a monitor, and you can use this board to test part 1 of this lab.
+
+The board with the IP address `172.24.89.138` is only connected to a camera. You will use it as the remote board to test part 2 and 3.
+
+To sign into either one of the board, run:
+```bash
+ssh root@IP_ADDRESS
 ```
-cd lab4
+For example, for part 1, you need to sign in by running:
+```bash
+ssh root@172.24.89.140
 ```
+
+After you sign in, you will see a directory called `gold`. This directory contains the reference implementation. You will also see directories named after your Stanford username. We assign one directory for each student. You can test your executables in your directory.
 
 ## Realtime Video Streaming
 The working directory of this section is in ```./video```.
@@ -57,8 +71,6 @@ After memory-mapping the two devices, one would have obtained two pointers. One 
 ```c
 static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
 {
-    // TODO: Your job to do the color space conversion
-    // TODO: How to calculate the adjacent one?
     unsigned char *s;
     unsigned long *d;
     int l, c, alpha = 0x0;
@@ -108,7 +120,7 @@ static void yuyv_to_rgb32 (int width, int height, char *src, long *dst)
     }
 }
 ```
-The ```src``` buffer contains one frame fetched from the camera device, and the ```dst``` buffer will be sent to the frame buffer after the colorspace conversion is completed. To smooth the edges between pixels, in this function we will be processing two consecutive pixels a time instead of one pixel a time. In other words, at each pixel position, we will bring in two YUV pixels and create two ARGB pixels side-by-side. Let's say we start at the ```n```th YUV pixel. The YUV values at pixel ```n```, ```n+1``` are ```m```, ```k```, respectively. Here is a step-by-step guide on how to complete the conversion: 
+The ```src``` buffer contains one frame fetched from the camera device, and the ```dst``` buffer will be sent to the frame buffer after the colorspace conversion is completed. To smooth the edges between pixels, we need to process two consecutive pixels a time. Specifically, at each pixel, we bring in two YUV pixels and create two ARGB pixels side-by-side. Let's say we start at the ```n```th YUV pixel. The YUV values at pixel ```n```, ```n+1``` are ```m```, ```k```, respectively. The pseudo-code for creating the ARGB pixels looks as follows:
 
 - Calculate Cb, Cg of the ```n```th pixel by using:
     - Cb = ((m - 128) * 454) >> 8
@@ -143,7 +155,7 @@ ls
 ```
 ![image](./img/make.png)
 
-You will need to ```scp``` this binary to the FPGA board that's connected to a camera and a monitor. After ```scp``` finishes, you can start the video streaming by running:
+You will need to ```scp``` this binary to the FPGA board that's connected to a camera and a monitor. In this lab, the IP address of this FPGA board is `172.24.89.140`. After ```scp``` finishes, you can start the video streaming by running:
 ```
 ./video_stream.out
 ```
@@ -169,7 +181,7 @@ The working directory of this section is in ```./udp```.
 
 In class, we covered an example of building a UDP server and a UDP client. In this section, we will be implementing a server-client pair. We have already provided a detailed explanation of what needs to be done in Lecture 07. Besides the provided material, there are also some lab-specific details: 
 - The IP addresses of the server and the client can be modified in ```port.h```. 
-- For this session, we have the following IP addresses assigned for the server and the client: 172.24.72.94 and 172.24.72.54.
+- For this session, we have the following IP addresses assigned for the server and the client: `172.24.89.140` and `172.24.89.138`.
 - Your task is to send a string called ```Thirsty Thursday``` from the client to the server. 
     - The server needs to always listen to the port 21234, which is the port number that the client would send a message to.
 After you finish your implementation, you can generate the binary files by calling:
