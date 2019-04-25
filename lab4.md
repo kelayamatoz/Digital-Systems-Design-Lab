@@ -16,9 +16,9 @@ ssh root@IP_ADDRESS
 For example, for part 1, you need to sign in by running:
 ```bash
 ssh root@172.24.89.140
+root@172.24.89.140's password:
 ```
-
-After you sign in, you will see a directory called `gold`. This directory contains the reference implementation. You will also see directories named after your Stanford username. We assign one directory for each student. You can test your executables in your directory.
+We will post the password in the Slack channel. After you sign in, you will see a directory called `gold`. This directory contains the reference implementation. You will also see directories named after your Stanford username. We assign one directory for each student. You can test your executables in your directory.
 
 ## Realtime Video Streaming
 The working directory of this section is in ```./video```.
