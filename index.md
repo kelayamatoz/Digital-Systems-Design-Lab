@@ -32,9 +32,9 @@ The design of integrated digital systems encompassing both customized software a
 
 
 
-* [Lab 4: Embedded Linux Programming](lab4.md)
+<!-- * [Lab 4: Embedded Linux Programming](lab4.md)
 
-* [Lab 4 Submission](lab4_submission.md) 
+* [Lab 4 Submission](lab4_submission.md)  -->
 
 <!-- **Laboratory Links:**
 
@@ -84,6 +84,6 @@ The design of integrated digital systems encompassing both customized software a
 * [CS107 Guide to vim](https://web.stanford.edu/class/cs107/guide/vim.html)
 
 **Contact**
-* [Slack Link](http://ee109-spr1819.slack.com/)
+<!-- * [Slack Link](http://ee109-spr1819.slack.com/) -->
 
 * [Stanford Canvas](https://canvas.stanford.edu/)
