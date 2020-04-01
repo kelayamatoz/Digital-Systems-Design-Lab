@@ -10,16 +10,51 @@ footer-links:
 page-img: "/img/spatial.jpg"
 
 font:
-  # The normal (roman) font face to use.
-  # Style can be specified to pick a specific face.
-  normal:
-    family: "Fira Code"
-    style: Retina
+  enable: true
 
-  # The bold font face
-  bold:
+  # Global font settings used on <body> element.
+  global:
+    # external: true will load this font family from host.
+    external: true
     family: "Fira Code"
 
-  # The italic font face
-  italic:
+  # Font settings for Headlines (h1, h2, h3, h4, h5, h6)
+  # Fallback to `global` font settings.
+  headings:
+    external: true
     family: "Fira Code"
+
+  # Font settings for posts
+  # Fallback to `global` font settings.
+  posts:
+    external: true
+    family: "Fira Code"
+
+  # Font settings for Logo
+  # Fallback to `global` font settings.
+  # The `size` option use `px` as unit
+  logo:
+    external: true
+    family: "Fira Code"
+
+  # Font settings for <code> and code blocks.
+  codes:
+    external: true
+    family: "Fira Code"
+
+
+
+# font:
+#   # The normal (roman) font face to use.
+#   # Style can be specified to pick a specific face.
+#   normal:
+#     family: "Fira Code"
+#     style: Retina
+
+#   # The bold font face
+#   bold:
+#     family: "Fira Code"
+
+#   # The italic font face
+#   italic:
+#     family: "Fira Code"
