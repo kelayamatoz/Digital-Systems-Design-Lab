@@ -1,4 +1,4 @@
-# Laboratory Exercise 1: Getting Started with Digital Systems Design Using Spatial
+Getting Started with Digital Systems Design Using Spatial
 
 This is an introductory exercise that involves using Spatial controllers and memories to design circuits. In this section, you will build a few Spatial applications using the following elements:
 
