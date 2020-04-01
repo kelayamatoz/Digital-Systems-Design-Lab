@@ -1,8 +1,6 @@
-# Laboratory Exercise 1: Basic Usage of Spatial
+# Laboratory Exercise 1: Getting Started with Digital Systems Design Using Spatial
 
-Project due: 04/10/2019 11:59 pm
-
-This is an introductory exercise that involves using Spatial controllers and memories to design circuits. In this section, you will be building a few Spatial applications using the following elements:
+This is an introductory exercise that involves using Spatial controllers and memories to design circuits. In this section, you will build a few Spatial applications using the following elements:
 
 Off-Chip Memory: DRAM
 
@@ -213,7 +211,7 @@ Now we can start deploying your design on the FPGA board. In this class, we are 
 screen -S Lab1Part1RegExample
 ```
 
-In the screen session, you need to first generate a design for your FPGA. In this class, your FPGA will be either a zcu or a zynq board. The TA will send you information about the board assigned to you. For example, let us assume that you have access to a zynq board. Go back to the spatial directory, and replace the "--fgpa" flag with "zynq":
+In the screen session, you need to first generate a design for your FPGA. In this class, we are using Xilinx's Zynq board as the target device. We will not be able to use the FPGA directly, but we can still use the FPGA toolchains to understand the resource utilization of your design. Go back to the spatial directory, and replace the "--fpga" flag with "zynq":
 ```bash
 bin/spatial Lab1Part1RegExample --synth --instrumentation --fpga=zynq
 ```
@@ -229,34 +227,14 @@ After you start the synthesizer, you can detach the screen session by pressing "
 
 
 <!-- <img src="./img/screenjobs.png" width="70%" height="60%"> -->
-The synthesis process would take ~20 min to run. After the synthesis finishes, we would want to deploy the design onto the FPGA board. You will need to resume the session, copy the synthesized bitstream onto board, and then ssh onto the board:
 
-```bash
-screen -r Lab1Part1RegExample
-// In the screen session. scp copies a file to a remote FPGA board.
-// Your board may have a different name.
-scp Lab1Part1RegExample.tar.gz YOUR_NAME@holodeck-zc706.stanford.edu:~/
-ssh YOUR_NAME@holodeck-zc706.stanford.edu
-```
-<!-- <img src="./img/scp.png" width="70%" height="60%"> -->
-
-Lab1Part1RegExample.tar.gz is a compressed file. Once you login, you will need to first decompress it. After the decompression finishes, you can run the design by:
-```bash
-x Lab1Part1RegExample.tar.gz
-cd Lab1Part1RegExample
-bash run.sh 32 32
-```
-
-<!-- If your design runs successfully, you will see the following message: -->
-<!-- <img src="./img/deploydesign.png" width="70%" height="60%"> -->
-
-The console would print a few messages indicating that your design runs for 1 cycle. Congratulations! You have successfully deployed your first accelerator design!
+The synthesis process would take ~20 min to run. After the synthesis finishes, you will have access to the bitstream and reports of your design's resource utilization on the target FPGA. 
 
 
 ### Your Turn
-Can you modify this app so that it fetches three numbers from the CPU side and calculates their sum? You can assume that your user only enters integers.
+Can you modify this app so that it fetches three numbers from the CPU side and calculates their sum? You can assume that your user only enters integers. 
 
-* Report on the modifications you made to the original app.
+* Report the modifications you made to the original app. Report the number of cycles the application run in VCS simulation.
 
 ## Using DRAM and SRAM
 ### Demo
@@ -366,8 +344,8 @@ These elements would be enough to implement the circuit we want. Let's say that 
 ```
 
 ### Your Turn
-* Simulate the app using Scala and VCS simulation. Report on the simulation result. 
-* Synthesize the design and run on the FPGA. Report the number of cycles needed for the design. 
+* Simulate the app using Scala and VCS simulation. Report the simulation result. 
+* Synthesize the design. 
 
 Cycle count is not the only aspect that shows how good your design is. Moreover, we would want to understand the resource utilization of your design. The synthesizer would give you some information about it.  
 
@@ -478,7 +456,6 @@ Here is an example of using Reduce to compute the sum of a list of elements in S
   val tileSize = 16
   type T = Int
 
-  @virtualize
   def main() {
     val arraySize = N
     val srcFPGA = DRAM[T](N)
