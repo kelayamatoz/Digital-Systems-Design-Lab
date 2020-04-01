@@ -1,4 +1,4 @@
-# Laboratory Exercise 2: Advanced Usage of Spatial
+# Designing a Math Kernel in Spatial and Understands Its Performance 
 In this lab, we are going to explore more advanced features in Spatial.
 
 We will first go through the details of using controllers. Then we will use the controllers to build an app for accelerating matrix multiplication. We will also learn about how to improve the performance of your via parallelization and fine-tuning.
