@@ -18,21 +18,6 @@ The design of integrated digital systems encompassing both customized software a
 
 **Lab Links**
 Coming soon!
-<!--
-* [Lab 1: Basic Usage of Spatial](lab1.md)
-
-* [Lab 1 Submission](lab1_submission.md)
-
-
-* [Lab 2: Advanced Usage of Spatial](lab2.md)
-
-* [Lab 2 Submission](lab2_submission.md)
-
-* [Lab 3: Algorithm-Specific Hardware Design](lab3.md)
-
-* [Lab 3 Submission](lab3_submission.md)
--->
-
 
 <!-- * [Lab 4: Embedded Linux Programming](lab4.md)
 
