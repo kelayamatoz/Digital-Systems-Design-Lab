@@ -17,7 +17,7 @@ The design of integrated digital systems encompassing both customized software a
 * [Basic Spatial Component Examples](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/UnitTests.scala) -->
 
 **Lab Links**
-Coming soon!
+* [Lab 1: Getting Started with Digital Systems Design Using Spatial](lab1.md)
 
 <!-- * [Lab 4: Embedded Linux Programming](lab4.md)
 
