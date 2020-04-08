@@ -53,7 +53,6 @@ The first line imports the spatial library. The 3rd line declares an app called 
 ```scala
 
 @spatial object Lab1Part1RegExample extends SpatialApp {
-  def main() {
 
   // In this app, the type of numbers is Int.
   type T = Int
