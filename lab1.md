@@ -53,7 +53,6 @@ The first line imports the spatial library. The 3rd line declares an app called 
 ```scala
 
 @spatial object Lab1Part1RegExample extends SpatialApp {
-
   // In this app, the type of numbers is Int.
   type T = Int
 
@@ -233,7 +232,8 @@ The synthesis process would take ~20 min to run. After the synthesis finishes, y
 ### Your Turn
 Can you modify this app so that it fetches three numbers from the CPU side and calculates their sum? You can assume that your user only enters integers. 
 
-* Report the modifications you made to the original app. Report the number of cycles the application run in VCS simulation.
+* Report the modifications you made to the original app. 
+* Report the number of cycles the application run in VCS simulation.
 
 ## Using DRAM and SRAM
 ### Demo
