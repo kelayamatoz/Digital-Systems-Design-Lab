@@ -3,7 +3,9 @@ Student Name 1:
 
 Student Name 2:
 
-## Part 1
+##
+
+### Part 1
 Please attach your modified app in the \`\`\`scala session.
 Your answer:
 ```scala
