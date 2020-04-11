@@ -35,7 +35,7 @@ Your implementation:
 
 
 ### Part 4
-* Use Fold controller to calculate the sum of an element. You can leave your implementation in Lab1Part7FoldExample.  
+* Use Fold controller to calculate the sum of an element. You can leave your implementation in Lab1Part6FoldExample.  
 Your implementation
 ```scala
 // Copy-paste your implementation here
