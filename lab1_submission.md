@@ -21,7 +21,7 @@ Your answer:
 
 
 ### Part 3
-* Reimplement the example in Part 2 using FIFO / FILO. You can leave your implementation under Lab1Part4FIFOExample and Lab1Part5FILOExample. 
+* Reimplement the example in Part 2 using FIFO. You can leave your implementation under Lab1Part4FIFOExample. 
 Your implementation: 
 ```scala
 // Copy-paste your implementation here
