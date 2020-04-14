@@ -408,7 +408,6 @@ In Spatial, a FIFO is implemented using embedded FPGA memories. Therefore, you c
 ### Your Turn
 * Reimplement the example in Part 2 using FIFO. You can leave your implementation under Lab1Part4FIFOExample.
 * Run Scala simulation and VCS simulation. Report the results of VCS simulation.
-* Synthesize the design and run it on the board. Report the number of cycles for running the design.
 * Check the utilization report. Report the resource utilization of your design.
 
 ## Using Controllers
