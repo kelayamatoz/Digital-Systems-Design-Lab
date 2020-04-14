@@ -383,7 +383,7 @@ f1 load dram(i::i+tileSize)
 // Create an enqueue port for data to f1 
 f1.enq(data)
 // Create a deque port for data to f1 
-f1.deq(data)
+val data = f1.deq()
 // Peek the head of f1 without removing it
 f1.peek()
 // 
