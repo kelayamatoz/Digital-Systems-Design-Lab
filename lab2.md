@@ -1,7 +1,7 @@
 # Designing a Math Kernel in Spatial and Understands Its Performance 
 In this lab, we are going to explore more advanced features in Spatial.
 
-We will first go through the details of using controllers. Then we will use the controllers to build an app for accelerating matrix multiplication. We will also learn about how to improve the performance of your via parallelization and fine-tuning.
+We will first go through the details of using controllers. Then we will use the controllers to build an app for accelerating matrix multiplication. We will also learn about how to improve the performance of your design via parallelization and fine-tuning.
 
 More specifically, the elements used in this lab are:
 
@@ -31,10 +31,10 @@ MemReduce(a)(-5 until 5 by 1) { i =>
   val tmp = SRAM[Int](16)
   // For each element in the tmp SRAM, fill it with 1
   Foreach(16 by 1) { j => 
-    tmpSRAM(j) = 1
-    tmpSRAM
-  }{_+_}
-}
+    tmp(j) = 1
+  }
+  tmp
+}{_+_}
 ```
 
 The end-to-end application will look like:
