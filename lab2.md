@@ -90,12 +90,12 @@ FSM(// initial condition)(// constraint on the state) { state =>
 
 For example, if you want to fill an SRAM of size 32 using the following rules: 
 * If index of the SRAM is greater than or equal to 16: 
-  * If index == 16, set the element at index - 16 to 17.
-  * If index == 17, set the element at index - 16 to reg.value.
-  * Otherwise, set the elementat index - 16 to be the value of the index.
-* If state is smaller than 16:
-  * If index < 8, set the element at 31 - index to be index
-  * Otherwise, set the element at 31 - index to be index + 1
+  * If index == 16, set the element at the location (index - 16) to the value 17.
+  * If index == 17, set the element at the location (index - 16) to reg.value.
+  * Otherwise, set the element at location (index - 16) to be the value of the index you are currently on.
+* If index is smaller than 16:
+  * If index < 8, set the element at the location (31 - index) to be index
+  * Otherwise, set the element at the location (31 - index) to be index + 1
 
 You will need to implement it in Spatial that looks like:
 ```scala
@@ -144,7 +144,6 @@ An example of the end-to-end application looks like:
                           29, 30, 31, 16, 15, 14, 13, 12, 11, 10, 9, 7, 6, 5, 4, 3, 2, 1, 0)
     printArray(result, "Result")
     printArray(gold, "Gold")
-    // for (i <- 0 until 32){ assert(result(i) == gold(i)) }
     val cksum = gold.zip(result){_ == _}.reduce{_&&_}
     println("PASS: " + cksum + " (BasicCondFSM)")
   }
