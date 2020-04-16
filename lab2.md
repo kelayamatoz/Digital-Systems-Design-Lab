@@ -442,7 +442,7 @@ to the user to figure out how to use parallelizations and rewrite portions of th
 and get better performance.
 
 ## Your Turn:
-With the information from instrumentation results, can you set the parallelization differently to  get the fewest clock cycle for your GEMM? What is the smallest cycle number you can get after tuning the application?
+* With the information from instrumentation results, can you set the parallelization differently to  get the fewest clock cycle for your GEMM? What is the smallest cycle number you can get after tuning the application?
 
 In the next lab, we will cover how to use RegFile, LUTs, ShiftRegisters, and
 Streaming interfaces.
