@@ -1,4 +1,4 @@
-# Designing a Math Kernel in Spatial and Understands Its Performance 
+# Design a Math Kernel in Spatial and Understand Its Performance 
 In this lab, we are going to explore more advanced features in Spatial.
 
 We will first go through the details of using controllers. Then we will use the controllers to build an app for accelerating matrix multiplication. We will also learn about how to improve the performance of your design via parallelization and fine-tuning.
