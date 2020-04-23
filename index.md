@@ -22,6 +22,7 @@ The design of integrated digital systems encompassing both customized software a
 * [Lab 2: Design a Math Kernel in Spatial and Understand Its Performance](lab2.md)
 * [Lab 2 Submission](lab2_submission.md)
 * [Lab 3: Algorithm Specific Hardware Design](lab3.md)
+* [Lab 3 Submission](lab3_submission.md)
 
 
 <!-- * [Lab 4: Embedded Linux Programming](lab4.md)
