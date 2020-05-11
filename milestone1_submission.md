@@ -14,3 +14,8 @@
 ```bash
 # Please add instructions for running your software demo here
 ```
+
+## Performance Analysis:
+```bash
+# Please add a performance analysis of your software implementation. This can be an analytical analysis of the computations or from a profiling package (e.g. Tensorboard).
+```
