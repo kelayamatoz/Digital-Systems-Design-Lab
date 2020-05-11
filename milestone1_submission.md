@@ -18,12 +18,12 @@
 ## Performance Analysis:
 ```bash
 # Please add a performance analysis of your software implementation. 
-This can be an analytical analysis of the computations or from a profiling package (e.g. Tensorboard).
+# This can be an analytical analysis of the computations or from a profiling package (e.g. Tensorboard).
 
-Here's a list of instrumentation / profiling tools:
-C/C++: Valgrind, Callgrind.
-Python: trace, timeit
-TensorFlow: TensorBoard
-PyTorch: torch.utils.bottleneck, etc.
-CUDA: CUDA::Profiler
+# Here's a list of instrumentation / profiling tools:
+# C/C++: Valgrind, Callgrind.
+# Python: trace, timeit
+# TensorFlow: TensorBoard
+# PyTorch: torch.utils.bottleneck, etc.
+# CUDA: CUDA::Profiler
 ```
