@@ -16,13 +16,13 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Basic Spatial Component Examples](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/UnitTests.scala) -->
 
-**Lab Links**
+<!-- **Lab Links**
 * [Lab 1: Getting Started with Digital Systems Design Using Spatial](lab1.md)
 * [Lab 1 Submission](lab1_submission.md)
 * [Lab 2: Design a Math Kernel in Spatial and Understand Its Performance](lab2.md)
 * [Lab 2 Submission](lab2_submission.md)
 * [Lab 3: Algorithm Specific Hardware Design](lab3.md)
-* [Lab 3 Submission](lab3_submission.md)
+* [Lab 3 Submission](lab3_submission.md) -->
 
 
 <!-- * [Lab 4: Embedded Linux Programming](lab4.md)
@@ -33,7 +33,7 @@ The design of integrated digital systems encompassing both customized software a
 
 -->
 
-**Project Directions**
+<!-- **Project Directions**
 * [Project Proposal Guidelines](project_proposal.md)
 
 * [Milestone 1: Software Demo](milestone1.md)
@@ -48,7 +48,7 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Milestone 3 Submission](milestone3_submission.md)
 
-* [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md)
+* [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md) -->
 
 **Past Year Reports**
 
