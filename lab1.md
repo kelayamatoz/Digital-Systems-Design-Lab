@@ -13,12 +13,12 @@ Controllers: Foreach, Fold, Reduce
 Each part of the exercise covers the usage of a Spatial element. We will first guide you through some examples. Then you will need to modify the examples to make a few new apps.
 
 ## Setup
-First, open your terminal app and login to tucson by running:
+First, open your terminal app and login to lagos by running:
 ```bash
-ssh -Y USERNAME@tucson.stanford.edu
+ssh -Y USERNAME@lagos.stanford.edu
 ```
 
-Tucson is the main server that we will be using to host our development environment. On tucson, the development directory is under spatial. Go to your development directory by running:
+lagos is the main server that we will be using to host our development environment. On lagos, the development directory is under spatial. Go to your development directory by running:
 ```bash
 cd ~/spatial
 ```
@@ -508,4 +508,4 @@ Compared to Foreach, Reduce and Fold allow users to write more precise code. Mor
 MemFold and MemReduce perform the same way as Fold and Reduce; however they are used to operate on on-chip memories. We will cover more details of these two controllers in the next lab.
 
 ## Submission
-* Please fill in the lab1_submission.md. After completing the lab, you can upload this file in your home directory on tucson.  We will collect the submission files from your home directory after the deadline.
+* Please fill in the lab1_submission.md. After completing the lab, you can upload this file in your home directory on lagos.  We will collect the submission files from your home directory after the deadline.
