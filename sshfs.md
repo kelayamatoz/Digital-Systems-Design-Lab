@@ -1,4 +1,4 @@
-# Mount the Spatial Directory on Tucson
+# Mount the Spatial Directory on Lagos
 
 ## Mac
 ### Prerequisites
@@ -13,7 +13,7 @@ mkdir spatial
 
 Then, run the following commands to mount the Spatial test folder onto your local computer:
 ```bash
-sshfs YOUR_USER_NAME@tucson.stanford.edu:/home/spatial/spatial/ ./spatial -o allow_other
+sshfs YOUR_USER_NAME@lagos.stanford.edu:/home/spatial/spatial/ ./spatial -o allow_other
 ```
 
 You will be prompted for your password.
