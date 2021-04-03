@@ -492,11 +492,11 @@ Here is an example of using Reduce to compute the sum of a list of elements in S
 
 Although Reduce and Fold operate in similar manners, Fold requires user to specify
 a initial value to perform the reduction, whereas Reduce starts from the first
-element of the list. For example, when using Fold, you have to manually
-initialize your fold register:
+element of the list. Here's a [link](https://stackoverflow.com/questions/25149359/difference-between-reduce-and-fold) that explains the difference between Fold and Reduce in the context of functional programming. 
+
 ```scala
-val a = Reg[T](0)
-Fold(a)(N by n){ i =>
+val a = Reg[T](1)
+Fold(a)(N by n){ i => // Fold will read the data stored in a, and use that as the starting value for accumulation.
   // Fold body
 }{ // binary operator }
 ```
