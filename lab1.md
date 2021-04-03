@@ -444,6 +444,7 @@ Reduce(accum)(N by n) { i =>
   // map body
 }{// binary operator}
 ```
+Since Reduce is simply using accum as an accumulator, the initial value stored in accum will be ignored.
 
 ### Demo
 Here is an example of using Reduce to compute the sum of a list of elements in Spatial. In this example, we have two Reduce controllers. The first Reduce loads a block of elements from the DRAM, and leave this block for the second Reduce to consume. The second Reduce takes in the block, adds all the elements in the block, and save the result in a register. At last, the first Reduce collects the results created by the second Reduce and coalesces the results using + to create the final sum.
