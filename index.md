@@ -22,6 +22,10 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Lab 1 Submission](lab1_submission.md)
 
+* [Lab 2: Using Spatial Controllers and Memories](lab2.md)
+
+* [Lab 2 Submission](lab2_submission.md)
+
 <!-- **Laboratory Links:**
 
 -->
