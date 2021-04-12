@@ -30,7 +30,7 @@ The design of integrated digital systems encompassing both customized software a
 
 -->
 
-<!-- **Project Directions**
+**Project**
 * [Project Proposal Guidelines](project_proposal.md)
 
 * [Milestone 1: Software Demo](milestone1.md)
@@ -45,9 +45,9 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Milestone 3 Submission](milestone3_submission.md)
 
-* [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md) -->
+* [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md) 
 
-**Past Year Reports**
+**Reports from Previous EE109**
 
 **2017-18**
 * [MNIST Recognition using Support Vector Machine and Deep Neural Network](1718_reports/FinalReport_Akshay_Andrea_Spr1718/FinalReport_Akshay_Andrea_Spr1718.md)
