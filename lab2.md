@@ -334,17 +334,17 @@ you must combine loops appropriately.
 ## Advanced Banking
 
 Let's now add in more optimizations to improve the performance of this application.  Specifically, we will parallelize two of the
-loops in such a way to expose hierarchical banking.  The following code shows the loops for ``k`` and ``j`` parallelized by 2 and 4
+loops in such a way to expose hierarchical banking.  The following code shows the loops for ``K`` and ``N`` parallelized by 2 and 4
 respectively:
 ```scala
   Accel {
-    Foreach(K by tileK){kk => 
+    Foreach(K by tileK par 2){kk => 
       val numel_k = min(tileK.to[Int], K - kk)
       Foreach(M by tileM){mm =>
         val numel_m = min(tileM.to[Int], M - mm)
         val tileA_sram = SRAM[T](tileM, tileK)
         tileA_sram load a(mm::mm+numel_m, kk::kk+numel_k)
-        Foreach(N by tileN){nn =>
+        Foreach(N by tileN par 4){nn =>
           val numel_n = min(tileN.to[Int], N - nn)
           val tileB_sram = SRAM[T](tileK, tileN)
           val tileC_sram = SRAM[T](tileM, tileN).buffer
@@ -361,7 +361,7 @@ respectively:
 ```
 
 Now let's look at what happens to ``tileB_sram``.  It's first and second indices are both parallelized.
-Index ``j`` is vectorized by 4, while index ``k`` is duplicated for two different values of k when the
+Index ``n`` is vectorized by 4, while index ``k`` is duplicated for two different values of k when the
 loop is unrolled by 2.  This means we must bank ``tileB_sram`` in both the horizontal and vertical dimensions
 in order to guarantee that all 8 of these accesses will be able to touch unique banks every time we read from this memory.
 The animation below demonstrates how we hierarchically bank this SRAM.
@@ -372,17 +372,17 @@ Let's consider the situation if we instead decided to parallelize a different wa
 if we chose to parallelize the loading of tileB_sram by 8 while also parallelizing the ``k`` loop by 2:
 ```scala
   Accel {
-    Foreach(K by tileK){kk => 
+    Foreach(K by tileK par 2){kk => 
       val numel_k = min(tileK.to[Int], K - kk)
       Foreach(M by tileM){mm =>
         val numel_m = min(tileM.to[Int], M - mm)
         val tileA_sram = SRAM[T](tileM, tileK)
         tileA_sram load a(mm::mm+numel_m, kk::kk+numel_k)
-        Foreach(N by tileN){nn =>
+        Foreach(N by tileN par 4){nn =>
           val numel_n = min(tileN.to[Int], N - nn)
           val tileB_sram = SRAM[T](tileK, tileN)
           val tileC_sram = SRAM[T](tileM, tileN).buffer
-          tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n)
+          tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n par 8)
           tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
 
           // Your code here
