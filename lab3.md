@@ -70,7 +70,7 @@ These lines will create three arrays, `bucketsGold, bucketValsGold, bucketSizesG
 
 
 If you need some hints, here are two useful links:
-[Python example of solving a knapsack problem](https://dev.to/downey/solving-the-knapsack-problem-with-dynamic-programming-4hce) and 
+[Python example of solving a knapsack problem](https://dev.to/downey/solving-the-knapsack-problem-with-dynamic-programming-4hce) (Although this is a great article, there are a few typos in it and the discussion section provide a few fixes.) and 
 [Spatial NW example](https://spatial-lang.org/nwsw).
 
 
