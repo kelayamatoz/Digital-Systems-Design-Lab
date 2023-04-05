@@ -2,9 +2,10 @@ import spatial.dsl._
 
 
 // Register
-@spatial object Lab1Part1RegExample extends SpatialApp {
+@spatial class Lab1Part1RegExample extends SpatialTest {
 
   type T = Int
+  override def runtimeArgs = "3 5"
 
   def main(args: Array[String]): Unit = {
     val N = args(0).to[T]
@@ -33,10 +34,12 @@ import spatial.dsl._
 
 
 // DRAM/SRAM
-@spatial object Lab1Part2DramSramExample extends SpatialApp {
+@spatial class Lab1Part2DramSramExample extends SpatialTest {
 
   val N = 32
   type T = Int
+
+  override def runtimeArgs = "10"
 
   def simpleLoadStore(srcHost: Array[T], value: T) = {
     val tileSize = 16
@@ -85,9 +88,11 @@ import spatial.dsl._
 
 
 // // FIFO
-// @spatial object Lab1Part4FIFOExample extends SpatialApp {
+// @spatial class Lab1Part4FIFOExample extends SpatialTest {
 //   val N = 32
 //   type T = Int
+
+//   override def runtimeArgs = "10"
 
 //   def simpleLoadStore(srcHost: Array[T], value: T) = {
 //     val tileSize = 16
@@ -125,7 +130,7 @@ import spatial.dsl._
 
 
 // Reduce
-@spatial object Lab1Part5ReduceExample extends SpatialApp {
+@spatial class Lab1Part5ReduceExample extends SpatialTest {
   val N = 32
   val tileSize = 16
   type T = Int
@@ -162,7 +167,7 @@ import spatial.dsl._
 
 
 // // Fold
-// @spatial object Lab1Part6FoldExample extends SpatialApp {
+// @spatial class Lab1Part6FoldExample extends SpatialTest {
 //   val N = 32
 //   val tileSize = 16
 //   type T = Int

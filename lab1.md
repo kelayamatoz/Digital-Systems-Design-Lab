@@ -13,28 +13,37 @@ Controllers: Foreach, Fold, Reduce
 Each part of the exercise covers the usage of a Spatial element. We will first guide you through some examples. Then you will need to modify the examples to make a few new apps.
 
 ## Setup
-First, open your terminal app and login to lagos by running:
-```bash
-ssh -Y USERNAME@lagos.stanford.edu
+Spatial is currently supported in Linux/Unix (Ubuntu). For these labs, we will be using the CS217 branch of Spatial, available at https://github.com/stanford-ppl/spatial/tree/CS217
+
+You will also need Scala, available through https://www.scala-lang.org/download/.
+In order to run Spatial you will need the Integer Set Library (ISL, available on brew and apt-get, among others)
+
+Setting up the CS217 branch of Spatial:
+
+```shell
+git clone git@github.com:stanford-ppl/spatial.git
+git fetch
+git checkout CS217
+
+bash bin/update_resources.sh
+make publish
 ```
 
-lagos is the main server that we will be using to host our development environment. On lagos, the development directory is under spatial. Go to your development directory by running:
-```bash
-cd ~/spatial
+In order to update Spatial
+
+```shell
+make clean
+make publish
 ```
 
-If you haven't installed Spatial before, run the following command to install it:
-```bash
-make && make install && make publish
-```
+## Manually Running Spatial Applications
+A variety of applications are already written in Spatial. A tutorial, documentation, and other resources can be found at https://spatial-lang.org/.
 
-Under the spatial directory, the apps/src directory stores the source code of Spatial apps. The gen directory contains the generated FPGA projects. To start developing apps, go to apps/src:
-```bash
-cd apps/src
-```
-<!-- ![apps](./img/apps.png) -->
+In order to run a test from this directory:
 
-You will see that all the Spatial apps are stored as .scala files. For this exercise, we will complete our apps in lab1.scala.
+```shell
+sbt -Dtest.CS217=true "; testOnly <appname>" 
+```
 
 ## Using Registers
 ### Demo:
@@ -42,7 +51,7 @@ In this example, we build a circuit that reads in two inputs and add them togeth
 ```scala
 import spatial.dsl._
 
-@spatial object Lab1Part1RegExample extends SpatialApp {
+@spatial class Lab1Part1RegExample extends SpatialTest {
   def main() {
     // Your code here
   }
@@ -52,9 +61,12 @@ import spatial.dsl._
 The first line imports the spatial library. The 3rd line declares an app called "Lab1Part1RegExample". Before we move forward, we need to think about the design of the app. In this case, we want to send two scalars from the CPU side to the accelerator side. We then perform the addition at the accelerator side, and send the result back to the CPU. How can we do this? First, we will need two ArgIn registers and one ArgOut register to establish the communication between the host and the accelerator:
 ```scala
 
-@spatial object Lab1Part1RegExample extends SpatialApp {
+@spatial object Lab1Part1RegExample extends SpatialTest {
   // In this app, the type of numbers is Int.
   type T = Int
+
+  // Sets the runtime arguments for args(0) and args(1). These can be overridden later via command line, but are used for simulation.
+  override def runtimeArgs = "3 5"
 
   def main() {
     // In Spatial, you can get the Nth argument from the command line by using args(N). 
@@ -110,9 +122,10 @@ Here's what the app looks like:
 ```scala
 import spatial.dsl._
 
-@spatial object Lab1Part1RegExample extends SpatialApp {
+@spatial class Lab1Part1RegExample extends SpatialTest {
 
   type T = Int
+  override def runtimeArgs = "3 5"
 
   def main() {
     val N = args(0).to[T]
@@ -143,32 +156,16 @@ import spatial.dsl._
 After you are done designing the app, go back to the spatial directory. We will need to verify that the app is written correctly.
 
 There are two ways to verify the correctness of your design. The first way is to run a Scala simulation. The second way is to run a VCS simulation. If you just want to quickly check what your design produces, you should use the Scala simulation. To start the Scala simulation, you need to run:
-```scalar
-cd ~/spatial
-bin/spatial Lab1Part1RegExample --sim
+```scala
+sbt -Dtest.CS217=true "; testOnly Lab1Part1RegExample" 
 ```
-<!-- ![runssim](./img/runssim.png) -->
-
-The second command generates the files needed for scala simulation. To start the simulation, run:
-
-```scalar
-./Lab1Part1RegExample.sim "3 5"
-```
-<!-- ![scalare](./img/scalare.png) -->
-
-This command runs scala simulation for the app with command line inputs 3 and 5, and produces the correct result.
 
 However, if you want to make sure that your design is [cycle-accurate](https://retrocomputing.stackexchange.com/questions/1191/what-exactly-is-a-cycle-accurate-emulator), you will need to run the VCS simulation. Unlike Scala simulation, VCS simulation generates the Verilog description of your design and runs a cycle-accurate simulation. Compared to Scala simulation, VCS simulation takes longer to complete (because the circuit needs to be simulated at every clock cycle), but it gives a simulation environment that's more similar to what will be running on the board. For example, you can have a design that passes the Scala simulation, but fails the VCS simulation because the circuit that gets generated is not correct. In addition, we can also use the VCS simulation results to help us tune our design. We will cover the details in Lab 2.
 
 In order to generate the files for VCS simulation, you need to run the following commands:
 ```bash
-cd ~/spatial
-bin/spatial Lab1Part1RegExample --synth --instrumentation --fpga=VCS
-cd ./gen
-ls
+sbt -Dtest.VCS=true "; testOnly Lab1Part1RegExample" 
 ```
-
-The "--synth" flag means that we want to generate a synthesizable design. The "--instrumentation" flag means that we want to learn about the number of clock cycles needed to finish the design. The "--fgpa" flag refers to the target you are generating for. In this example, you are generating a design for the VCS simulation, and hence the flag "--fpga=VCS".
 
 <!-- <img src="./img/gen.png" width="70%" height="60%"> -->
 
@@ -270,7 +267,7 @@ Foreach (N by n) { i =>
 These elements would be enough to implement the circuit we want. Let's say that the size of our SRAM is tileSize, and we have an array of N elements. First, we need to bring the N elements from the host side into DRAM. Second, we need to load the N elements into the accelerator. Third, we need to multiply each element by a factor of x. Fourth, we need to store the N elements into DRAM. Fifth, we need to instruct the host to fetch the results from DRAM. To translate these steps into a circuit, we would write the Spatial app that looks like this:
 
 ```scala
-@spatial object Lab1Part2DramSramExample extends SpatialApp {
+@spatial class Lab1Part2DramSramExample extends SpatialTest {
 
   val N = 32
   type T = Int
@@ -450,7 +447,7 @@ Since Reduce is simply using accum as an accumulator, the initial value stored i
 Here is an example of using Reduce to compute the sum of a list of elements in Spatial. In this example, we have two Reduce controllers. The first Reduce loads a block of elements from the DRAM, and leave this block for the second Reduce to consume. The second Reduce takes in the block, adds all the elements in the block, and save the result in a register. At last, the first Reduce collects the results created by the second Reduce and coalesces the results using + to create the final sum.
 
 ```scala
-@spatial object Lab1Part6ReduceExample extends SpatialApp {
+@spatial class Lab1Part6ReduceExample extends SpatialTest {
   val N = 32
   val tileSize = 16
   type T = Int
@@ -509,4 +506,4 @@ Compared to Foreach, Reduce and Fold allow users to write more precise code. Mor
 MemFold and MemReduce perform the same way as Fold and Reduce; however they are used to operate on on-chip memories. We will cover more details of these two controllers in the next lab.
 
 ## Submission
-* Please fill in the lab1_submission.md. After completing the lab, you can upload this file in your home directory on lagos.  We will collect the submission files from your home directory after the deadline.
+* Please fill in the lab1_submission.md. After completing the lab, you can upload this to Gradescope.
