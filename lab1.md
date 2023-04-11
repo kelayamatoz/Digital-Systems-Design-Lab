@@ -13,10 +13,52 @@ Controllers: Foreach, Fold, Reduce
 Each part of the exercise covers the usage of a Spatial element. We will first guide you through some examples. Then you will need to modify the examples to make a few new apps.
 
 ## Setup
-Spatial is currently supported in Linux/Unix (Ubuntu). For these labs, we will be using the CS217 branch of Spatial, available at https://github.com/stanford-ppl/spatial/tree/CS217
+Spatial is currently supported in Linux/Unix (Ubuntu), therefore Windows users should download and use Ubuntu with Windows Subsystem for Linux (WSL). For these labs, we will be using the CS217 branch of Spatial, available at https://github.com/stanford-ppl/spatial/tree/CS217
 
-You will also need Scala, available through https://www.scala-lang.org/download/.
-In order to run Spatial you will need the Integer Set Library (ISL, available on brew and apt-get, among others)
+You should have the latest Java JDK, Scala version 2.12.17, sbt version 1.8.2, and Integer Set Library installed. You can use the following script to get everything set up from the terminal:
+
+```shell
+#!/bin/bash
+
+## Build essentials
+sudo apt update
+sudo apt install build-essential
+
+## Python and Scapy
+sudo apt update
+sudo apt install python python-pip
+pip install scapy
+pip install grpcio
+pip install grpcio-tools 
+
+## Java
+sudo apt update
+sudo apt install default-jdk
+
+## Scala
+sudo apt remove scala-library scala
+sudo wget http://scala-lang.org/files/archive/scala-2.12.17.deb
+sudo dpkg -i scala-2.12.17.deb
+sudo apt update
+sudo apt install scala
+
+## SBT
+sudo apt-get update
+sudo apt-get install apt-transport-https curl gnupg -yqq
+echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee /etc/apt/sources.list.d/sbt_old.list
+curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo -H gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/scalasbt-release.gpg --import
+sudo chmod 644 /etc/apt/trusted.gpg.d/scalasbt-release.gpg
+sudo apt-get update
+sudo apt-get install sbt
+
+## Others
+sudo apt update
+sudo apt install pkg-config libgmp3-dev libisl-dev
+sudo apt install nfs-common
+```
+
+You should verify that the correct versions of everything are installed by running java --version, scala --version, and sbt --version in the terminal. This script will be uploaded to Canvas for you to download and run.
 
 Setting up the CS217 branch of Spatial:
 
@@ -36,10 +78,12 @@ make clean
 make publish
 ```
 
+You will need to create the directory spatial/src/test/scala to put your lab1.scala file in, and you can put all the Lab1PartX Spatial classes from this handout inside of this file.
+
 ## Manually Running Spatial Applications
 A variety of applications are already written in Spatial. A tutorial, documentation, and other resources can be found at https://spatial-lang.org/.
 
-In order to run a test from this directory:
+When you are ready to test your application, go back to the spatial directory and run the following command:
 
 ```shell
 sbt -Dtest.CS217=true "; testOnly <appname>" 
@@ -52,7 +96,7 @@ In this example, we build a circuit that reads in two inputs and add them togeth
 import spatial.dsl._
 
 @spatial class Lab1Part1RegExample extends SpatialTest {
-  def main() {
+  def main(args: Array[String]): Unit = {
     // Your code here
   }
 }
@@ -61,14 +105,14 @@ import spatial.dsl._
 The first line imports the spatial library. The 3rd line declares an app called "Lab1Part1RegExample". Before we move forward, we need to think about the design of the app. In this case, we want to send two scalars from the CPU side to the accelerator side. We then perform the addition at the accelerator side, and send the result back to the CPU. How can we do this? First, we will need two ArgIn registers and one ArgOut register to establish the communication between the host and the accelerator:
 ```scala
 
-@spatial object Lab1Part1RegExample extends SpatialTest {
+@spatial class Lab1Part1RegExample extends SpatialTest {
   // In this app, the type of numbers is Int.
   type T = Int
 
   // Sets the runtime arguments for args(0) and args(1). These can be overridden later via command line, but are used for simulation.
   override def runtimeArgs = "3 5"
 
-  def main() {
+  def main(args: Array[String]): Unit = {
     // In Spatial, you can get the Nth argument from the command line by using args(N). 
     // We need to cast it as type T because we use T as the type of the values throughout the whole app. 
     val N = args(0).to[T]
@@ -111,10 +155,13 @@ We are not done yet. After we specify the accelerator design, we still need to f
     // Calculate the reference result. Make sure that it matches the accelerator output.
     val gold = M + N
     println("Gold = " + gold)
-    val chksum = gold == argRegOutResult
+    val cksum = gold == argRegOutResult
 
     // Print PASS if the reference result matches the accelerator result.
-    println("PASS = " + chksum)
+    println("PASS = " + cksum)
+
+    // To make the compiler happy
+    assert(cksum == 1)
 
 ```
 
@@ -127,7 +174,7 @@ import spatial.dsl._
   type T = Int
   override def runtimeArgs = "3 5"
 
-  def main() {
+  def main(args: Array[String]): Unit = {
     val N = args(0).to[T]
     val M = args(1).to[T]
     val argRegIn0 = ArgIn[T]
@@ -147,90 +194,27 @@ import spatial.dsl._
 
     val gold = M + N
     println("Gold = " + gold)
-    val chksum = gold == argRegOutResult
-    println("PASS = " + chksum)
+    val cksum = gold == argRegOutResult
+    println("PASS = " + cksum)
+
+    // To make the compiler happy
+    assert(cksum == 1)
   }
 }
 ```
 
 After you are done designing the app, go back to the spatial directory. We will need to verify that the app is written correctly.
 
-There are two ways to verify the correctness of your design. The first way is to run a Scala simulation. The second way is to run a VCS simulation. If you just want to quickly check what your design produces, you should use the Scala simulation. To start the Scala simulation, you need to run:
+In this lab we will verify our designs by using a Scala simulation. You can run the following command to test the first example:
 ```scala
 sbt -Dtest.CS217=true "; testOnly Lab1Part1RegExample" 
 ```
 
-However, if you want to make sure that your design is [cycle-accurate](https://retrocomputing.stackexchange.com/questions/1191/what-exactly-is-a-cycle-accurate-emulator), you will need to run the VCS simulation. Unlike Scala simulation, VCS simulation generates the Verilog description of your design and runs a cycle-accurate simulation. Compared to Scala simulation, VCS simulation takes longer to complete (because the circuit needs to be simulated at every clock cycle), but it gives a simulation environment that's more similar to what will be running on the board. For example, you can have a design that passes the Scala simulation, but fails the VCS simulation because the circuit that gets generated is not correct. In addition, we can also use the VCS simulation results to help us tune our design. We will cover the details in Lab 2.
-
-In order to generate the files for VCS simulation, you need to run the following commands:
-```bash
-sbt -Dtest.VCS=true "; testOnly Lab1Part1RegExample" 
-```
-
-<!-- <img src="./img/gen.png" width="70%" height="60%"> -->
-
-The synthesizable design of your Spatial app is under "Lab1Part1RegExample". Let's take a look at the generated files.
-```bash
-cd Lab1Part1RegExample
-ls
-```
-
-<!-- <img src="./img/genls.png" width="70%" height="60%"> -->
-The chisel folder contains the RTL code generated from your design. Here are the commands to run VCS simulation:
-
-```bash
-# make vcs simulation binary, then redirect the console output to vcs.log
-make > vcs.log
-# run vcs simulation, then redirect the console output to dramsim.log. 
-bash run.sh 3 5 > dramsim.log
-```
-
-VCS simulation would start. Wait till the simulation completes, and you can view the simulation results by running:
-<!-- After the simulation finishes, you will see the following messages:
-![vcs](./img/vcs.png)
-To view the simulation result, run: -->
-```bash
-cat dramsim.log
-```
-<!-- ![dramsim](./img/dramsimre.png) -->
-
-The VCS simulation result states that your app is simulated successfully and ran for 3 cycles. Now we can clean up the VCS simulation directory.
-
-```bash
-cd ~/spatial
-rm -rf gen/Lab1Part1RegExample
-```
-
-Now we can start deploying your design on the FPGA board. In this class, we are using [Xilinx ZC706](https://www.xilinx.com/products/boards-and-kits/ek-z7-zc706-g.html) as our platform. Before synthesizing the design, we need to do a few more setups. First, we need to start a [screen](https://kb.iu.edu/d/acuy) session to run the synthesizer. This way, you can keep the job running even when you sign off the server. The following command starts a screen session called Lab1Part1RegExample.
-```bash
-screen -S Lab1Part1RegExample
-```
-
-In the screen session, you need to first generate a design for your FPGA. In this class, we are using Xilinx's Zynq board as the target device. We will not be able to use the FPGA directly, but we can still use the FPGA toolchains to understand the resource utilization of your design. Go back to the spatial directory, and replace the "--fpga" flag with "zynq":
-```bash
-bin/spatial Lab1Part1RegExample --synth --instrumentation --fpga=zynq
-```
-
-Then, go to the generated folder and run make:
-```bash
-cd gen/Lab1Part1RegExample
-make | tee make.log
-```
-
-The "tee" command would log the output from the synthesizer to "make.log".
-After you start the synthesizer, you can detach the screen session by pressing "Ctrl+A D". You can view the running screen sessions by using the command "screen -ls". To reattach a screen session, you can run "screen -r SESSIONNAME".
-
-
-<!-- <img src="./img/screenjobs.png" width="70%" height="60%"> -->
-
-The synthesis process would take ~20 min to run. After the synthesis finishes, you will have access to the bitstream and reports of your design's resource utilization on the target FPGA. 
+However, if you want to make sure that your design is [cycle-accurate](https://retrocomputing.stackexchange.com/questions/1191/what-exactly-is-a-cycle-accurate-emulator), you will need to run the VCS simulation. Unlike Scala simulation, VCS simulation generates the Verilog description of your design and runs a cycle-accurate simulation. Compared to Scala simulation, VCS simulation takes longer to complete (because the circuit needs to be simulated at every clock cycle), but it gives a simulation environment that's more similar to what will be running on the board. For example, you can have a design that passes the Scala simulation, but fails the VCS simulation because the circuit that gets generated is not correct. In addition, we can also use the VCS simulation results to help us tune our design. We will cover the details and use VCS simulation in Lab 2.
 
 
 ### Your Turn
-Can you modify this app so that it fetches three numbers from the CPU side and calculates their sum? You can assume that your user only enters integers. 
-
-* Report the modifications you made to the original app. 
-* Report the number of cycles the application run in VCS simulation.
+Can you modify this app so that it fetches three numbers from the CPU side and calculates their sum? You can assume that your user only enters integers. This is the version of the app that you should submit.
 
 ## Using DRAM and SRAM
 ### Demo
@@ -264,7 +248,7 @@ Foreach (N by n) { i =>
 }
 ```
 
-These elements would be enough to implement the circuit we want. Let's say that the size of our SRAM is tileSize, and we have an array of N elements. First, we need to bring the N elements from the host side into DRAM. Second, we need to load the N elements into the accelerator. Third, we need to multiply each element by a factor of x. Fourth, we need to store the N elements into DRAM. Fifth, we need to instruct the host to fetch the results from DRAM. To translate these steps into a circuit, we would write the Spatial app that looks like this:
+These elements would be enough to implement the circuit we want. Let's say that the size of our SRAM is tileSize, and we have an array of N elements. First, we need to bring the N elements from the host side into DRAM. Second, we need to load the N elements into the accelerator. Third, we need to multiply each element by a factor of x. Fourth, we need to store the N elements into DRAM. Fifth, we need to instruct the host to fetch the results from DRAM. You can use "override def runtimeArgs =" to control the main function arguments just like in exercise 1. To translate these steps into a circuit, we would write the Spatial app that looks like this:
 
 ```scala
 @spatial class Lab1Part2DramSramExample extends SpatialTest {
@@ -309,7 +293,7 @@ These elements would be enough to implement the circuit we want. Let's say that 
     getMem(dstFPGA)
   }
 
-  def main() {
+  def main(args: Array[String]): Unit = {
     val arraySize = N
     val value = args(0).to[Int]
 
@@ -335,38 +319,14 @@ These elements would be enough to implement the circuit we want. Let's say that 
     // function "_&&_".
     val cksum = dst.zip(gold){_ == _}.reduce{_&&_}
     println("PASS: " + cksum)
+
+    assert(cksum == 1)
   }
 }
 ```
 
 ### Your Turn
-* Simulate the app using Scala and VCS simulation. Report the simulation result. 
-* Synthesize the design. 
-
-Cycle count is not the only aspect that shows how good your design is. Moreover, we would want to understand the resource utilization of your design. The synthesizer would give you some information about it.  
-
-After the synthesis finishes, go to ~/spatial/gen/Lab1Part2DramSramExample/verilog-zynq/ (if you are using a zcu, you need to go to verilog-zcu). The resource utilization report is named "par_utilization.rpt", and it contains information that looks like this:
-
-```bash
-+--------------------------------------+-------+-------+-----------+-------+
-|               Site Type              |  Used | Fixed | Available | Util% |
-+--------------------------------------+-------+-------+-----------+-------+
-| Slice LUTs                           | 18243 |     0 |    218600 |  8.35 |
-|   LUT as Logic                       | 12198 |     0 |    218600 |  5.58 |
-|   LUT as Memory                      |  3122 |     0 |     70400 |  4.43 |
-|     LUT as Distributed RAM           |  1288 |     0 |           |       |
-|     LUT as Shift Register            |  1834 |     0 |           |       |
-|   LUT used exclusively as pack-thrus |  2923 |     0 |    218600 |  1.34 |
-| Slice Registers                      | 19710 |     0 |    437200 |  4.51 |
-|   Register as Flip Flop              | 19710 |     0 |    437200 |  4.51 |
-|   Register as Latch                  |     0 |     0 |    437200 |  0.00 |
-|   Register as pack-thrus             |     0 |     0 |    437200 |  0.00 |
-| F7 Muxes                             |   592 |     0 |    109300 |  0.54 |
-| F8 Muxes                             |     0 |     0 |     54650 |  0.00 |
-+--------------------------------------+-------+-------+-----------+-------+
-```
-
-* Report the resource utilization of your design.
+* Simulate the app using Scala simulation. 
 
 ## Using FIFO
 A [FIFO](https://stanford-ppl.github.io/spatial-doc/v1.1/spatial/lang/FIFO.html) can be thought of as a queue.
@@ -404,8 +364,7 @@ In Spatial, a FIFO is implemented using embedded FPGA memories. Therefore, you c
 
 ### Your Turn
 * Reimplement the example in Part 2 using FIFO. You can leave your implementation under Lab1Part4FIFOExample.
-* Run Scala simulation and VCS simulation. Report the results of VCS simulation.
-* Check the utilization report. Report the resource utilization of your design.
+* Run Scala simulation.
 
 ## Using Controllers
 We have already introduced the usage of the Foreach controller. In this part, we will be learning about other controllers: Fold, Reduce, MemFold and MemReduce.
@@ -452,7 +411,7 @@ Here is an example of using Reduce to compute the sum of a list of elements in S
   val tileSize = 16
   type T = Int
 
-  def main() {
+  def main(args: Array[String]): Unit = {
     val arraySize = N
     val srcFPGA = DRAM[T](N)
     val src = Array.tabulate[Int](arraySize) { i => i % 256 }
@@ -484,6 +443,8 @@ Here is an example of using Reduce to compute the sum of a list of elements in S
 
     val cksum = gold == result
     println("PASS: " + cksum)
+
+    assert(cksum == 1)
   }
 }
 ```
@@ -506,4 +467,4 @@ Compared to Foreach, Reduce and Fold allow users to write more precise code. Mor
 MemFold and MemReduce perform the same way as Fold and Reduce; however they are used to operate on on-chip memories. We will cover more details of these two controllers in the next lab.
 
 ## Submission
-* Please fill in the lab1_submission.md. After completing the lab, you can upload this to Gradescope.
+* There will be no report submission for this lab. Please upload your completed lab1.scala file to Gradescope.
