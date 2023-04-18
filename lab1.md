@@ -15,7 +15,7 @@ Each part of the exercise covers the usage of a Spatial element. We will first g
 ## Setup
 Spatial is currently supported in Linux/Unix (Ubuntu), therefore Windows users should download and use Ubuntu with Windows Subsystem for Linux (WSL). For these labs, we will be using the CS217 branch of Spatial, available at https://github.com/stanford-ppl/spatial/tree/CS217
 
-You should have the latest Java JDK, Scala version 2.12.17, sbt version 1.8.2, and Integer Set Library installed. You can use the following script to get everything set up from the terminal:
+You should have the latest Java JDK, Scala version 2.12.17, sbt version 1.8.2, and Integer Set Library installed. Windows users running WSL can use the following linux script to get everything set up from the Ubuntu terminal:
 
 ```shell
 #!/bin/bash
@@ -56,6 +56,11 @@ sudo apt-get install sbt
 sudo apt update
 sudo apt install pkg-config libgmp3-dev libisl-dev
 sudo apt install nfs-common
+```
+
+Mac users can just install the latest JDK from the Java website and use homebrew to install scala and sbt with
+```shell
+brew install sbt
 ```
 
 You should verify that the correct versions of everything are installed by running java --version, scala --version, and sbt --version in the terminal. This script will be uploaded to Canvas for you to download and run.
