@@ -67,6 +67,96 @@ The end-to-end application will look like:
 }
 ```
 
+In the last lab, you used scala simulation to quickly test the functionality of your designs. However, if you want to make sure that your design is [cycle-accurate](https://retrocomputing.stackexchange.com/questions/1191/what-exactly-is-a-cycle-accurate-emulator), you will need to run the VCS simulation. Unlike Scala simulation, VCS simulation generates the Verilog description of your design and runs a cycle-accurate simulation. Compared to Scala simulation, VCS simulation takes longer to complete (because the circuit needs to be simulated at every clock cycle), but it gives a simulation environment that's more similar to what will be running on the board. For example, you can have a design that passes the Scala simulation, but fails the VCS simulation because the circuit that gets generated is not correct. In addition, we can also use the VCS simulation results to help us tune our design.
+
+In order to generate the files for VCS simulation, you need to run the following command in the labs directory:
+```bash
+ export TEST_ARGS="--name Lab2Part1SimpleMemReduce --synth --instrumentation --fpga=VCS"; sbt -Dci=true "; testOnly Lab2Part1SimpleMemReduce" 
+```
+
+<!-- <img src="./img/gen.png" width="70%" height="60%"> -->
+
+The synthesizable design of your Spatial app is under "gen/Lab2Part1SimpleMemReduce". Let's take a look at the generated files.
+```bash
+cd gen/Lab2Part1SimpleMemReduce
+ls
+```
+
+<!-- <img src="./img/genls.png" width="70%" height="60%"> -->
+The chisel folder contains the RTL code generated from your design. Here are the commands to run VCS simulation:
+
+```bash
+# make vcs simulation binary, then redirect the console output to vcs.log
+make > vcs.log
+# run vcs simulation, then redirect the console output to dramsim.log. 
+bash run.sh "" > dramsim.log
+```
+
+If your application expects any runtime arguments you can include them within the quotation marks, separated by a space.
+For example, if your application is expecting to take in two integers, your command would look like:
+```bash
+bash run.sh "3 5" > dramsim.log
+```
+
+VCS simulation will start. Wait till the simulation completes, and you can view the simulation results by running:
+<!-- After the simulation finishes, you will see the following messages:
+![vcs](./img/vcs.png)
+To view the simulation result, run: -->
+```bash
+cat dramsim.log
+```
+<!-- ![dramsim](./img/dramsimre.png) -->
+
+This file should show that your app is simulated successfully and tell you how many cycles it ran for. Now we can clean up the VCS simulation directory.
+
+```bash
+cd ../../
+rm -rf gen/Lab2Part1SimpleMemReduce
+``` 
+
+Now we can start deploying your design on an FPGA board. For your projects we will use the Alveo U250 Data Center Acceleration Card as our platform, but for now we can target the Xilinx ZC706 FPGA to get an idea of how to generate a bitstream and look at the resource utilization of our design. Before synthesizing, we need to do a bit more setup. First, we need to start a [screen](https://kb.iu.edu/d/acuy) session to run the synthesizer. This way, you can keep the job running even when you sign off the server. The following command starts a screen session called Lab2Part1SimpleMemReduce.
+```bash
+screen -S Lab2Part1SimpleMemReduce
+```
+
+In the screen session, you need to first generate a design for your FPGA. Go back to the labs directory, and run the following command:
+```bash
+export TEST_ARGS="--name Lab2Part1SimpleMemReduce --synth --instrumentation --fpga=zynq"; sbt -Dci=true "; testOnly Lab2Part1SimpleMemReduce"
+```
+
+Then, go to the generated folder and run make:
+```bash
+cd gen/Lab2Part1SimpleMemReduce
+make | tee make.log
+```
+
+The "tee" command would log the output from the synthesizer to "make.log".
+After you start the synthesizer, you can detach the screen session by pressing "Ctrl+A D". You can view the running screen sessions by using the command "screen -ls". To reattach a screen session, you can run "screen -r SESSIONNAME".
+
+
+<!-- <img src="./img/screenjobs.png" width="70%" height="60%"> -->
+
+The synthesis process would take ~20 min to run. After the synthesis finishes, you will have access to the bitstream and reports of your design's resource utilization on the target FPGA. The report is located in labs/gen/Lab2Part1SimpleMemReduce/verilog-zynq/ (if you are using a zcu, you need to go to verilog-zcu). The resource utilization report is named "par_utilization.rpt", and it contains information that looks like this:
+
+```bash
++--------------------------------------+-------+-------+-----------+-------+
+|               Site Type              |  Used | Fixed | Available | Util% |
++--------------------------------------+-------+-------+-----------+-------+
+| Slice LUTs                           | 18243 |     0 |    218600 |  8.35 |
+|   LUT as Logic                       | 12198 |     0 |    218600 |  5.58 |
+|   LUT as Memory                      |  3122 |     0 |     70400 |  4.43 |
+|     LUT as Distributed RAM           |  1288 |     0 |           |       |
+|     LUT as Shift Register            |  1834 |     0 |           |       |
+|   LUT used exclusively as pack-thrus |  2923 |     0 |    218600 |  1.34 |
+| Slice Registers                      | 19710 |     0 |    437200 |  4.51 |
+|   Register as Flip Flop              | 19710 |     0 |    437200 |  4.51 |
+|   Register as Latch                  |     0 |     0 |    437200 |  0.00 |
+|   Register as pack-thrus             |     0 |     0 |    437200 |  0.00 |
+| F7 Muxes                             |   592 |     0 |    109300 |  0.54 |
+| F8 Muxes                             |     0 |     0 |     54650 |  0.00 |
++--------------------------------------+-------+-------+-----------+-------+
+```
+
 ## Your Turn
 * Synthesize the example application. Report on the resource utilization and
 cycle counts.
@@ -183,7 +273,10 @@ val lut_ijmn = lut(i,j,m,n)
 ## Your Turn
 * Please use the LUT syntax to implement the app in Lab2Part4LUT. The LUT is 3 by 3 filled with integers from 1 to 9.  What we want
 to do here is that given a LUT, the user will provide a base value, index i and
-index j. The output should be base value + LUT(i,j).
+index j. The output should be base value + LUT(i,j). No need to synthesize this application, but make sure it passes scala and VCS sim and include the VCS cycle count.
+```scala
+// Copy-paste your implementation here
+```
 
 ### Designing An Accelerator for Matrix Multiplication
 General Matrix Multiply (GEMM) is a common algorithm in linear algebra, machine learning,
@@ -411,9 +504,14 @@ minimalistic banking scheme that guarantees correctness.
 Now that you have finished writing an algorithm, you will want to try to get the best performance possible.  In order to
 get optimal performance, it is important to balance the stages in your pipelines.  While you could get a good estimate
 by eyeballing your code, there is a way to get actual execution cycles on a controller-by-controller basis using
-a Spatial/special feature called "instrumentation."
+a Spatial/special feature called "instrumentation." This is the reason for including the --instrumentation flag in our commands.
 
-To turn on instrumentation hooks, use the ``bin/spatial <app name> --synth --fpga=VCS --instrument`` option when compiling the app.  This flag injects performance counters that count the number of cycles each controller is enabled, as well as the number of times a particular controller is done.  Note that performance counters will only be injected in the --synth backend.
+To run VCS simulation using instrumentation hooks, use the same command as before:
+```bash
+ export TEST_ARGS="--name Lab2Part5GEMM --synth --instrumentation --fpga=VCS"; sbt -Dci=true "; testOnly Lab2Part5GEMM" 
+```
+
+This flag injects performance counters that count the number of cycles each controller is enabled, as well as the number of times a particular controller is done.  Note that performance counters will only be injected in the --synth backend.
 
 Once you compile your app, you should run it normally with the run.sh script.  You may notice that there are some extra lines
 that are spitting out information about the app.  Running the run.sh script created a file in your current directory called
@@ -442,10 +540,7 @@ to the user to figure out how to use parallelizations and rewrite portions of th
 and get better performance.
 
 ## Your Turn:
-* With the information from instrumentation results, can you set the parallelization differently to  get the fewest clock cycle for your GEMM? What is the smallest cycle number you can get after tuning the application?
-
-In the next lab, we will cover how to use RegFile, LUTs, ShiftRegisters, and
-Streaming interfaces.
+* With the information from instrumentation results, can you set the parallelization differently to get the fewest clock cycle for your GEMM? What is the smallest cycle number you can get after tuning the application?
 
 
 ## Extra Credits (5 points out of 100)
