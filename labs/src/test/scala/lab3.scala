@@ -1,5 +1,5 @@
+import Utils.toSpatialIntArray
 import spatial.dsl._
-
 
 @spatial class Lab3Part1Convolution extends SpatialTest {
 
@@ -75,11 +75,9 @@ import spatial.dsl._
        1   2   1
        0   0   0
       -1  -2  -1
-
        1   0  -1
        2   0  -2
        1   0  -1
-
      */
      val gold = (0::R, 0::C){(i,j) =>
        val px00 = if ((j-2) > border && (j-2) < C-border && (i-2) > border && (i-2) < C - border) (i-2)*16 else 0
@@ -107,135 +105,93 @@ import spatial.dsl._
    }
  }
 
-/*
- @spatial class Lab3Part2NW extends SpatialTest {
- 
 
- //  Needleman-Wunsch Genetic Alignment algorithm
+@spatial class Lab3Part2OptimizeHomework extends SpatialTest {
+  def main(args: Array[String]): Unit = {
 
- //    LETTER KEY:         Scores                   Ptrs
- //      a = 0                   T  T  C  G                T  T  C  G
- //      c = 1                0 -1 -2 -3 -4 ...         0  ←  ←  ←  ← ...
- //      g = 2             T -1  1  0 -1 -2          T  ↑  ↖  ←  ←  ←
- //      t = 3             C -2  0 -1  1  0          C  ↑  ↑  ↑  ↖  ←
- //      - = 4             G -3 -2 -2  0  2          G  ↑  ↑  ↑  ↑  ↖
- //      _ = 5             A -4 -3 -3 -1  1          A  ↑  ↑  ↑  ↑  ↖
- //                           .                         .
- //                           .                         .
- //                           .                         .
- //
- //    PTR KEY:
- //      ← = 0 = skipB
- //      ↑ = 1 = skipA
- //      ↖ = 2 = align
- //
+    val nItems = 7
+    val capacity = 15
+    val solverValues = scala.Array(7, 9, 5, 12, 14, 6, 12)
+    val solverSizes = scala.Array(3, 4, 2, 6, 7, 3, 5)
 
-   @struct case class nw_tuple(score: Int16, ptr: Int16)
+    val solver = new Solver(capacity, solverSizes, solverValues)
+    solver.solveKnapsackIterative()
+    solver.printDPArray()
 
-   def main(args: Array[String]): Unit = {
+    val sizes = toSpatialIntArray(solverSizes)
+    val values = toSpatialIntArray(solverValues)
 
-      // FSM setup
-      // In this state, we need to continue traverse from bottom right to top left
-     val traverseState = 0
-      // In this state, we need to pad both sequences by adding an INDEL
-     val padBothState = 1
-      // In this state, we are done traversing
-     val doneState = 2
+    val dpMatrix = DRAM[Int]((nItems + 1).to[I32], (capacity + 1).to[I32])
+    val dSizes = DRAM[Int](nItems.to[I32])
+    val dValues = DRAM[Int](nItems.to[I32])
 
+    val bucketSize = 2 * nItems
 
-     val a = 'a'.to[Int8]
-     val c = 'c'.to[Int8]
-     val g = 'g'.to[Int8]
-     val t = 't'.to[Int8]
-     val d = '-'.to[Int8]
-     val underscore = '_'.to[Int8]
-     val dash = ArgIn[Int8]
+    def getBucketDRAM = DRAM[Int](bucketSize.to[I32])
 
-     setArg(dash,d)
+    val resultBuckets = getBucketDRAM
+    val resultBucketSizes = getBucketDRAM
+    val resultBucketValues = getBucketDRAM
+    val resultNBuckets = ArgOut[Int]
 
-     val par_load = 1
-     val par_store = 1
-     val row_par = 1
+    setMem(
+      dpMatrix,
+      Matrix.tabulate[Int]((nItems + 1).to[I32], (capacity + 1).to[I32])((_, _) =>
+        -1.to[Int]))
+    setMem(dSizes, sizes)
+    setMem(dValues, values)
 
-     val SKIPB = 0
-     val SKIPA = 1
-     val ALIGN = 2
-     val MATCH_SCORE = 1
-     val MISMATCH_SCORE = -1
-     val GAP_SCORE = -1
-     // bash run.sh tcgacgaaataggatgacagcacgttctcgt ttcgagggcgcgtgtcgcggtccatcgacat
+    val dpMatrixResult = DRAM[Int]((nItems + 1).to[I32], (capacity + 1).to[I32])
 
-     val seqa_string = "tcgacgaaataggatgacagcacgttctcgtattagagggccgcggtacaaaccaaatgctgcggcgtacagggcacggggcgctgttcgggagatcgggggaatcgtggcgtgggtgattcgccggc"
-     val seqb_string = "ttcgagggcgcgtgtcgcggtccatcgacatgcccggtcggtgggacgtgggcgcctgatatagaggaatgcgattggaaggtcggacgggtcggcgagttgggcccggtgaatctgccatggtcgat"
-     val measured_length = seqa_string.length
-     val length = ArgIn[Int]
-     val lengthx2 = ArgIn[Int]
-     setArg(length, measured_length)
-     setArg(lengthx2, 2*measured_length)
+    Accel {
+      val nRows = (nItems + 1).to[I32]
+      val nCols = (capacity + 1).to[I32]
+      val step = 1.to[I32]
+      val base = 0.to[I32]
+      val sizes = SRAM[Int](nRows - step)
+      val values = SRAM[Int](nRows - step)
+      val DPArray = SRAM[Int](nRows, nCols)
+      val ip = 4.to[I32]
 
-     val max_length = 64
-     assert(max_length >= length, "Cannot have string longer than 64 elements")
+      sizes load dSizes(base :: (nRows - 1.to[Int]) par ip)
+      values load dValues(base :: (nRows - 1.to[Int]) par ip)
+      DPArray load dpMatrix(base :: nRows, base :: nCols par ip)
 
-      // Prepare the two sequences.
+      // Step 1: Generate the score table. The score table is stored in DPArray.
 
-     val seqa_bin = seqa_string.map{c => c.to[Int8] }
-     val seqb_bin = seqb_string.map{c => c.to[Int8] }
+      // TODO: Your code here
 
-     val seqa_dram_raw = DRAM[Int8](length)
-     val seqb_dram_raw = DRAM[Int8](length)
-     val seqa_dram_aligned = DRAM[Int8](lengthx2)
-     val seqb_dram_aligned = DRAM[Int8](lengthx2)
-     setMem(seqa_dram_raw, seqa_bin)
-     setMem(seqb_dram_raw, seqb_bin)
+      // Step 2: traverse the DP matrix backward and find the optimal path.
+      // val traverseState = 0.to[I32]
+      val doneState = 0.to[I32]
+      val pickedBuckets = FIFO[Int](bucketSize.to[I32])
+      val pickedValues = FIFO[Int](bucketSize.to[I32])
+      val pickedSizes = FIFO[Int](bucketSize.to[I32])
 
-     Accel{
-       val seqa_sram_raw = SRAM[Int8](max_length)
-       val seqb_sram_raw = SRAM[Int8](max_length)
+      val sIdx = Reg[Int](nCols - step)
+      val nBuckets = Reg[Int](base)
 
-       // These two FIFOs are used to store the aligned results
-       val seqa_fifo_aligned = FIFO[Int8](max_length*2)
-       val seqb_fifo_aligned = FIFO[Int8](max_length*2)
+      FSM(/*TODO*/)(/*TODO*/) { state =>
 
-       seqa_sram_raw load seqa_dram_raw(0::length par par_load)
-       seqb_sram_raw load seqb_dram_raw(0::length par par_load)
+        // TODO: Your code here.
 
-       val score_matrix = SRAM[nw_tuple](max_length+1,max_length+1)
+      } { /*TODO: Fill in next state logic*/}
 
-       // Step 1: Build score matrix
-       Foreach(length+1 by 1 par row_par) { r =>
-         // TODO: Populate the score matrix row by row
-         // Your implementation here
-       }
+      // Step 3: store back the results
+      resultNBuckets := nBuckets.value
+      resultBuckets(base :: pickedBuckets.numel) store pickedBuckets
+      resultBucketSizes(base :: pickedSizes.numel) store pickedSizes
+      resultBucketValues(base :: pickedValues.numel) store pickedValues
+    }
 
-       // Step 2: Reconstruct the path
-       val b_addr = Reg[Int](0)  // Index of the current position in sequence b
-       val a_addr = Reg[Int](0)  // Index of the current position in sequence a
-       Parallel{b_addr := length; a_addr := length}  // Set the position to start from bottom right
-       val done_backtrack = Reg[Bit](false) // A flag to tell if traceback is done
-       // TODO: Implement an FSM that traces the path information to create the best aligntment. You can use doneState, padBothState, traverseState to track the current state of your FSM.
-       // Your implementation here
-
-       // Alignment completed. Send the aligned results back.
-       Parallel{
-         seqa_dram_aligned(0::length*2 par par_store) store seqa_fifo_aligned
-         seqb_dram_aligned(0::length*2 par par_store) store seqb_fifo_aligned
-       }
-     }
-
-     val seqa_aligned_result = getMem(seqa_dram_aligned)
-     val seqb_aligned_result = getMem(seqb_dram_aligned)
-     val seqa_aligned_string = charArrayToString(seqa_aligned_result.map(_.to[Char]))
-     val seqb_aligned_string = charArrayToString(seqb_aligned_result.map(_.to[Char]))
-
-     // Pass if >70% match
-     val matches = seqa_aligned_result.zip(seqb_aligned_result){(a,b) => if ((a == b) || (a == dash) || (b == dash)) 1 else 0}.reduce{_+_}
-     val cksum = matches.to[Float] > 0.70.to[Float]*measured_length.to[Float]*2
-
-     println("Result A: " + seqa_aligned_string)
-     println("Result B: " + seqb_aligned_string)
-     println("Found " + matches + " matches out of " + measured_length*2 + " elements")
-     println("PASS: " + cksum + " (Lab3Part2NW)")
-     assert(cksum == 1)
-   }
- }
-*/
+    val buckets = getMem(resultBuckets)
+    val bucketSizes = getMem(resultBucketSizes)
+    val bucketValues = getMem(resultBucketValues)
+    val nBuckets = getArg(resultNBuckets)
+    printArray(buckets, "buckets = ")
+    printArray(bucketSizes, "bucketSizes = ")
+    printArray(bucketValues, "bucketValues = ")
+    println("nBuckets = " + nBuckets)
+    assert(1 == 1)
+  }
+}
