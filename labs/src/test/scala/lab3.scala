@@ -105,7 +105,7 @@ import spatial.dsl._
    }
  }
 
-
+/*
 @spatial class Lab3Part2OptimizeHomework extends SpatialTest {
   def main(args: Array[String]): Unit = {
 
@@ -170,13 +170,13 @@ import spatial.dsl._
 
       val sIdx = Reg[Int](nCols - step)
       val nBuckets = Reg[Int](base)
-
-      FSM(/*TODO*/)(/*TODO*/) { state =>
+*/
+//    FSM(/*TODO*/)(/*TODO*/) { state =>
 
         // TODO: Your code here.
 
-      } { /*TODO: Fill in next state logic*/}
-
+//    } { /*TODO: Fill in next state logic*/}
+/*
       // Step 3: store back the results
       resultNBuckets := nBuckets.value
       resultBuckets(base :: pickedBuckets.numel) store pickedBuckets
@@ -195,3 +195,4 @@ import spatial.dsl._
     assert(1 == 1)
   }
 }
+*/
