@@ -17,13 +17,6 @@ For this 2D convolution, we also introduce the lookup table (LUT). This is a rea
 ## Your Turn:
 Given the two kernels and the input data, perform 2 2-D convolutions on the image. This design is equivalent to a hardware Sobel filter. You can add your implementation to Lab3Part1Convolution. Report the resource utilization and cycle counts of your design.
 
-To test your application, you can use the following arguments:
-```bash
-64 64
-```
-
-This pair of arguments will create an image of 64 by 64.
-
 
 ## Designing a hardware accelerator for combinatorial optimization.
 In class, we introduced the Needleman-Wunsch (NW) algorithm to find aligned genetic sequences. It turns out that the core algorithm of NW, dynamic programming, can be used to solve a broader class of optimization problems called combinatorial optimization. In this lab, we are looking at one particular use case of combinatorial optimization: solving the knapsack problem. 
