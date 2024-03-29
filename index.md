@@ -1,7 +1,7 @@
 ## About EE109
 
 The design of integrated digital systems encompassing both customized software and hardware. Software / hardware design tradeoffs. Algorithm design for pipelining and parallelism. System latency and throughput tradeoffs. FPGA optimization techniques. Integration with external systems and smart devices. Firmware configuration and embedded system considerations. Enrollment limited to 25; preference to graduating seniors. Prerequisites: 180 (formerly 108B), and CS 106B or X.
-
+<!-- 
 **Tutorials for Using the Toolchain**
 <!-- * [Tutorial 0: Running Scala and VCS Simulation](test.md) -->
 
@@ -14,28 +14,27 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Matrix Multiplications, Products](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/Products.scala)
 
-* [Basic Spatial Component Examples](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/UnitTests.scala) -->
+* [Basic Spatial Component Examples](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/UnitTests.scala) --> -->
 
 **Labs**
 
-* [Lab 1: Getting Started with Digital Systems Design Using Spatial](lab1.md)
+* [Lab 1: Getting Started with Digital Systems Design Using Spatial] 
+<!-- (lab1.md) -->
 
-* [Lab 1 Submission](lab1_submission.md)
+* [Lab 2: Using Spatial Controllers and Memories]
+<!-- (lab2.md) -->
 
-* [Lab 2: Using Spatial Controllers and Memories](lab2.md)
+* [Lab 3: Algorithm-Specific Hardware Design]
+<!-- (lab3.md) -->
 
-* [Lab 2 Submission](lab2_submission.md)
-
-* [Lab 3: Algorithm-Specific Hardware Design](lab3.md)
-
-* [Lab 3 Submission](lab3_submission.md)
 
 <!-- **Laboratory Links:**
 
 -->
 
 **Project**
-* [Project Proposal Guidelines](project_proposal.md)
+TBD
+<!-- * [Project Proposal Guidelines](project_proposal.md)
 
 * [Milestone 1: Software Demo](milestone1.md)
 
@@ -49,7 +48,7 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Milestone 3 Submission](milestone3_submission.md)
 
-* [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md) 
+* [Final Project Report Template](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md)  -->
 
 **Reports from Previous EE109**
 
@@ -65,9 +64,9 @@ The design of integrated digital systems encompassing both customized software a
 **Notes on Spatial**
 <!-- * [Helpful Instructions when Working with Spatial](spatial-cheatsheet.md) -->
 
-* [FAQs](common-issues.md)
+<!-- * [FAQs](common-issues.md) -->
 
-* [Spatial Documentation](https://spatial-lang.org/)
+* [Spatial Documentation](https://spatial-lang.readthedocs.io/en/legacy/index.html)
 
 **Using Github**
 * [How to use Git and Github](https://www.udacity.com/course/how-to-use-git-and-github--ud775)
