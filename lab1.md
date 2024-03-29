@@ -35,6 +35,7 @@ pip install grpcio-tools
 sudo apt update
 sudo apt install default-jdk
 
+
 ## Scala
 sudo apt remove scala-library scala
 sudo wget http://scala-lang.org/files/archive/scala-2.12.17.deb
