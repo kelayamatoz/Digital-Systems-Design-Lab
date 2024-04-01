@@ -1,13 +1,13 @@
 ## About EE109
 
 The design of integrated digital systems encompassing both customized software and hardware. Software / hardware design tradeoffs. Algorithm design for pipelining and parallelism. System latency and throughput tradeoffs. FPGA optimization techniques. Integration with external systems and smart devices. Firmware configuration and embedded system considerations. Enrollment limited to 25; preference to graduating seniors. Prerequisites: 180 (formerly 108B), and CS 106B or X.
-
+<!--
 **Tutorials for Using the Toolchain**
-<!-- * [Tutorial 0: Running Scala and VCS Simulation](test.md) -->
+ * [Tutorial 0: Running Scala and VCS Simulation](test.md) 
 
 * [Tutorial 1: Mounting a Remote File System](sshfs.md)
 
-* [Tutorial 2: Using an IDE for Spatial development](ide.md)
+* [Tutorial 2: Using an IDE for Spatial development](ide.md) -->
 
 **Reference Designs:**
 * [MachSuite](https://github.com/stanford-ppl/spatial-apps/blob/regression_arria10/src/MachSuite.scala)
@@ -59,10 +59,15 @@ TBD
 
 * [Codecademy Learn Git](https://www.codecademy.com/learn/learn-git)
 
-**Using vim**
-* [CS107 Guide to vim](https://web.stanford.edu/class/cs107/guide/vim.html)
+**Using VScode with Git**
+* [VS code doc on using git](https://code.visualstudio.com/docs/sourcecontrol/intro-to-git#_staging-and-committing-code-changes)
+
+The lab will be released as a git repository. Once you clone the repo and open it with VScode, VScode provides many useful features that will help you use git source control more easily.
+
+<!-- **Using vim**
+* [CS107 Guide to vim](https://web.stanford.edu/class/cs107/guide/vim.html) 
 
 **Contact**
-<!-- * [Slack Link](http://ee109-spr1819.slack.com/) -->
+ * [Slack Link](http://ee109-spr1819.slack.com/) 
 
-* [Stanford Canvas](https://canvas.stanford.edu/)
+* [Stanford Canvas](https://canvas.stanford.edu/) -->
