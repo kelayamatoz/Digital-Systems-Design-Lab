@@ -404,7 +404,7 @@ Simulate the app using Scala simulation. Report the following measurements from 
 
 This can be found in `gen/CS217/Lab1Part2DramSramExample/info/PostExecution.html`. The three metrics can be found in the red boxes in this picture.
 
-<img src="PostExecution.jpg" alt="PostExecution.html" width="800"/>
+<img src="img/PostExecution.jpg" alt="PostExecution.html" width="800"/>
 
 Reasoning this file will help you understand how to understand the throughput of your design. In the `Lab1Part2DramSramExample` function, there is a comment asking you to fill in these information. Please fill them in.
 
