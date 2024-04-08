@@ -18,8 +18,7 @@ The design of integrated digital systems encompassing both customized software a
 
 **Labs**
 
-* [Lab 1: Getting Started with Digital Systems Design Using Spatial] 
-<!-- (lab1.md) -->
+* [Lab 1: Getting Started with Digital Systems Design Using Spatial](lab1.md)
 
 * [Lab 2: Using Spatial Controllers and Memories]
 <!-- (lab2.md) -->
@@ -52,7 +51,7 @@ TBD
 
 <!-- * [FAQs](common-issues.md) -->
 
-* [Spatial Documentation](https://spatial-lang.readthedocs.io/en/legacy/index.html)
+* [Spatial Documentation](https://spatial-lang.org/)
 
 **Using Github**
 * [How to use Git and Github](https://www.udacity.com/course/how-to-use-git-and-github--ud775)
