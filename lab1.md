@@ -121,6 +121,7 @@ Setting up the CS217 branch of Spatial:
 
 ```shell
 git clone https://github.com/stanford-ppl/spatial.git
+cd spatial
 git checkout CS217
 
 bash bin/update_resources.sh
