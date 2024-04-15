@@ -20,8 +20,7 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Lab 1: Getting Started with Digital Systems Design Using Spatial](lab1.md)
 
-* [Lab 2: Using Spatial Controllers and Memories]
-<!-- (lab2.md) -->
+* [Lab 2: Using Spatial Controllers and Memories](lab2.md)
 
 * [Lab 3: Algorithm-Specific Hardware Design]
 <!-- (lab3.md) -->
