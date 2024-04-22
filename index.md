@@ -32,7 +32,7 @@ The design of integrated digital systems encompassing both customized software a
 
 **Project**
 
-TBD
+* [Spatial Design Flow](spatial-design-flow.md)
 
 **Reports from Previous EE109**
 
