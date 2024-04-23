@@ -577,7 +577,7 @@ by eyeballing your code, there is a way to get actual execution cycles on a cont
 Spatial. 
 -->
 
- <!-- This is the reason for including the --instrumentation flag in our commands.
+<!-- This is the reason for including the --instrumentation flag in our commands.
 
 To run VCS simulation using instrumentation hooks, use the same command as before:
 ```bash
@@ -597,8 +597,8 @@ You will get a screen that looks like this:
 
 If you play around with this screen, you will see that this shows you the control hierarchy in your app, and points each box
 back to the original source code.  
--->
-<!-- To make this a more useful tool, we will now inject the instrumentation results into this
+
+To make this a more useful tool, we will now inject the instrumentation results into this
 page.  Run the script:
 ```bash
 bash scripts/instrument.sh
@@ -615,7 +615,7 @@ and get better performance.
 
 ## Your Turn:
 * With the information from instrumentation results, can you set the parallelization differently to get the fewest clock cycle for your GEMM? What is the smallest cycle number you can get after tuning the application?
- -->
+-->
 
 ## Submission
 You should add the following implementation to each file and fill in ``lab2-part6.md``.
