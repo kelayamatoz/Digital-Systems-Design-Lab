@@ -471,81 +471,6 @@ This is because of the way the loops are written, such that we step through each
 increment the tile for M.  If you want to write the app such that there are no wasteful fill and drain iterations,
 you must combine loops appropriately.
 
-<!--
-### Advanced Banking
-
-Let's now add in more optimizations to improve the performance of this application.  Specifically, we will parallelize two of the
-loops in such a way to expose hierarchical banking.  The following code shows the loops for ``K`` and ``N`` parallelized by 2 and 4
-respectively:
-```scala
-  Accel {
-    Foreach(K by tileK par 2){kk => 
-      val numel_k = min(tileK.to[Int], K - kk)
-      Foreach(M by tileM){mm =>
-        val numel_m = min(tileM.to[Int], M - mm)
-        val tileA_sram = SRAM[T](tileM, tileK)
-        tileA_sram load a(mm::mm+numel_m, kk::kk+numel_k)
-        Foreach(N by tileN par 4){nn =>
-          val numel_n = min(tileN.to[Int], N - nn)
-          val tileB_sram = SRAM[T](tileK, tileN)
-          val tileC_sram = SRAM[T](tileM, tileN).buffer
-          tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n)
-          tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
-
-          // Your code here
-
-          c(mm::mm+numel_m, nn::nn+numel_n) store tileC_sram
-        }
-      }
-    }
-  }
-```
-
-Now let's look at what happens to ``tileB_sram``.  It's first and second indices are both parallelized.
-Index ``n`` is vectorized by 4, while index ``k`` is duplicated for two different values of k when the
-loop is unrolled by 2.  This means we must bank ``tileB_sram`` in both the horizontal and vertical dimensions
-in order to guarantee that all 8 of these accesses will be able to touch unique banks every time we read from this memory.
-The animation below demonstrates how we hierarchically bank this SRAM.
-
-![image](./img/hierbank.gif)
-
-Let's consider the situation if we instead decided to parallelize a different way.  Below is the code for the application
-if we chose to parallelize the loading of tileB_sram by 8 while also parallelizing the ``k`` loop by 2:
-```scala
-  Accel {
-    Foreach(K by tileK par 2){kk => 
-      val numel_k = min(tileK.to[Int], K - kk)
-      Foreach(M by tileM){mm =>
-        val numel_m = min(tileM.to[Int], M - mm)
-        val tileA_sram = SRAM[T](tileM, tileK)
-        tileA_sram load a(mm::mm+numel_m, kk::kk+numel_k)
-        Foreach(N by tileN par 4){nn =>
-          val numel_n = min(tileN.to[Int], N - nn)
-          val tileB_sram = SRAM[T](tileK, tileN)
-          val tileC_sram = SRAM[T](tileM, tileN).buffer
-          tileB_sram load b(kk::kk+numel_k, nn::nn+numel_n par 8)
-          tileC_sram load c(mm::mm+numel_m, nn::nn+numel_n)
-
-          // Your code here
-
-          c(mm::mm+numel_m, nn::nn+numel_n) store tileC_sram
-        }
-      }
-    }
-  }
-```
-
-While the hierarchical banking scheme shown above will still work for this case, where we have 2 banks along the rows
-and 8 banks along the columns, the Spatial compiler will perform a memory-saving optimization called Diagonal Banking.
-In this example, we need to be able to access 8 elements along the column simultaneously, and later in the app we need to
-access 2 elements from different rows simultaneously.  However, these accesses do not occur at the same time, so we do
-not need 16 unique banks (as is implied by the previous example) and can get away with 8 banks.
-
-![image](./img/diagbank.gif)
-
-If the parallelizations of the various accesses are not multiples of each other, the compiler will figure out the most
-minimalistic banking scheme that guarantees correctness.
--->
 
 ### Understanging Performance
 
@@ -570,52 +495,8 @@ data store output
 * Add your implementation to the commented section (`TODO: Implement the full outer product here`) of ``Lab2Part6GEMM`` in the `Lab2GEMM.scala` file.
 * In ``lab2-part6.md``, answer the questions based on the performence gain you observed in `gen/CS217/Lab2Part6GEMM/info/PostExecution.html`.  The answers don't have to be lengthy. Just try to provide the information the questions ask.
 
-<!--
-In order to
-get optimal performance, it is important to balance the stages in your pipelines.  While you could get a good estimate
-by eyeballing your code, there is a way to get actual execution cycles on a controller-by-controller basis using
-Spatial. 
--->
-
-<!-- This is the reason for including the --instrumentation flag in our commands.
-
-To run VCS simulation using instrumentation hooks, use the same command as before:
-```bash
- export TEST_ARGS="--name Lab2Part5GEMM --synth --instrumentation --fpga=VCS"; sbt -Dci=true "; testOnly Lab2Part5GEMM" 
-```
-
-This flag injects performance counters that count the number of cycles each controller is enabled, as well as the number of times a particular controller is done.  Note that performance counters will only be injected in the --synth backend.
-
-Once you compile your app, you should run it normally with the run.sh script.  You may notice that there are some extra lines
-that are spitting out information about the app.  Running the run.sh script created a file in your current directory called
-`instrumentation.txt`, which will be used to populate a visualization of your app.
-
-When we run the simulation for a given test, Spatial creates a file called `PostExecution.html` under the `./gen/CS217/<TEST_NAME>/info/` directory. You can open this using any brower you like (e.g., Chrome, Firefox, etc.).
-
-You will get a screen that looks like this:
-![ctrl](./img/controller.png)
-
-If you play around with this screen, you will see that this shows you the control hierarchy in your app, and points each box
-back to the original source code.  
-
-To make this a more useful tool, we will now inject the instrumentation results into this
-page.  Run the script:
-```bash
-bash scripts/instrument.sh
-```
-
-Now refresh the controller tree page.  There should be a lot of red text, similar to the image shown below:
-![ictrl](./img/icontroller.png)
 
 
-You can now play around with this page and look at how the various stages in your pipelines are performing.  We leave it up
-to the user to figure out how to use parallelizations and rewrite portions of the app to figure out how to balance the pipelines
-and get better performance.
-
-
-## Your Turn:
-* With the information from instrumentation results, can you set the parallelization differently to get the fewest clock cycle for your GEMM? What is the smallest cycle number you can get after tuning the application?
--->
 
 ## Submission
 You should add the following implementation to each file and fill in ``lab2-part6.md``.
