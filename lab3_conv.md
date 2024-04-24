@@ -184,10 +184,14 @@ x395 - 73233 (73233 / 1) [1 iters/parent execution]
 
 To see the html version of this control tree, see `gen/VCS/Lab3Part1Convolution/info/controller_tree.html`.
 
-### Submission
-* Leave your implementation in `Lab3Part1Convolution`.
-* Fill in your control tree result found in `logs/VCS/Lab3Part1Convolution/run.log` into `lab3_submit.md`.
-* Submit a pdf with your GitHub Classroom repository & commit ID you would like to be graded on.
+
+# Submission:
+* Gradescope: a doc with your commit ID & repo
+* Convolution: Leave your implementation under **your Github Classroom repository's** `src/test/scala/Lab3.scala` file.
+* Vitis-Spatial Hello World: Leave your implementation under **your Github Classroom repository's** `hello_world_demo/src/vadd.cpp`
+    * For extra credit, implement your design under the cpp files in **your Github Classroom repository's** `hello_world_extra/src/`.
+* Fill in **your Github Classroom repository's** `lab3_submit.md`
+
 
 ### Debugging
 When you use VCS to simulate code, you have to store the values you want to inspect in your accelerator code (the `Accel` block) to DRAM and bring it back to the host (you can't inspect it by adding print statements inside the `Accel` block). To help you debug, we provide code that dumps the value in the shift register on every iteration. The debugging code is currently commented out, but you can uncomment the lines saying `// FOR DEBUGGING`. However, when you submit your code, comment these lines out.

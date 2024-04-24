@@ -24,7 +24,7 @@ The design of integrated digital systems encompassing both customized software a
 
 * Lab 3: Algorithm-Specific Hardware Design
     * [Part1: Convolution](lab3_conv.md)
-    * [Part2: Vitis-Spatial Hello World]()
+    * [Part2: Vitis-Spatial Hello World](lab3_vitis_spatial.md)
 
 <!-- **Laboratory Links:**
 
