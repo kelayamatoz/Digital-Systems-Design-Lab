@@ -31,38 +31,33 @@ The accelerated application is written in C/C++, OpenCL or RTL with OpenCL APIs.
     </div>
 
 6. SSH into your instance
-    <details>
-    <summary>Option 1: VSCode (We recommend this option when you edit code & run sw/hw emulations) </summary>
+    * Option 1: VSCode (We recommend this option when you edit code & run sw/hw emulations)
     
-    1. Install the 'remote-ssh' extension
-        <div style="padding-left: 0px; padding-bottom: 30px; text-align: center;">
-            <img src="./img/remote-ssh-vsc.png" width="50%">
-        </div>
+        1. Install the 'remote-ssh' extension
+            <div style="padding-left: 0px; padding-bottom: 30px; text-align: center;">
+                <img src="./img/remote-ssh-vsc.png" width="50%">
+            </div>
 
-    2. Press the small button on the lower right and select **Connect to host > Configure SSH Hosts** and choose the first file (this will look something like `\user\$USERNAME\.ssh\config`).
-        <div style="padding-left: 0px; padding-bottom: 30px; text-align: center;">
-            <img src="./img/connect-host-vsc.png" width="50%">
-        </div>
-    3. Add the following entry to the file and save it. The value for `HostName` is the address you copied in step 5. **This address changes whenever you start the instance. So you will have to update this field whenever you stop and re-start the instance.** The 'IdentityFile' field is the location where you saved the private key file in step 1. **In the screenshot shown in step 5, it uses 'root' as the user name, but use 'centos' instead.**
+        2. Press the small button on the lower right and select **Connect to host > Configure SSH Hosts** and choose the first file (this will look something like `\user\$USERNAME\.ssh\config`).
+            <div style="padding-left: 0px; padding-bottom: 30px; text-align: center;">
+                <img src="./img/connect-host-vsc.png" width="50%">
+            </div>
+        3. Add the following entry to the file and save it. The value for `HostName` is the address you copied in step 5. **This address changes whenever you start the instance. So you will have to update this field whenever you stop and re-start the instance.** The 'IdentityFile' field is the location where you saved the private key file in step 1. **In the screenshot shown in step 5, it uses 'root' as the user name, but use 'centos' instead.**
+            ```bash
+            Host ee109-vitis
+                HostName ec2-34-203-199-5.compute-1.amazonaws.com
+                User centos
+                IdentityFile "C:\Users\gina7\.ssh\ginasohn_aws2.pem"
+            ```
+        4. Go back and press the small button on the lower right you clicked in step 6-2 and select **Connect to host**. The host you've just added will now appear. Selecting the newly added AWS host will connect you to your instance. Once you're connected, you can open folders in your instance using the 'File > Open Folder' feature and run code using the 'Terminal > New Terminal' feature.
+
+    * Option 2: Terminal (We recommend this option when you want to open a gui to view the emulation reports) 
+        The value after the `-i` option is the location of the private key.
+
         ```bash
-        Host ee109-vitis
-            HostName ec2-34-203-199-5.compute-1.amazonaws.com
-            User centos
-            IdentityFile "C:\Users\gina7\.ssh\ginasohn_aws2.pem"
-        ```
-    4. Go back and press the small button on the lower right you clicked in step 6-2 and select **Connect to host**. The host you've just added will now appear. Selecting the newly added AWS host will connect you to your instance. Once you're connected, you can open folders in your instance using the 'File > Open Folder' feature and run code using the 'Terminal > New Terminal' feature.
-
-    </details>
+        ssh -i \Users\gina7\.ssh\ginasohn_aws2.pem centos@ec2-34-203-199-5.compute-1.amazonaws.com
+        ``` 
     
-    <details>
-    <summary>Option 2: Terminal (We recommend this option when you want to open a gui to view the emulation reports) </summary>
-    The value after the `-i` option is the location of the private key.
-
-    ```bash
-    ssh -i \Users\gina7\.ssh\ginasohn_aws2.pem centos@ec2-34-203-199-5.compute-1.amazonaws.com
-    ``` 
-    
-    </details>
 
 7. Install packages
     ```bash
