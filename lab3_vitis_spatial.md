@@ -320,6 +320,9 @@ Implement at least one of the method you suggested and show how it improved the 
 
 <br/>
 
+* **For groups with three members: It is mandatory to implement as least one method to improve performance.** The group will receive extra credits only when they implement both methods.
+* **For groups with one or two members**: The group will receive extra credits if aleast one optimization is implemented.
+
 <br/>
 
 # Submission:
