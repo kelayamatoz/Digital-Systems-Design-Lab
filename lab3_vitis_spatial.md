@@ -51,6 +51,8 @@ The accelerated application is written in C/C++, OpenCL or RTL with OpenCL APIs.
             ```
         4. Go back and press the small button on the lower right you clicked in step 6-2 and select **Connect to host**. The host you've just added will now appear. Selecting the newly added AWS host will connect you to your instance. Once you're connected, you can open folders in your instance using the 'File > Open Folder' feature and run code using the 'Terminal > New Terminal' feature.
 
+        <br/>
+
     * Option 2: Terminal (We recommend this option when you want to open a gui to view the emulation reports) 
         The value after the `-i` option is the location of the private key.
 
