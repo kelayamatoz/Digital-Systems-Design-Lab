@@ -22,8 +22,9 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Lab 2: Using Spatial Controllers and Memories](lab2.md)
 
-* [Lab 3: Algorithm-Specific Hardware Design]
+* Lab 3: Algorithm-Specific Hardware Design
     * [Part1: Convolution](lab3_conv.md)
+    * [Part2: Vitis-Spatial Hello World]()
 
 <!-- **Laboratory Links:**
 

@@ -32,7 +32,7 @@ This is executed as:
     <img src="./img/sobel-conv-kernels.gif" width="30%">
 </div>
 
-3. Given that `horz` and `vert` is the result of the convolution operation of each kernel, store the sum of the absolute values to the output. The value should be sqrt(`horz`<sup>2</sup> + `vert`<sup>2</sup>), but this can be approximated with |`horz`| + |`vert`|. To learn more about sobel filters, you can take a look at [this page](https://homepages.inf.ed.ac.uk/rbf/HIPR2/sobel.htm).
+3. Given that `horz` and `vert` is the result of the convolution operation of each kernel, store the sum of the absolute values to the output. The value should be sqrt(`horz`<sup>2</sup> + `vert`<sup>2</sup>), but this can be approximated with `|horz| + |vert|`. To learn more about sobel filters, you can take a look at [this page](https://homepages.inf.ed.ac.uk/rbf/HIPR2/sobel.htm).
 
 
 ## Line Buffers & LUTs
