@@ -134,8 +134,25 @@ To view the emulation results, using the vitis analyzer's gui will be useful. Ho
 
 <br/>
 
+## Creating Alarm for you instance
+AWS instances: We will soon set up a AWS credit limitation for each student. We are planning to allocate $200 − $250 for each student to cover both lab3 and the final project. We will announce more detailed information about this soon. However, in the meanwhile, **please make sure you stop your instances after using it so that you don't mistakenly use up all your credits!!**
+
+To prevent such issues, we **highly recommend** setting up an alarm to stop the instance after a certain duration of low usage.
+
+To set up the alarm, select the **+** button for your instance.
+<div style="padding-left: 0px; padding-top: 0px; text-align: center;">
+        <img src="./img/alarm-1.png" width="80%">
+</div>
+
+Then follow the instructions in this screenshot. This will be an example configuration for setting an alarm to stop the instance after the maximum CPU utilization was lower than 10% for more than an hour.
+<div style="padding-left: 0px; padding-top: 0px; text-align: center;">
+        <img src="./img/alarm-2.png" width="50%">
+</div>
+
+
 <br/>
 
+<br/>
 
 # Part1: A simple Spatial App
 A simple Spatial app that adds two `DATA_SIZE`-long 32bit integer vectors is provided under `src/test/scala/hello-world.scala`.
@@ -318,10 +335,9 @@ You do not have to actually implement this. However, suggest two ways of how you
 ## Extra Credit  (10 points out of 100)
 Implement at least one of the method you suggested and show how it improved the **latency** and **compute unit utilization** by comparing the numbers from the **hardware emulation**. Write down your answers in `lab3_submit.md`. Leave your design in the `hello_world_extra/src` directory.
 
-<br/>
-
 * **For groups with three members: It is mandatory to implement as least one method to improve performance.** The group will receive extra credits only when they implement both methods.
 * **For groups with one or two members**: The group will receive extra credits if aleast one optimization is implemented.
+
 
 <br/>
 
