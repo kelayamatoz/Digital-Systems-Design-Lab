@@ -110,27 +110,20 @@ To view the emulation results, using the vitis analyzer's gui will be useful. Ho
 **For Mac users**, follow the ['X11 forwarding for Mac' section in this link](https://www.businessnewsdaily.com/11035-how-to-use-x11-forwarding.html#what-is-x11-forwarding). 
 
 **For Window users**, follow these steps:
-<details>
-<summary>Setting up X11 Forwarding for Windows </summary>
-
  * Install [PuTTy](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) on your local Windows machine: Download the installer & run it
  * Install [Xming](https://sourceforge.net/projects/xming/) on your local Windows machine: Download the installer & run it
  * Convert your private key from a pem format to a ppk format using PuTTygen. Follow the instructions in [this link](https://www.puttygen.com/convert-pem-to-ppk).
  * Open PuTTy and follow these steps to ssh into your instance.
-    <div style="padding-left: 0px; padding-top: 0px; text-align: center;">
-        <img src="./img/x11-windows-1.png" width="60%">
-    </div>
+    ![x11-win-1](./img/x11-windows-1.png)
 
-    <div style="padding-left: 0px; padding-top: 0px; text-align: center;">
-        <img src="./img/x11-windows-2.png" width="60%">
-    </div>
+    ![x11-win-2](./img/x11-windows-2.png)
+    
  * Activate xming.
  * Run this command in your instance. If you see a clock showing up, you're all set.
     ```bash
     xclock
     ```
-    
-</details>
+
 
 <br/>
 
