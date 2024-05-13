@@ -34,6 +34,8 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Spatial Design Flow](spatial-design-flow.md)
 
+* [Vitis Design Flow](vitis_setup.md)
+
 **Reports from Previous EE109**
 
 **2017-18**
