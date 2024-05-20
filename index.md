@@ -36,6 +36,8 @@ The design of integrated digital systems encompassing both customized software a
 
 * [Vitis Design Flow](vitis_setup.md)
 
+* [F1 FPGA Tutorial](fpga-f1-tutorial.md)
+
 **Reports from Previous EE109**
 
 **2017-18**
