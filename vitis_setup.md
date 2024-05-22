@@ -1,3 +1,13 @@
+# Vitis Design Flow
+1. [How to create project from scratch](./vitis_setup.md#how-to-create-project-from-scratch)
+2. [How to get the simulation results?](./vitis_setup.md#how-to-get-the-simulation-results)
+    * [Test Result](./vitis_setup.md#test-result)
+    * [Performance (Latency)](./vitis_setup.md#performance-latency)
+    * [Resource Utilization](./vitis_setup.md#resource-utilization)
+3. [Are we meant to use Vitis HLS in IDE mode or full on script mode?](./vitis_setup.md#are-we-meant-to-use-vitis-hls-in-ide-mode-or-full-on-script-mode)
+4. [Tips on how to actually adapt software to a Vitis HLS system on the F1](./vitis_setup.md#tips-on-how-to-actually-adapt-software-to-a-vitis-hls-system-on-the-f1)
+
+
 ## How to create project from scratch:
 This is essentially trying to replicate the folder structure of the `hello_world_demo` folder we used for lab3.
 Your project folder should be placed under `$VITIS_DIR/examples/xilinx`. The structure of the folder should be:
@@ -122,6 +132,30 @@ $VITIS_DIR/examples/xilinx
 
 7. Copy in the `xrt.ini` file from the `hello_world_demo` folder in lab3. You can change the options based on what you would like to record during the emulation.
 
+
+## How to get the simulation results?
+### Test Result
+If you add print statements of whether the test passed or not in your host code, the test result will be printed out in the terminal.
+
+### Performance (Latency)
+The kernel execution time can be found in the 'profile summary' tab in the `xrt.run_summary' file.
+You can open this with a gui by running:
+```bash
+cd $VITIS_DIR/examples/xilinx/hello_world_demo
+vitis_analyzer xrt.run_summary
+```
+
+### Resource Utilization
+The compute unit utilization can be found in the 'profile summary' tab in the `xrt.run_summary' file.
+You can open this with a gui by running (replace the `$PROJECT_NAME` with your project directory name):
+```bash
+cd $VITIS_DIR/examples/xilinx/$PROJECT_NAME
+vitis_analyzer xrt.run_summary
+```
+
+<div style="padding-left: 0px; padding-top: 0px; text-align: center;">
+    <img src="./img/hw_emul_off.png" width="90%">
+</div>
 
 
 
