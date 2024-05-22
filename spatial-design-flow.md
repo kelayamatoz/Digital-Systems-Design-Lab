@@ -10,7 +10,7 @@ For the scope of this course, you are required to synthesize and do the placemen
 There are three simulations provided to help you check the correctness and improve performance of your design.
 
 * Scalasim: This is the simulation we have used so far for the labs. It is much faster than the other two backends (VCS and ZCU) as it does not generate the Verilog desciption of your design and run synthesis. Therefore, the fast speed comes with the cost that it maybe less accurate and may not provide all the low-level profiling details of your design. However, it reports estimates of the resource utilization for your application and it can serve as a useful profiling tool that will help you to iterate over many designs in the early stage of your project.
-	> Note: Some components are not supported in Scalasim. For example, Scalasim cannot properly simulate the line buffer we have used in lab3. If you want to use line buffers, you will have to simulate it with VCS like how we did in lab3.
+	> Known issues on Scalasim: read [this section](./spatial-design-flow.md#scalasim-line-buffers)
 
 * VCS: Unlike Scala simulation, VCS simulation generates RTL description (this will be in **Verilog**) of your design. Compared to Scala simulation, VCS simulation takes longer to complete (because the circuit needs to be simulated at every clock cycle), but it gives a simulation environment that's more similar to what will be running on the board. For example, you can have a design that passes the Scala simulation, but fails the VCS simulation because the circuit that gets generated is not correct.
 	> NOTE: VCS and ZCU uses licensed software such as VCS and Vivado. We have these installed in the lagos server, so if you want to run these simulations, log into the lagos server with your SUID.
@@ -35,7 +35,9 @@ There are three simulations provided to help you check the correctness and impro
     * [How to run ZCU Backend](./spatial-design-flow.md#how-to-run-zcu-backend)
     * [Synthesis reports](./spatial-design-flow.md#synthesis-reports)
 		* [Resource Utilization](./spatial-design-flow.md#resource-utilization-2)
-
+4. [Known Issues](./spatial-design-flow.md#known-issue)
+	* [Scalasim: line buffers](./spatial-design-flow.md#scalasim-line-buffers)
+	* [Using math functions](./spatial-design-flow.md#using-math-functions)
 ---
 ## Scalasim
 ### How to run Scalasim simulation
@@ -201,3 +203,49 @@ In the context of FPGA design, particularly when using Xilinx FPGAs and the Viva
 	* Each slice typically contains a set of Look-Up Tables (LUTs), flip-flops, and multiplexers.
 
 In summary, the main difference lies in the hierarchy and scale of functionality: a CLB is a larger structural unit in an FPGA that contains multiple slices, which are the actual implementers of logic. The CLB coordinates the operations of its constituent slices to execute complex logic and storage operations. In Vivado, you'll often deal with both terms when defining and analyzing the physical layout and logical implementation of your FPGA designs.
+
+---
+## Known Issue
+### Scalasim: line buffers
+Scalasim can simulate the building blocks we have used so far in the labs except for line buffers. Unfortunately, Scalasim cannot properly simulate the line buffer, so if you want to use line buffers, you will have to simulate it with VCS like how we did in lab3.
+
+### Using Math Functions
+For math functions such as power, exponential, cos, sin, random number generation, etc., you have to implement them manually in your accelerator design or generate the numbers that use this in the host code region and read them in.
+For relatively simple operations such as `sqrt` and `abs`, they are already implemented and will work for VCS and synthesis.
+```scala
+Foreach(tileSize by 1) { ii =>
+	b2(ii) = b1(ii) + sqrt(x)
+}
+```
+```scala
+Foreach(tileSize by 1) { ii =>
+	b2(ii) = b1(ii) + abs(x)
+}
+```
+If you would like to implement the math functions in your accelerator design consider either one of the following methods. Both algorithms will be an approximation; For CORDIC, you adjust the number of itertions and for Taylor Expansion, you adjust the number of terms for accuracy. Therefore, make sure what is the level of precision your application requires and check whether your implementation does not affect the correctness / quality of your application:
+* CORDIC Algorithm
+	* [CORDIC Basics](https://www.eit.lth.se/fileadmin/eit/courses/eitf35/2017/CORDIC_For_Dummies.pdf)
+	* [Learn CORDIC with Chatgpt](./CORDIC.md): I (Gina) am also new to using CORDIC to implement math functions. I used chatgpt to get a first grasp of what the algorithm is and how I implement it, which ended up being quite useful. I collected parts of the responses I got from ChatGPT in this doc. Hope this helps some of you who are also new to CORDIC.
+* Taylor Expansion:
+	* [Taylor Series Expansions of Exponential Functions](https://www.efunda.com/math/taylor_series/exponential.cfm)
+	* [Taylor Series Expansions of sin & cos Functions](https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/242ad6a22b86b20799afc7f207cd4271_MIT18_01SCF10_Ses99c.pdf)
+
+
+**Some Pros and Cons for each methods:**
+* CORDIC Algorithm
+	* Pros:
+		- Hardware Efficiency: No Multipliers Needed. CORDIC only requires addition, subtraction, bit-shifting, and look-up tables, making it very efficient in terms of hardware resources.
+		-  Versatility: CORDIC can compute a wide range of functions, including trigonometric, hyperbolic, exponential, and logarithmic functions, as well as square roots.
+		- Iterative Refinement: The precision can be easily adjusted by changing the number of iterations, without having to change the euqation you are implementing.
+	* Cons:
+		* CORDIC Gain: The CORDIC gain (Scaling Factor) must be accounted for in the final result, adding an additional step to the computation.
+		* Precomputed Values: Requires precomputed angle values stored in look-up tables, which consume some memory resources.
+
+* Taylor Series
+	* Pros:
+		* Simplicity for Specific Functions: For certain functions, Taylor series can provide a direct and straightforward method for approximation. The mathematical foundation is easier to understand and implement for specific functions.
+		* Accuracy for Small Intervals: For small intervals around the expansion point, the Taylor series can provide high accuracy with a few terms.
+	* Cons:
+		* Resource Intensive: Higher-order terms require multipliers, which can be resource-intensive on FPGAs.
+		* Range of Convergence: The Taylor series is accurate only within a certain range around the expansion point. For values outside this range, the accuracy diminishes quickly.
+		* Non-Iterative Nature: If you want to increase the number of terms for better accuracy, the equation you will have to implement will change.
