@@ -216,7 +216,7 @@ For math functions such as power, exponential, cos, sin, random number generatio
 If you would like to implement the math functions in your accelerator design, consider either one of the following methods. Both algorithms will be an approximation; For CORDIC, you adjust the number of itertions and for Taylor Expansion, you adjust the number of terms for accuracy. Therefore, make sure what is the level of precision your application requires and check whether your implementation does not affect the correctness / quality of your application:
 * CORDIC Algorithm
 	* [CORDIC Basics](https://www.eit.lth.se/fileadmin/eit/courses/eitf35/2017/CORDIC_For_Dummies.pdf)
-	* [Learn CORDIC with Chatgpt](./CORDIC.md): I (Gina) am also new to using CORDIC to implement math functions. I used chatgpt to get a first grasp of what the algorithm is and how I implement it, which ended up being quite useful. I collected parts of the responses I got from ChatGPT in this doc. Hope this helps some of you who are also new to CORDIC.
+	* [Learn CORDIC with Chatgpt](https://github.com/kelayamatoz/Digital-Systems-Design-Lab/blob/master/CORDIC.md): I (Gina) am also new to using CORDIC to implement math functions. I used chatgpt to get a first grasp of what the algorithm is and how I implement it, which ended up being quite useful. I collected parts of the responses I got from ChatGPT in this doc. Hope this helps some of you who are also new to CORDIC.
 * Taylor Expansion:
 	* [Taylor Series Expansions of Exponential Functions](https://www.efunda.com/math/taylor_series/exponential.cfm)
 	* [Taylor Series Expansions of sin & cos Functions](https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/242ad6a22b86b20799afc7f207cd4271_MIT18_01SCF10_Ses99c.pdf)
