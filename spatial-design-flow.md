@@ -18,6 +18,7 @@ There are three simulations provided to help you check the correctness and impro
 * ZCU: While the VCS simulation will generate the RTL description and do a cycle-accurate simulation on it, it does not do the logic synthesis and placement and routing. This backend will lower further from your RTL description and will target the Xilinx ZCU102 FPGA by conducting synthesis and placement and routing. This will give you detailed reports of your design's resource utilization on the target FPGA.
 	> NOTE: VCS and ZCU uses licensed software such as VCS and Vivado. We have these installed in the lagos server, so if you want to run these simulations, log into the lagos server with your SUID.
 
+---
 ## Scamasim
 You can run the scala simulation by running the following command (you should replace `$PROJECT_DIRECTORY` and `$TEST_NAME`):
 
@@ -28,7 +29,7 @@ sbt -Dtest.CS217=true "; testOnly $TEST_NAME"
 
 ### Simulation reports
 #### Cycle Count
-After running your application, artifacts will be generated into `gen/CS217/<appname>`. The most important files are:
+After running your application, artifacts will be generated into `gen/CS217/$TEST_NAME`. The most important files are:
 * `SimulatedExecutionSummary_*.log`: This captures the cycle count and trip count of each controller
 * `info/PostExecution.html`: This contains an html-based information dump of the cycle count of each controller
 
@@ -42,7 +43,7 @@ Both of the files show the line of code for each controller, so you can use this
 For more detailed information, you can look at `info/PostExecution.html`. It contains informations such as initiaion interval and latency for the `Foreach` loops. (If you are not familiar with initiation interval or pipelining, read [this](https://www.intel.com/content/www/us/en/docs/programmable/683152/24-1/pipeline-loops.html).)
 
 #### Resource Utilization
-Scalasim also gives you a rough estimate of the resource utilization of your application. Whenever you run a simulation, a `Main.json` file will be created under `gen/CS217/<appname>/reports/`. For example, the file for `Lab1Part2DramSramExample` in Lab 1 will look like:
+Scalasim also gives you a rough estimate of the resource utilization of your application. Whenever you run a simulation, a `Main.json` file will be created under `gen/CS217/$TEST_NAME/reports/`. For example, the file for `Lab1Part2DramSramExample` in Lab 1 will look like:
 ```json
 {
 	"bram": {
@@ -63,10 +64,9 @@ python computeResourceUtilization.py $file_name
 If you succeeded running the simulation, the terminal will let you know.
 
 **`SimulatedExecutionLog_*.log`**
-You can find this file under the `gen/CS217/<appname>` folder. This captures the print statements in your test case
+You can find this file under the `gen/CS217/$TEST_NAME` folder. This captures the print statements in your test case
 
 ---
-
 ## VCS
 
 <!-- ### Prerequisite: Update & Rebuild Spatial
@@ -113,6 +113,7 @@ At the end of the file, you will be able to see the print statements in your tes
 
 
 
+---
 ## ZCU
 ### How to run the ZCU backend:
 ```bash
