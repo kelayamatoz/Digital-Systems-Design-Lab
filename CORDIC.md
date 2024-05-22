@@ -4,14 +4,14 @@ This is a pseudocode example for implementing the CORDIC algorithm to compute th
 
 ## Pseudocode Overview
 1. **Initialization**:
-   - Set initial values for $ x $, $ y $, and $ z $.
+   - Set initial values for $x$, $y$, and $z$.
    - Precompute the CORDIC angles θ_i (atan values).
 
 2. **CORDIC Iterations**:
-   - Iterate through a fixed number of steps to update $ x $, $ y $, and $ z $ using the CORDIC equations in vectoring mode.
+   - Iterate through a fixed number of steps to update $x$, $y$, and $z$ using the CORDIC equations in vectoring mode.
 
 3. **Scaling**:
-   - Apply the CORDIC gain $ K $ to the final result to get the accurate square root.
+   - Apply the CORDIC gain $K $to the final result to get the accurate square root.
 
 
 ## Python Pseudocode
@@ -149,17 +149,17 @@ In the CORDIC algorithm, the CORDIC gain (K) and precomputed values (angles) are
 
 The CORDIC gain (K) is a scaling factor that accumulates as a result of the iterative rotations or vectoring operations. For each iteration, the length of the vector is scaled by a factor $\sqrt{1 + 2^{-2i}}$. The overall CORDIC gain after $n$ iterations is the product of these individual gains.
 
-$ K_n = \prod_{i=0}^{n-1} \frac{1}{\sqrt{1 + 2^{-2i}}} $
+$K_n = \prod_{i=0}^{n-1} \frac{1}{\sqrt{1 + 2^{-2i}}}$
 
-For a large number of iterations, the CORDIC gain approaches a constant value. For example, after about 16 iterations, $ K \approx 1.64676 $.
+For a large number of iterations, the CORDIC gain approaches a constant value. For example, after about 16 iterations, $K \approx 1.64676$.
 
 ### Precomputed Angles
 
-The precomputed values in the CORDIC algorithm are typically the angles corresponding to $ \arctan(2^{-i}) $ for rotation mode or hyperbolic functions, depending on the application. These angles are used to adjust the vector's direction in each iteration.
+The precomputed values in the CORDIC algorithm are typically the angles corresponding to $\arctan(2^{-i})$ for rotation mode or hyperbolic functions, depending on the application. These angles are used to adjust the vector's direction in each iteration.
 
 The precomputed angles for the basic CORDIC rotation mode are:
 
-$ θ_i = \arctan(2^{-i}) $
+$θ_i = \arctan(2^{-i})$
 
 These values are computed once and stored in a lookup table (LUT) for use during the iterative process.
 
@@ -169,11 +169,11 @@ These values are computed once and stored in a lookup table (LUT) for use during
 
 To calculate the CORDIC gain for $n$ iterations:
 
-$ K_n = \prod_{i=0}^{n-1} \frac{1}{\sqrt{1 + 2^{-2i}}} $
+$K_n = \prod_{i=0}^{n-1} \frac{1}{\sqrt{1 + 2^{-2i}}}$
 
 For example, for 10 iterations:
 
-$ K_{10} = \prod_{i=0}^{9} \frac{1}{\sqrt{1 + 2^{-2i}}} $
+$K_{10} = \prod_{i=0}^{9} \frac{1}{\sqrt{1 + 2^{-2i}}}$
 
 You can approximate this gain value using the product formula.
 
@@ -183,8 +183,8 @@ The precomputed angles for the first few iterations are:
 
 $θ_0 = \arctan(2^0) = 45^\circ \approx 0.785398163 \text{ radians}$
 
-$ θ_1 = \arctan(2^{-1}) = 26.56505118^\circ \approx 0.463647609 \text{ radians} $
+$θ_1 = \arctan(2^{-1}) = 26.56505118^\circ \approx 0.463647609 \text{ radians}$
 
-$ θ_2 = \arctan(2^{-2}) = 14.03624347^\circ \approx 0.244978663 \text{ radians} $
+$θ_2 = \arctan(2^{-2}) = 14.03624347^\circ \approx 0.244978663 \text{ radians}$
 
-$ θ_3 = \arctan(2^{-3}) = 7.125016349^\circ \approx 0.124354995 \text{ radians} $
+$θ_3 = \arctan(2^{-3}) = 7.125016349^\circ \approx 0.124354995 \text{ radians}$
