@@ -30,7 +30,6 @@ sbt -Dtest.CS217=true "; testOnly $TEST_NAME"
 #### Cycle Count
 After running your application, artifacts will be generated into `gen/CS217/<appname>`. The most important files are:
 * `SimulatedExecutionSummary_*.log`: This captures the cycle count and trip count of each controller
-* `SimulatedExecutionLog_*.log`: This captures the print statements in your test case
 * `info/PostExecution.html`: This contains an html-based information dump of the cycle count of each controller
 
 Both of the files show the line of code for each controller, so you can use this information to match it with your code. For example, in lab1's Lab1Part2DramSramExample, you can use the `SimulatedExecutionSummary_*.log` to understand how long each parts of your codeo took like this:
@@ -59,6 +58,15 @@ python computeResourceUtilization.py $file_name
 # ex: python computeResourceUtilization.py gen/CS217/Lab1Part2DramSramExample/reports/Main.json
 ```
 
+#### Test Results
+**Terminal**
+If you succeeded running the simulation, the terminal will let you know.
+
+**`SimulatedExecutionLog_*.log`**
+You can find this file under the `gen/CS217/<appname>` folder. This captures the print statements in your test case
+
+---
+
 ## VCS
 
 <!-- ### Prerequisite: Update & Rebuild Spatial
@@ -70,6 +78,7 @@ make publish
 ``` -->
 
 ### How to run VCS simulation:
+You can run the VCS simulation by running the following command (you should replace `$PROJECT_DIRECTORY` and `$TEST_NAME`):
 ```bash
 cd $PROJECT_DIRECTORY 
 source exports.sh
