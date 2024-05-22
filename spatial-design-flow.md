@@ -9,16 +9,17 @@ For the scope of this course, you are required to synthesize and do the placemen
 
 There are three simulations provided to help you check the correctness and improve performance of your design.
 
-* Scalasim: This is the simulation we have used so far for the labs. It is much faster than the other two backends (VCS and Zynq) as it does not generate the Verilog desciption of your design and run synthesis. Therefore, the fast speed comes with the cost that it maybe less accurate and may not provide all the low-level profiling details of your design. However, it reports estimates of the resource utilization for your application and the accuracy gap for the cycle counts are small enough for it to serve as a useful profiling tool that will help you to iterate over many designs in the early stage of your project.
+* Scalasim: This is the simulation we have used so far for the labs. It is much faster than the other two backends (VCS and ZCU) as it does not generate the Verilog desciption of your design and run synthesis. Therefore, the fast speed comes with the cost that it maybe less accurate and may not provide all the low-level profiling details of your design. However, it reports estimates of the resource utilization for your application and it can serve as a useful profiling tool that will help you to iterate over many designs in the early stage of your project.
+	> Note: Some components are not supported in Scalasim. For example, Scalasim cannot properly simulate the line buffer we have used in lab3. If you want to use line buffers, you will have to simulate it with VCS like how we did in lab3.
 
 * VCS: Unlike Scala simulation, VCS simulation generates RTL description (this will be in **Verilog**) of your design. Compared to Scala simulation, VCS simulation takes longer to complete (because the circuit needs to be simulated at every clock cycle), but it gives a simulation environment that's more similar to what will be running on the board. For example, you can have a design that passes the Scala simulation, but fails the VCS simulation because the circuit that gets generated is not correct.
+	> NOTE: VCS and ZCU uses licensed software such as VCS and Vivado. We have these installed in the lagos server, so if you want to run these simulations, log into the lagos server with your SUID.
 
 * ZCU: While the VCS simulation will generate the RTL description and do a cycle-accurate simulation on it, it does not do the logic synthesis and placement and routing. This backend will lower further from your RTL description and will target the Xilinx ZCU102 FPGA by conducting synthesis and placement and routing. This will give you detailed reports of your design's resource utilization on the target FPGA.
-
-> NOTE: VCS and ZCU uses licensed software such as VCS and Vivado. We have these installed in the lagos server, so if you want to run these simulations, log into the lagos server with your SUID.
+	> NOTE: VCS and ZCU uses licensed software such as VCS and Vivado. We have these installed in the lagos server, so if you want to run these simulations, log into the lagos server with your SUID.
 
 ## Scamasim
-You can run the scala simulation by running the following command (you should replace $PROJECT_DIRECTORY $TEST_NAME):
+You can run the scala simulation by running the following command (you should replace `$PROJECT_DIRECTORY` and `$TEST_NAME`):
 
 ```bash
 cd $PROJECT_DIRECTORY  # Change this to your project directory
@@ -29,7 +30,8 @@ sbt -Dtest.CS217=true "; testOnly $TEST_NAME"
 #### Cycle Count
 After running your application, artifacts will be generated into `gen/CS217/<appname>`. The most important files are:
 * `SimulatedExecutionSummary_*.log`: This captures the cycle count and trip count of each controller
-* `info/PostExecution.html`: This contains an html-based information dump
+* `SimulatedExecutionLog_*.log`: This captures the print statements in your test case
+* `info/PostExecution.html`: This contains an html-based information dump of the cycle count of each controller
 
 Both of the files show the line of code for each controller, so you can use this information to match it with your code. For example, in lab1's Lab1Part2DramSramExample, you can use the `SimulatedExecutionSummary_*.log` to understand how long each parts of your codeo took like this:
 
@@ -51,7 +53,7 @@ Scalasim also gives you a rough estimate of the resource utilization of your app
 	"fixed_ops": 5
 }
 ```
-You can also user the provided python script `computeResourceUtilization.py` which summarizes the resource utilization in a more concise manner. Run the following script with the proper `$file_name`. (Note: **Memory sizes in this output are given in bits, not bytes**)
+You can also use the provided python script [computeResourceUtilization.py](https://github.com/cs217/example_student_code/blob/master/computeResourceUtilization.py) which summarizes the resource utilization in a more concise manner. Run the following script with the proper `$file_name`. (Note: **Memory sizes in this output are given in bits, not bytes**)
 ```bash
 python computeResourceUtilization.py $file_name
 # ex: python computeResourceUtilization.py gen/CS217/Lab1Part2DramSramExample/reports/Main.json
@@ -77,6 +79,14 @@ For VCS and ZCU backend, you will have to set several environment variables usin
 
 ### Simulation reports
 
+#### Cycle Count
+To see the cycle count for the controllers, open the `gen/VCS/$TEST_NAME/info/controller_tree.html`.
+
+#### Resource Utilization
+N/A
+(To get the resource utilization information, you need to do placement and routing, which happens in the synthesis step.)
+
+#### Test Results
 **Terminal**
 If you succeeded running the simulation, the terminal will let you know.
 <img src="./img/vcs_success_terminal.png" width="70%">
@@ -91,8 +101,6 @@ At the end of the file, you will be able to see the print statements in your tes
 <img src="./img/vcs_runlog.png" width="70%">
 
 
-**Controller Tree**
-To see the cycle count for the controllers, open the `gen/VCS/$TEST_NAME/info/controller_tree.html`.
 
 
 
@@ -103,10 +111,12 @@ cd $PROJECT_DIRECTORY
 source exports.sh
 sbt -Dtest.ZCU=true "; testOnly $TEST_NAME" 
 ```
-
+For VCS and ZCU backend, you will have to set several environment variables using the `source exports.sh` command. Use the expoerts.sh file placed in lab3's skeleton repository.
 The synthesis process would take ~20 min to run.
 
 ### Simulation reports
+#### Cycle Count
+#### Resource Utilization
 After the synthesis finishes, you will have access to the report of your design's resource utilization on the target FPGA. The report is located in `labs/gen/$app_name/verilog-zcu/`. The resource utilization report is named `par_utilization.rpt`, and it contains information that looks like this (This is an example for `Lab2Part1SimpleMemReduce`):
 
 ```bash
@@ -143,15 +153,11 @@ If you would like to see how much on-chip memory your design requires, see the `
 +--------------------------+------------+-----------+--------+------------+
 ```
 
-If you would like to learn more about the report, watching this [videa](https://www.xilinx.com/video/hardware/analyzing-device-resource-statistics-in-vivado.html#t=2m19s) will be helpful.
+If you would like to learn more about the report, watching this [video](https://www.xilinx.com/video/hardware/analyzing-device-resource-statistics-in-vivado.html#t=2m19s) will be helpful.
 (The video uses 'Slice' instead of 'CLB', but you can think of them similarly.)
 
-
-<details>
-<summary>Difference between 'Slice' and 'CLB'</summary>
-
+**Difference between 'Slice' and 'CLB'** <br/>
 In the context of FPGA design, particularly when using Xilinx FPGAs and the Vivado design suite, the terms "slice" and "Configurable Logic Block (CLB)" refer to specific components of the FPGA architecture. 
-
 * **Configurable Logic Block (CLB)**:
 	* A CLB is a fundamental building block of Xilinx FPGA architectures. It comprises several finer-grain components that provide the logic capabilities of the FPGA.
 	* Typically, a CLB contains multiple slices (the exact number can vary based on the specific FPGA family), and these slices are the elements that actually implement the logic.
@@ -161,4 +167,3 @@ In the context of FPGA design, particularly when using Xilinx FPGAs and the Viva
 	* Each slice typically contains a set of Look-Up Tables (LUTs), flip-flops, and multiplexers.
 
 In summary, the main difference lies in the hierarchy and scale of functionality: a CLB is a larger structural unit in an FPGA that contains multiple slices, which are the actual implementers of logic. The CLB coordinates the operations of its constituent slices to execute complex logic and storage operations. In Vivado, you'll often deal with both terms when defining and analyzing the physical layout and logical implementation of your FPGA designs.
-</details>
