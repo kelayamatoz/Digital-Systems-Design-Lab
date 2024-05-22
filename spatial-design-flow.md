@@ -211,18 +211,8 @@ Scalasim can simulate the building blocks we have used so far in the labs except
 
 ### Using Math Functions
 For math functions such as power, exponential, cos, sin, random number generation, etc., you have to implement them manually in your accelerator design or generate the numbers that use this in the host code region and read them in.
-For relatively simple operations such as `sqrt` and `abs`, they are already implemented and will work for VCS and synthesis.
-```scala
-Foreach(tileSize by 1) { ii =>
-	b2(ii) = b1(ii) + sqrt(x)
-}
-```
-```scala
-Foreach(tileSize by 1) { ii =>
-	b2(ii) = b1(ii) + abs(x)
-}
-```
-If you would like to implement the math functions in your accelerator design consider either one of the following methods. Both algorithms will be an approximation; For CORDIC, you adjust the number of itertions and for Taylor Expansion, you adjust the number of terms for accuracy. Therefore, make sure what is the level of precision your application requires and check whether your implementation does not affect the correctness / quality of your application:
+
+If you would like to implement the math functions in your accelerator design, consider either one of the following methods. Both algorithms will be an approximation; For CORDIC, you adjust the number of itertions and for Taylor Expansion, you adjust the number of terms for accuracy. Therefore, make sure what is the level of precision your application requires and check whether your implementation does not affect the correctness / quality of your application:
 * CORDIC Algorithm
 	* [CORDIC Basics](https://www.eit.lth.se/fileadmin/eit/courses/eitf35/2017/CORDIC_For_Dummies.pdf)
 	* [Learn CORDIC with Chatgpt](./CORDIC.md): I (Gina) am also new to using CORDIC to implement math functions. I used chatgpt to get a first grasp of what the algorithm is and how I implement it, which ended up being quite useful. I collected parts of the responses I got from ChatGPT in this doc. Hope this helps some of you who are also new to CORDIC.
