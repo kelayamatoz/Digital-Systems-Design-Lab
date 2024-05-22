@@ -19,7 +19,27 @@ There are three simulations provided to help you check the correctness and impro
 	> NOTE: VCS and ZCU uses licensed software such as VCS and Vivado. We have these installed in the lagos server, so if you want to run these simulations, log into the lagos server with your SUID.
 
 ---
-## Scamasim
+1. [Scalasim](./spatial-design-flow.md#scalasim)
+    * [How to run Scalasim simulation](./spatial-design-flow.md#how-to-run-scalasim-simulation)
+    * [Simulation reports](./spatial-design-flow.md#simulation-reports)
+		* [Cycle Count](./spatial-design-flow.md#cycle-count)
+		* [Resource Utilization](./spatial-design-flow.md#resource-utilization)
+		* [Test Results](./spatial-design-flow.md#test-results)
+2. [VCS](./spatial-design-flow.md#vcs)
+    * [How to run VCS simulation](./spatial-design-flow.md#how-to-run-vcs-simulation)
+    * [Simulation reports](./spatial-design-flow.md#simulation-reports-1)
+		* [Cycle Count](./spatial-design-flow.md#cycle-count-1)
+		* [Resource Utilization](./spatial-design-flow.md#resource-utilization-1)
+		* [Test Results](./spatial-design-flow.md#test-results-1)
+3. [ZCU](./spatial-design-flow.md#zcu)
+    * [How to run ZCU Backend](./spatial-design-flow.md#how-to-run-zcu-backend)
+    * [Simulation reports](./spatial-design-flow.md#simulation-reports-2)
+		* [Cycle Count](./spatial-design-flow.md#cycle-count-2)
+		* [Resource Utilization](./spatial-design-flow.md#resource-utilization-2)
+		* [Test Results](./spatial-design-flow.md#test-results-2)
+---
+## Scalasim
+### How to run Scalasim simulation
 You can run the scala simulation by running the following command (you should replace `$PROJECT_DIRECTORY` and `$TEST_NAME`):
 
 ```bash
@@ -77,7 +97,7 @@ git pull
 make publish
 ``` -->
 
-### How to run VCS simulation:
+### How to run VCS simulation
 You can run the VCS simulation by running the following command (you should replace `$PROJECT_DIRECTORY` and `$TEST_NAME`):
 ```bash
 cd $PROJECT_DIRECTORY 
@@ -115,7 +135,7 @@ At the end of the file, you will be able to see the print statements in your tes
 
 ---
 ## ZCU
-### How to run the ZCU backend:
+### How to run the ZCU backend
 ```bash
 cd $PROJECT_DIRECTORY 
 source exports.sh
