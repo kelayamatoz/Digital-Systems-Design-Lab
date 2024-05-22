@@ -38,6 +38,7 @@ There are three simulations provided to help you check the correctness and impro
 4. [Known Issues](./spatial-design-flow.md#known-issue)
 	* [Scalasim: line buffers](./spatial-design-flow.md#scalasim-line-buffers)
 	* [Using math functions](./spatial-design-flow.md#using-math-functions)
+
 ---
 ## Scalasim
 ### How to run Scalasim simulation
