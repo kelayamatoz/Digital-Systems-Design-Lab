@@ -33,10 +33,9 @@ There are three simulations provided to help you check the correctness and impro
 		* [Test Results](./spatial-design-flow.md#test-results-1)
 3. [ZCU](./spatial-design-flow.md#zcu)
     * [How to run ZCU Backend](./spatial-design-flow.md#how-to-run-zcu-backend)
-    * [Simulation reports](./spatial-design-flow.md#simulation-reports-2)
-		* [Cycle Count](./spatial-design-flow.md#cycle-count-2)
+    * [Synthesis reports](./spatial-design-flow.md#synthesis-reports)
 		* [Resource Utilization](./spatial-design-flow.md#resource-utilization-2)
-		* [Test Results](./spatial-design-flow.md#test-results-2)
+
 ---
 ## Scalasim
 ### How to run Scalasim simulation
@@ -142,12 +141,11 @@ source exports.sh
 sbt -Dtest.ZCU=true "; testOnly $TEST_NAME" 
 ```
 For VCS and ZCU backend, you will have to set several environment variables using the `source exports.sh` command. Use the expoerts.sh file placed in lab3's skeleton repository.
-The synthesis process would take ~20 min to run.
+The synthesis process would take 30 min ~ 1 hour to run.
 
-### Simulation reports
-#### Cycle Count
+### Synthesis reports
 #### Resource Utilization
-After the synthesis finishes, you will have access to the report of your design's resource utilization on the target FPGA. The report is located in `labs/gen/$app_name/verilog-zcu/`. The resource utilization report is named `par_utilization.rpt`, and it contains information that looks like this (This is an example for `Lab2Part1SimpleMemReduce`):
+After the synthesis finishes, you will have access to the report of your design's resource utilization on the target FPGA. The report is located in `gen/$TEST_NAME/verilog-zcu/`. The resource utilization report is named `par_utilization.rpt`, and it contains information that looks like this (This is an example for `Lab2Part1SimpleMemReduce`):
 
 ```bash
 +--------------------------------------+------+-------+-----------+-------+
