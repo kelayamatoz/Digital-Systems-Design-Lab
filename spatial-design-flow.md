@@ -143,6 +143,12 @@ sbt -Dtest.ZCU=true "; testOnly $TEST_NAME"
 For VCS and ZCU backend, you will have to set several environment variables using the `source exports.sh` command. Use the expoerts.sh file placed in lab3's skeleton repository.
 The synthesis process would take 30 min ~ 1 hour to run.
 
+#### Known issues during synthesis
+When running synthesis, there are some issues with building the host software. So you will see an error message in the terminal that looks like:
+<img src="./img/synth_error.png" width="70%">
+
+**However, this does not affect the synthesis stage of your hardware design. Check if the `end.log` file has been properly created under `gen/ZCU/$TEST_NAME/`.** The `end.log` contains the timestamp when the hardware synthesis is completed (this will usually be a 10-digit number). If you can find this file and can see the resource utilization report, then your hardware design has been successfully synthesized. The following section will explain how to see the resource utilization report.
+
 ### Synthesis reports
 #### Resource Utilization
 After the synthesis finishes, you will have access to the report of your design's resource utilization on the target FPGA. The report is located in `gen/$TEST_NAME/verilog-zcu/`. The resource utilization report is named `par_utilization.rpt`, and it contains information that looks like this (This is an example for `Lab2Part1SimpleMemReduce`):
