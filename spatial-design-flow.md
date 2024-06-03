@@ -164,6 +164,7 @@ The figure below shows the basic FPGA structure that consists of an array of:
 - a set of programmable input and output pads around the device
 
 <img src="img/fpga-diagram.jpg" alt="fpga-diagram" width="800"/>
+(ref: https://www.sciencedirect.com/science/article/pii/S0065245820300899)
 
 You can access how much of the resources your design is using by looking at the following sections in the report `par_utilization.rpt`:
 - CLB Logic
@@ -224,6 +225,23 @@ You can access how much of the resources your design is using by looking at the 
 	```
 
 
+**For students that are trying to draw a roofline model for their application:**
+* Reasoning about FLOPS:
+	- For FLOPS, you should look at your DSP utilization and the utilization of 'LUT as Logic' in the CLB section. 
+	- [**DSP**] The DSP48E2 is a Digital Signal Processing (DSP) slice commonly used in Xilinx FPGAs, such as those in the Virtex UltraScale+ family. The number of Floating Point Operations per Second (FLOPS) that a DSP48E2 can execute depends on the specific configuration and clock frequency at which it operates.
+		* Operations per Cycle: A single DSP48E2 slice can perform a multiply-accumulate operation (MAC) in one clock cycle. This involves two multiplications and one addition/subtraction, which is typically considered as two floating-point operations (FLOPs) per cycle (one multiplication and one addition).
+		* Clock Frequency: The maximum clock frequency of a DSP48E2 slice can vary depending on the FPGA model and operating conditions. You can find the clock frequency in the `gen/$TEST_NAME/verilog-zcu/parClockFreq.sh` file.
+		* To estimate the FLOPS, you can use the following formula. I will use an example where each DSP48E2 slice is running at 500 MHz and the FPGA has 4000 DSP48E2 slices. <br/>
+		<img src="img/DSP_flops.png" alt="DSP-flops" width="600"/>
+
+	- [**CLB**] 'LUT as Logic' in the CLB section indicates the number of LUTs that are being used purely to implement combinational logic. Combinational logic refers to logic circuits whose output is a pure function of the present input only, without any memory or feedback (e.g., AND, OR, XOR gates). As this can be configured to execute various kinds of combinational logic, it is hard to reason about FLOPS precisely. Therefore, you can try to tie them in to your roofline model by creating a metric based on the number of blocks available for `LUT as Logic`.
+
+* Reasoning about Bandwidth:
+	When drawing a roofline, you can use different memory bandwidths depending on where you are drawing the boundaries in your system. However, the common bandwidth you would use will propably be the bandwidth of the off-chip DRAM. For this, you can look up the bandwidth of a DDR4 DRAM.
+
+
+<br/>
+
 If you would like to learn more about the report, watching this [video](https://www.xilinx.com/video/hardware/analyzing-device-resource-statistics-in-vivado.html#t=2m19s) will be helpful.
 (The video uses 'Slice' instead of 'CLB', but you can think of them similarly.)
 
@@ -238,6 +256,9 @@ In the context of FPGA design, particularly when using Xilinx FPGAs and the Viva
 	* Each slice typically contains a set of Look-Up Tables (LUTs), flip-flops, and multiplexers.
 
 In summary, the main difference lies in the hierarchy and scale of functionality: a CLB is a larger structural unit in an FPGA that contains multiple slices, which are the actual implementers of logic. The CLB coordinates the operations of its constituent slices to execute complex logic and storage operations. In Vivado, you'll often deal with both terms when defining and analyzing the physical layout and logical implementation of your FPGA designs.
+
+
+
 
 ---
 ## Known Issue
