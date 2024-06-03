@@ -32,7 +32,7 @@ There are three simulations provided to help you check the correctness and impro
 		* [Resource Utilization](./spatial-design-flow.md#resource-utilization-1)
 		* [Test Results](./spatial-design-flow.md#test-results-1)
 3. [ZCU](./spatial-design-flow.md#zcu)
-    * [How to run ZCU Backend](./spatial-design-flow.md#how-to-run-zcu-backend)
+    * [How to run ZCU Backend](./spatial-design-flow.md#how-to-run-the-zcu-backend)
     * [Synthesis reports](./spatial-design-flow.md#synthesis-reports)
 		* [Resource Utilization](./spatial-design-flow.md#resource-utilization-2)
 4. [Known Issues](./spatial-design-flow.md#known-issue)
@@ -154,41 +154,75 @@ When running synthesis, there are some issues with building the host software. S
 
 ### Synthesis reports
 #### Resource Utilization
-After the synthesis finishes, you will have access to the report of your design's resource utilization on the target FPGA. The report is located in `gen/$TEST_NAME/verilog-zcu/`. The resource utilization report is named `par_utilization.rpt`, and it contains information that looks like this (This is an example for `Lab2Part1SimpleMemReduce`):
+After the synthesis finishes, you will have access to the report of your design's resource utilization on the target FPGA. The report is located in `gen/$TEST_NAME/verilog-zcu/`. The resource utilization report is named `par_utilization.rpt`.
 
-```bash
-+--------------------------------------+------+-------+-----------+-------+
-|               Site Type              | Used | Fixed | Available | Util% |
-+--------------------------------------+------+-------+-----------+-------+
-| CLB LUTs                             | 6107 |     0 |    274080 |  2.23 |
-|   LUT as Logic                       | 4375 |     0 |    274080 |  1.60 |
-|   LUT as Memory                      |  882 |     0 |    144000 |  0.61 |
-|     LUT as Distributed RAM           |  808 |     0 |           |       |
-|     LUT as Shift Register            |   74 |     0 |           |       |
-|   LUT used exclusively as pack-thrus |  850 |     0 |    274080 |  0.31 |
-| CLB Registers                        | 6721 |     0 |    548160 |  1.23 |
-|   Register as Flip Flop              | 6721 |     0 |    548160 |  1.23 |
-|   Register as Latch                  |    0 |     0 |    548160 |  0.00 |
-|   Register as pack-thrus             |    0 |     0 |    548160 |  0.00 |
-| CARRY8                               |  186 |     0 |     34260 |  0.54 |
-| F7 Muxes                             |   33 |     0 |    137040 |  0.02 |
-| F8 Muxes                             |    1 |     0 |     68520 | <0.01 |
-| F9 Muxes                             |    0 |     0 |     34260 |  0.00 |
-+--------------------------------------+------+-------+-----------+-------+
-```
+The figure below shows the basic FPGA structure that consists of an array of:
+- configurable logic blocks (CLBs): Programmable logic cells. LUTs, Registers and computations that are not executed in the DSP will be mapped to these blocks.
+- block RAMs (BRAMs)
+- digital signal processing (DSP) blocks: These execute compute-intensive operations such as multiply-and-accumulate (MAC)
+- programmable interconnection networks
+- a set of programmable input and output pads around the device
 
-If you would like to see how much on-chip memory your design requires, see the `par_ram_utilization.rpt` file. In the summary section, you will be able to see a table like this:
-```bash
-+--------------------------+------------+-----------+--------+------------+
-| Memory Type              | Total Used | Available | Util % | Inferred % |
-+--------------------------+------------+-----------+--------+------------+
-| URAM                     |        0.0 |         0 |    0.0 |        0.0 |
-| BlockRAM                 |        0.0 |       912 |    0.0 |        0.0 |
-| LUTMs as Distributed RAM |      101.0 |    144000 |    0.1 |      100.0 |
-|  LUTMs as RAM64M8        |          9 |           |        |      100.0 |
-|  LUTMs as RAM32M16       |         92 |           |        |      100.0 |
-+--------------------------+------------+-----------+--------+------------+
-```
+<img src="img/fpga-diagram.jpg" alt="fpga-diagram" width="800"/>
+
+You can access how much of the resources your design is using by looking at the following sections in the report `par_utilization.rpt`:
+- CLB Logic
+	```bash
+	+--------------------------------------+------+-------+-----------+-------+
+	|               Site Type              | Used | Fixed | Available | Util% |
+	+--------------------------------------+------+-------+-----------+-------+
+	| CLB LUTs                             | 6107 |     0 |    274080 |  2.23 |
+	|   LUT as Logic                       | 4375 |     0 |    274080 |  1.60 |
+	|   LUT as Memory                      |  882 |     0 |    144000 |  0.61 |
+	|     LUT as Distributed RAM           |  808 |     0 |           |       |
+	|     LUT as Shift Register            |   74 |     0 |           |       |
+	|   LUT used exclusively as pack-thrus |  850 |     0 |    274080 |  0.31 |
+	| CLB Registers                        | 6721 |     0 |    548160 |  1.23 |
+	|   Register as Flip Flop              | 6721 |     0 |    548160 |  1.23 |
+	|   Register as Latch                  |    0 |     0 |    548160 |  0.00 |
+	|   Register as pack-thrus             |    0 |     0 |    548160 |  0.00 |
+	| CARRY8                               |  186 |     0 |     34260 |  0.54 |
+	| F7 Muxes                             |   33 |     0 |    137040 |  0.02 |
+	| F8 Muxes                             |    1 |     0 |     68520 | <0.01 |
+	| F9 Muxes                             |    0 |     0 |     34260 |  0.00 |
+	+--------------------------------------+------+-------+-----------+-------+
+	```
+
+- BLOCKRAM
+	```bash
+	+-------------------+------+-------+-----------+-------+
+	|     Site Type     | Used | Fixed | Available | Util% |
+	+-------------------+------+-------+-----------+-------+
+	| Block RAM Tile    |   15 |     0 |       912 |  1.64 |
+	|   RAMB36/FIFO*    |   14 |     0 |       912 |  1.54 |
+	|     RAMB36E2 only |   14 |       |           |       |
+	|   RAMB18          |    2 |     0 |      1824 |  0.11 |
+	|     RAMB18E2 only |    2 |       |           |       |
+	+-------------------+------+-------+-----------+-------+
+	```
+	For a more detailed report on the on-chip memory requirements of your design, see the `par_ram_utilization.rpt` file. In the summary section, you will be able to see a table like this and there are also other sections such as Utilization, Performance, Power for the memory components:
+	```bash
+	+--------------------------+------------+-----------+--------+------------+
+	| Memory Type              | Total Used | Available | Util % | Inferred % |
+	+--------------------------+------------+-----------+--------+------------+
+	| URAM                     |        0.0 |         0 |    0.0 |        0.0 |
+	| BlockRAM                 |        0.0 |       912 |    0.0 |        0.0 |
+	| LUTMs as Distributed RAM |      101.0 |    144000 |    0.1 |      100.0 |
+	|  LUTMs as RAM64M8        |          9 |           |        |      100.0 |
+	|  LUTMs as RAM32M16       |         92 |           |        |      100.0 |
+	+--------------------------+------------+-----------+--------+------------+
+	```
+
+- ARITHMETIC: This explains how much of the DSP logics your design is using.
+	```bash
+	+----------------+------+-------+-----------+-------+
+	|    Site Type   | Used | Fixed | Available | Util% |
+	+----------------+------+-------+-----------+-------+
+	| DSPs           |   42 |     0 |      2520 |  1.67 |
+	|   DSP48E2 only |   42 |       |           |       |
+	+----------------+------+-------+-----------+-------+
+	```
+
 
 If you would like to learn more about the report, watching this [video](https://www.xilinx.com/video/hardware/analyzing-device-resource-statistics-in-vivado.html#t=2m19s) will be helpful.
 (The video uses 'Slice' instead of 'CLB', but you can think of them similarly.)
