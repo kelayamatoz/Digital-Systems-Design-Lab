@@ -3,6 +3,25 @@
 The second part of lab1 we will be translating Spatial code to Vitis C++ code. Vitis is a complete development environment for applications accelerated using Xilinx FPGAs. It leverages the OpenCL heterogeneous computing framework to offload compute intensive workloads to the FPGA.
 The accelerated application is written in C/C++, OpenCL, or RTL with OpenCL APIs. For the purpose of lab 1, all the exercises done with Spatial have been converted to C/C++ HLS. Lab1, part 2 will walk you through setting up an environment for running hardware emulation, generating the F1 instance bitstream, and running on the FPGA.
 
+## Table of Contents
+
+1. [Getting Started with Digital Systems Design Using F1 FPGAs](#getting-started-with-digital-systems-design-using-f1-fpgas)  
+2. [Prerequisite (Need to do them only once)](#prerequisite-need-to-do-them-only-once)  
+   2.1 [Setting up X11 Forwarding](#setting-up-x11-forwarding)  
+   2.2 [Creating Alarm for you instance](#creating-alarm-for-you-instance)  
+3. [Running hardware emulation and FPGA instance](#running-hardware-emulation-and-fpga-instance)  
+4. [Understanding Lab1Part2DramSramExample Vitis HLS code](#understanding-lab1part2dramsramexample-vitis-hls-code)  
+   4.1 [Understanding Vitis C++ code](#understanding-vitis-c-code)  
+   4.2 [Section A: create test data in the host memory (`host.cpp`)](#section-a-create-test-data-in-the-host-memory-hostcpp)  
+   4.3 [Getting the device and kernel ready (`host.cpp`)](#getting-the-device-and-kernel-ready-hostcpp)  
+   4.4 [Section B: allocate DRAM in Global Memory (`host.cpp`)](#section-b-allocate-dram-in-global-memory-hostcpp)  
+   4.5 [Section C: Invoke the kernel (`host.cpp`)](#section-c-invoke-the-kernel-hostcpp)  
+   4.6 [Section D: Bring back results from DRAM (`host.cpp`)](#section-d-bring-back-results-from-dram-hostcpp)  
+   4.7 [Section E: Compare with gold (`host.cpp`)](#section-e-compare-with-gold-hostcpp)  
+5. [Your Turn:](#your-turn)  
+6. [Submission:](#submission)  
+7. [Additional Materials for Vitis C++](#additional-materials-for-vitis-c)
+
 # Prerequisite (Need to do them only once)
 1. You should have received an email with a subject "[EE109] AWS Instance Instructions". Download the private key attached to the email and save it under your `.ssh` folder. Your path to the `.ssh` folder is usually:
     * Linux / Mac : `~/.ssh`

@@ -12,17 +12,17 @@ Controllers: Foreach, Fold, Reduce
 
 Each part of the exercise covers the usage of a Spatial element. We will first guide you through some examples. Then you will need to modify the examples to make a few new apps.
 
-1. [Set up](./lab1.md#setup)
-    * [Packages](./lab1.md#packages)
-    * [SDKMAN!](./lab1.md#sdkman)
-    * [Java, Scala, sbt](./lab1.md#java-scala-sbt)
-    * [Spatial](./lab1.md#spatial)
-2. [Manually Running Spatial Applications](./lab1.md#manually-running-spatial-applications)
-3. [Using Registers](./lab1.md#using-registers)
-4. [Using DRAM and SRAM](./lab1.md#using-dram-and-sram)
-5. [Using FIFO](./lab1.md#using-fifo)
-6. [Using Controllers](./lab1.md#using-controllers)
-7. [Submission](./lab1.md#submission)
+1. [Set up](./lab1_part1_spatial.md#setup)
+    * [Packages](./lab1_part1_spatial.md#packages)
+    * [SDKMAN!](./lab1_part1_spatial.md#sdkman)
+    * [Java, Scala, sbt](./lab1_part1_spatial.md#java-scala-sbt)
+    * [Spatial](./lab1_part1_spatial.md#spatial)
+2. [Manually Running Spatial Applications](./lab1_part1_spatial.md#manually-running-spatial-applications)
+3. [Using Registers](./lab1_part1_spatial.md#using-registers)
+4. [Using DRAM and SRAM](./lab1_part1_spatial.md#using-dram-and-sram)
+5. [Using FIFO](./lab1_part1_spatial.md#using-fifo)
+6. [Using Controllers](./lab1_part1_spatial.md#using-controllers)
+7. [Submission](./lab1_part1_spatial.md#submission)
 
 ## Setup
 ### Packages
@@ -547,8 +547,8 @@ Compared to Foreach, Reduce and Fold allow users to write more precise code. Mor
 MemFold and MemReduce perform the same way as Fold and Reduce; however they are used to operate on on-chip memories. We will cover more details of these two controllers in the next lab.
 
 ## Submission
-* [Using Registers](./lab1.md#using-registers): Modify this app so that it fetches three numbers from the CPU side and calculates their sum. You can assume that your user only enters integers. Leave your implementation in `Lab1Part1RegExample3`.
-* [Using DRAM and SRAM](./lab1.md#using-dram-and-sram): Fill in the fields in `Lab1Part2DramSramExample` according to the instructions in [this section](./lab1.md#your-turn-1).
-* [Using FIFO](./lab1.md#using-fifo): Reimplement the example in Part 2 using FIFO. You can leave your implementation under Lab1Part4FIFOExample.
-* [Using Controllers](./lab1.md#using-controllers): Use Fold controller to calculate the sum of an element. Leave your implementation in `Lab1Part6FoldExample`.
+* [Using Registers](./lab1_part1_spatial.md#using-registers): Modify this app so that it fetches three numbers from the CPU side and calculates their sum. You can assume that your user only enters integers. Leave your implementation in `Lab1Part1RegExample3`.
+* [Using DRAM and SRAM](./lab1_part1_spatial.md#using-dram-and-sram): Fill in the fields in `Lab1Part2DramSramExample` according to the instructions in [this section](./lab1_part1_spatial.md#your-turn-1).
+* [Using FIFO](./lab1_part1_spatial.md#using-fifo): Reimplement the example in Part 2 using FIFO. You can leave your implementation under Lab1Part4FIFOExample.
+* [Using Controllers](./lab1_part1_spatial.md#using-controllers): Use Fold controller to calculate the sum of an element. Leave your implementation in `Lab1Part6FoldExample`.
 * There will be no report submission for this lab. Please upload your completed `Lab1.scala` file to Gradescope.
