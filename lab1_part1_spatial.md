@@ -139,7 +139,7 @@ make publish
 ## Manually Running Spatial Applications
 For the labs, we will use GitHub Classroom to release the skeleton code. If you don't have a GitHub account, please create one [https://github.com/](https://github.com/).
 
-The skeleton Code will be accessible by accepting the invitation to the assignment through [https://classroom.github.com/a/mWywXS3B](https://classroom.github.com/a/mWywXS3B). If it's the first time using GitHub classroom, please refer to [this doc](https://docs.google.com/document/d/1cgPLa6V26DEOppgDrKcIn8uaosUrQSEAcLYpinZXdHw/edit?usp=sharing)
+The skeleton Code will be accessible by accepting the invitation to the assignment through [ https://classroom.github.com/a/tTgaPMVZ]( https://classroom.github.com/a/tTgaPMVZ). If it's the first time using GitHub classroom, please refer to [this doc](https://docs.google.com/document/d/1cgPLa6V26DEOppgDrKcIn8uaosUrQSEAcLYpinZXdHw/edit?usp=sharing)
 
 This will include the code used in this lab and run commands to run the simulation.
 A variety of applications are already written in Spatial. A tutorial, documentation, and other resources can be found at https://spatial-lang.org/.
