@@ -403,7 +403,7 @@ Since we are done working with the FPGA accelerator, there will be no OpenCL C++
 # Your Turn:
 1. Run hardware emulation for Lab1Part1RegExample, Lab1Part2DramSramExample, Lab1Part4FIFOExample and Lab1Part6ReduceExample and report the runtimes in `lab1_submit.md`. They can be found in the 'profile summary' tab in the `xrt.run_summary' file. You can open this with a gui (note that this needs the X11 forwarding setup) by running:
 ```bash
-cd $VITIS_DIR/examples/xilinx/hello_world_demo
+cd $VITIS_DIR/examples/xilinx/Lab1Part1RegExample
 vitis_analyzer --classic xrt.run_summary
 ```
 <div style="padding-left: 0px; padding-top: 0px; text-align: center;">
