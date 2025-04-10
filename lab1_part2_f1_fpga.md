@@ -195,7 +195,7 @@ Then follow the instructions in this screenshot. This will be an example configu
 
 2. Copy the `Lab1Part1RegExample` folder to the Vitis xilinx folder.
     ```
-    cp -rf $LAB1_DIR/Lab1Part1RegExample $AWS_FPGA_REPO_DIR/Vitis/examples/xilinx
+    cp -rf $LAB1_DIR/Lab1Part1RegExample $AWS_FPGA_REPO_DIR/Vitis/examples/xilinx/
     ```
 
 3. Source vitis_setup.sh 
