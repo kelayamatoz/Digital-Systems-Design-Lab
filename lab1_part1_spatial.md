@@ -551,4 +551,4 @@ MemFold and MemReduce perform the same way as Fold and Reduce; however they are 
 * [Using DRAM and SRAM](./lab1_part1_spatial.md#using-dram-and-sram): Fill in the fields in `Lab1Part2DramSramExample` according to the instructions in [this section](./lab1_part1_spatial.md#your-turn-1).
 * [Using FIFO](./lab1_part1_spatial.md#using-fifo): Reimplement the example in Part 2 using FIFO. You can leave your implementation under Lab1Part4FIFOExample.
 * [Using Controllers](./lab1_part1_spatial.md#using-controllers): Use Fold controller to calculate the sum of an element. Leave your implementation in `Lab1Part6FoldExample`.
-* There will be no report submission for this lab. Please upload your completed `Lab1.scala` file to Gradescope.
+* Gradescope: a doc with your commit ID & repo (for the entire lab1). Be sure to push all the changes required for submission (`src/test/scala/Lab1.scala` file for Lab 1 Part 1).
