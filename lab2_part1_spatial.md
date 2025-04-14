@@ -1,21 +1,3 @@
-# Before we start the lab:
-There has been some updates to Spatial. Please update Spatial using the following commands so that you don't run into errors for the [GEMM section](./lab2.md#designing-an-accelerator-for-matrix-multiplication).
-
-```bash
-cd spatial # move into where your spatial code is
-git pull   # one update should appear
-make clean
-make publish
-```
-
-# Running the Tests
-The `run.sh` file contains the commands to run the tests in this lab. You can run specific tests selectively by commenting out the ones you don't want to run.
-
-```bash
-chmod +x ./run.sh   # do this if you see "Permission denied" when trying to run ./run.sh
-./run.sh
-```
-
 # Design a Math Kernel in Spatial and Understand Its Performance 
 
 In this lab, we are going to explore more advanced features in Spatial.
@@ -30,16 +12,23 @@ On-chip memory components: LUT
 
 Tools for optimizing applications: `PostExecution.html`, fine-tuning the parallelization factors.
 
-1. [MemReduce, MemFold](./lab2.md#memreduce-memfold)
-2. [FSM](./lab2.md#fsm)
-3. [LUT](./lab2.md#lut)
-4. [Designing An Accelerator for Matrix Multiplication](./lab2.md#designing-an-accelerator-for-matrix-multiplication)
-    * [Data Setup and Validation](./lab2.md#data-setup-and-validation)
-    * [Outer Products](./lab2.md#outer-products)
-    * [Advanced Buffering](./lab2.md#advanced-buffering)
-    * [Understanging Performance](./lab2.md#understanging-performance)
-5. [Submission](./lab2.md#submission)
+1. [MemReduce, MemFold](#memreduce-memfold)
+2. [FSM](#fsm)
+3. [LUT](#lut)
+4. [Designing An Accelerator for Matrix Multiplication](#designing-an-accelerator-for-matrix-multiplication)
+    * [Data Setup and Validation](#data-setup-and-validation)
+    * [Outer Products](#outer-products)
+    * [Advanced Buffering](#advanced-buffering)
+    * [Understanging Performance](#understanging-performance)
+5. [Submission](#submission)
 
+# Running the Tests
+The `run.sh` file contains the commands to run the tests in this lab. You can run specific tests selectively by commenting out the ones you don't want to run.
+
+```bash
+chmod +x ./run.sh   # do this if you see "Permission denied" when trying to run ./run.sh
+./run.sh
+```
 ## MemReduce, MemFold
 > Code for this section can be found in ``src/test/scala/Lab2Part1.scala``.
 
@@ -495,25 +484,14 @@ data store output
 * Add your implementation to the commented section (`TODO: Implement the full outer product here`) of ``Lab2Part6GEMM`` in the `Lab2GEMM.scala` file.
 * In ``lab2-part6.md``, answer the questions based on the performence gain you observed in `gen/CS217/Lab2Part6GEMM/info/PostExecution.html`.  The answers don't have to be lengthy. Just try to provide the information the questions ask.
 
-
-
-
 ## Submission
 You should add the following implementation to each file and fill in ``lab2-part6.md``.
-* In `Lab2Part1.scala`: Fill in the commented `TODO` section in `Lab2Part2SimpleMemFold`. For more detail, refer to [MemReduce, MemFold section](./lab2.md#your-turn)
-* In `Lab2Part3.scala`: Fill in the commented `TODO` section in `Lab2Part3BasicCondFSMAlt`. For more detail, refer to [FSM section](./lab2.md#your-turn-1)
-* In `Lab2Part4.scala`: Fill the commented `TODO` section in `Lab2Part4LUT`. For more detail, refer to [LUT section](./lab2.md#your-turn-2)
-* In `Lab2GEMM.scala`: Fill the commented `TODO` section in `Lab2Part5GEMM` and `Lab2Part6GEMM`. For more detail, refer to [Lab2Part5GEMM](./lab2.md#your-turn-3), [Lab2Part6GEMM](./lab2.md#your-turn-4).
+* In `Lab2Part1.scala`: Fill in the commented `TODO` section in `Lab2Part2SimpleMemFold`. For more detail, refer to [MemReduce, MemFold section](#your-turn)
+* In `Lab2Part3.scala`: Fill in the commented `TODO` section in `Lab2Part3BasicCondFSMAlt`. For more detail, refer to [FSM section](#your-turn-1)
+* In `Lab2Part4.scala`: Fill the commented `TODO` section in `Lab2Part4LUT`. For more detail, refer to [LUT section](#your-turn-2)
+* In `Lab2GEMM.scala`: Fill the commented `TODO` section in `Lab2Part5GEMM` and `Lab2Part6GEMM`. For more detail, refer to [Lab2Part5GEMM](#your-turn-3), [Lab2Part6GEMM](#your-turn-4).
 * Fill in `lab2-part6.md`.
-
-### What you shoud submit to Gradescope
-As we are using GitHub Classroom, you don't need to submit your code to gradescope. Fill in the code and `lab2-part6.md` file in your repository and submit the repository and commit ID you would like to be graded on to gradescope.
-To submit your repository address and commit ID, you can use [this template](https://docs.google.com/document/d/1z7TlOLEIgU_ZT1rNLH_tEcFHcTiX9ErWi0XSE0t_XZA/edit?usp=sharing). 
-* Create a copy of the template (as long as you write down your GitHub Classroom repository and commit ID, you don't necessarily have to use the template.)
-* Fill in your GitHub Classroom repository and commit ID
-* Download it as a PDF 
-* Submit it to Gradescope
-
+* Gradescope: a doc with your commit ID & repo (for the entire lab2). Be sure to push all the changes required for submission (Part 1 and Part 2).
 
 <!--
 Submit a report answering the following question.
@@ -522,7 +500,7 @@ Submit a report answering the following question.
 Trying to get the fewest clock cycle as possible is desired, but rather than the number of clock cycles itself, we are more interested to see your thought process of coming up with the proper parallelization factors based on your analysis of the performance information you get.
 
 To show this, please include the following details in the report:
-* **You initial performance before modifying the parallelization factor**: A screenshot of the controller tree mentioned in [this section](./lab2.md#understanging-performance)
+* **You initial performance before modifying the parallelization factor**: A screenshot of the controller tree mentioned in [this section](#understanging-performance)
 * **How you plan to modify the parallelization factor & Why**
 * **How the performance changed after modifying the parallelization factor**: A screenshot of the controller tree and a breif explanation of which parts improved.
 
