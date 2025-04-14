@@ -22,7 +22,9 @@ The design of integrated digital systems encompassing both customized software a
     * [Part1: Spatial](lab1_part1_spatial.md)
     * [Part2: F1 FPGA](lab1_part2_f1_fpga.md)
 
-<!-- TODO - Release for lab 2: [Lab 2: Using Spatial Controllers and Memories](lab2.md):-->
+* Lab 2: Using Controllers and Memories
+    * [Part1: Spatial](lab2_part1_spatial.md)
+    * [Part2: F1 FPGA](lab2_part2_f1_fpga.md)
 
 <!-- TODO - Release for lab 3: * Lab 3: Algorithm-Specific Hardware Design
     * [Part1: Convolution](lab3_conv.md)
