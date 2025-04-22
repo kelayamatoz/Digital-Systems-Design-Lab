@@ -1,6 +1,23 @@
 # Laboratory Exercise 3: Algorithm Specific Hardware Design & Spatial-Vitis Hello World
 Lab 1 covers the basics of data types and controls. Lab 2 gives an example of implementing and optimizing a math kernel. In this lab, we will design a domain-specific hardware accelerator that combines the components introduced in the previous labs.
 
+# Table of Contents
+
+- [Laboratory Exercise 3: Algorithm Specific Hardware Design & Spatial-Vitis Hello World](#laboratory-exercise-3-algorithm-specific-hardware-design--spatial-vitis-hello-world)
+  - [Remote Development with Lagos](#remote-development-with-lagos)
+    - [Option1: SSH through terminal](#option1-ssh-through-terminal)
+    - [Option2: VSCode](#option2-vscode)
+  - [Application: Convolution](#application-convolution)
+  - [Line Buffers & LUTs](#line-buffers--luts)
+  - [Overall Hardware Design](#overall-hardware-design)
+  - [Caveat](#caveat)
+    - [Shift register](#shift-register)
+    - [Muxing the edge values when using line buffers & shift registers](#muxing-the-edge-values-when-using-line-buffers--shift-registers)
+  - [Your Turn](#your-turn)
+    - [Simulation](#simulation)
+  - [Submission](#submission)
+    - [Debugging](#debugging)
+
 
 ## Remote Development with Lagos
 This lab uses VCS for simulation which requires a license. Therefore, you will remotely log into the Lagos server. <span style="color:red">**However, this is a research server used by the Pervasive Parallelism Lab. So, please use the server for only EE109 related work. As other graduate students in the lab are also using this server, make sure to avoid doing any destructive behaviors.**</span>
@@ -11,12 +28,16 @@ Open your terminal and ssh into lagos using your SUID. It will ask you for your 
 
 ```bash
 ssh $SUID@lagos.stanford.edu
+
+# Switch to bash terminal after logging in
+bash
 ```
 
 ### Option2: VSCode
 Option1 can be convenient, but sometimes we may want to use IDE while developing remotely. To do so, we recommend using Visual Studio Code.
-Follow instuctions in [this link](https://code.visualstudio.com/docs/remote/ssh) to use VSCode while developing on Lagos.
+Follow instructions in [this link](https://code.visualstudio.com/docs/remote/ssh) to use VSCode while developing on Lagos.
 
+**Important Note: If you run into any license or module related issue on the host machine, please follow the spatial setup steps given in lab1 - [Setup SDKMAN](./lab1_part1_spatial.md#sdkman), [Setup Java, Scala, sbt](./lab1_part1_spatial.md#java-scala-sbt) and [setup Spatial](./lab1_part1_spatial.md#spatial)**
 
 ## Application: Convolution
 In this example, we will design an accelerator for 2D convolution on an image. We will execute a [Sobel filter](https://en.wikipedia.org/wiki/Sobel_operator) which is used in image processing and computer vision, particularly within edge detection algorithms where it creates an image emphasising edges. 
@@ -186,10 +207,8 @@ To see the html version of this control tree, see `gen/VCS/Lab3Part1Convolution/
 
 
 # Submission:
-* Gradescope: a doc with your commit ID & repo
+* Gradescope: a doc with your commit ID & repo (for the entire lab3). Be sure to push all the changes required for submission (Part 1 and Part 2).
 * Convolution: Leave your implementation under **your Github Classroom repository's** `src/test/scala/Lab3.scala` file.
-* Vitis-Spatial Hello World: Leave your implementation under **your Github Classroom repository's** `hello_world_demo/src/vadd.cpp`
-    * For extra credit, implement your design under the cpp files in **your Github Classroom repository's** `hello_world_extra/src/`.
 * Fill in **your Github Classroom repository's** `lab3_submit.md`
 
 
