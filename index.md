@@ -26,23 +26,22 @@ The design of integrated digital systems encompassing both customized software a
     * [Part1: Spatial](lab2_part1_spatial.md)
     * [Part2: F1 FPGA](lab2_part2_f1_fpga.md)
 
-<!-- TODO - Release for lab 3: * Lab 3: Algorithm-Specific Hardware Design
-    * [Part1: Convolution](lab3_conv.md)
-    * [Part2: Vitis-Spatial Hello World](lab3_vitis_spatial.md)
-    -->
+* Lab 3: Algorithm-Specific Hardware Design
+    * [Part1: Spatial](lab3_part1_spatial.md)
+    * [Part2: F1 FPGA](lab3_part2_f1_fpga.md)
 
 <!-- **Laboratory Links:**
 
 -->
 
-<!-- TODO - Release with Lab2 **Project**
+**Project**
 
 * [Spatial Design Flow](spatial-design-flow.md)
 
 * [Vitis Design Flow](vitis_setup.md)
 
 * [F1 FPGA Tutorial](fpga-f1-tutorial.md)
--->
+
 
 **Reports from Previous EE109**
 
