@@ -1,4 +1,4 @@
-# Final Project Milestone 0: Project Proposal
+# Project Milestone 0: Project Proposal
 Here is a very high level overview of what your project proposal should look like. Feel free to include more information.
 
 - **Introduction**: What application do you want to accelerate?

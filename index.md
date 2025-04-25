@@ -33,8 +33,17 @@ The design of integrated digital systems encompassing both customized software a
 <!-- **Laboratory Links:**
 
 -->
+** Project **
+* [Milestone 0: Project Proposal](project_proposal.md)
+* [Milestone 1: Simulating Apps in Software](milestone1.md)
+    *[Submission Template](milestone1_submission.md)
+* [Milestone 2: Hardware Simulation](milestone2.md)
+    *[Submission Template](milestone2_submission.md)
+* [Milestone 3: Deploying Apps](milestone3.md)
+    *[Submission Template](milestone3_submission.md)   
+* [Final Report](final_report_template/FinalReport_STUDENT1_STUDENT2_Spr1718.md)
 
-**Project**
+**Project Helpful Links**
 
 * [Spatial Design Flow](spatial-design-flow.md)
 
