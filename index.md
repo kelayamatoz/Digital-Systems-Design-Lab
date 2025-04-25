@@ -33,7 +33,7 @@ The design of integrated digital systems encompassing both customized software a
 <!-- **Laboratory Links:**
 
 -->
-** Project **
+**Project**
 * [Milestone 0: Project Proposal](project_proposal.md)
 * [Milestone 1: Simulating Apps in Software](milestone1.md)
     * [Submission Template](milestone1_submission.md)
