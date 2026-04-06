@@ -175,6 +175,7 @@ As explained, this wrapper is responsible for implementing the expected `CL` int
 ## Running the AWS F2 HLS Flow
 
 0. Enter the lab directory and create the symlink.
+
 ``` bash
 cd skeleton-lab-1
 
@@ -191,6 +192,7 @@ cd Lab1Part1RedExample
     * How many physical interfaces are actually instantiated? How is this apparent from the pragma calls?
 > Note: the second question especially is non-trivial. Our current host-device strategy stressed the flow of: (1) Host writing data to device DRAM, (2) Device interacting with DRAM to read inputs and store outputs, (3) Host reading outputs from device DRAM. Would this flow be possible had we implemented an s_axilite interface instead of m_axi?
 3. Lets generate RTL from this source code. Run the following:
+
 ```bash
 cd design_top
 source setup.sh
@@ -201,6 +203,7 @@ As you can see, your module's interface includes the standard clock, reset, star
 5. Take a look at the `design_top.sv` file, and the `vadd` instantiation. The block's axi master interface is meant to connect to the DDR controller `sh_ddr`, such that it can read data from DRAM. Currently however, it first passes through a MUX Arbiter in line 450. Answer the following:
     * Why is the MUX necessary? Why can't we statically connect the vadd AXI Master to the DRAM controller?
 6. Proceed to the RTL simulation. Run the following:
+
 ```bash
 make hw_sim
 ```
@@ -209,18 +212,22 @@ make hw_sim
     * What are the RTL Sim compute cycles?
     * The compute cycles look higher than expected for a simple addition, why are they this high
 8. We can now move on to the FPGA test. First we need to perform synthesis and implementation. Run the following command. Note that it takes about an hour to complete.
+
 ```bash
 make fpga_build
 ```
 9. After the build finishes, generate the AWS FPGA Image AFI as such.
+
 ```bash
 make generate_afi
 ```
 10. We now need to wait until the AFI becomes available. Run the following command. The AFI will most likely be listed as "Pending", and will take about 20 minutes to become available. Run the command periodically and only proceed when it shows "Available".
+
 ```bash
 make check_afi_available
 ```
 11. Now that the AFI is available, program the FPGA, and run the FPGA test.
+
 ```bash
 make program_fpga
 make run_fpga_test
