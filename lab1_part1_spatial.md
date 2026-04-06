@@ -139,7 +139,7 @@ make publish
 ## Manually Running Spatial Applications
 For the labs, we will use GitHub Classroom to release the skeleton code. If you don't have a GitHub account, please create one [https://github.com/](https://github.com/).
 
-The skeleton Code will be accessible by accepting the invitation to the assignment through [ https://classroom.github.com/a/tTgaPMVZ]( https://classroom.github.com/a/tTgaPMVZ). If it's the first time using GitHub classroom, please refer to [this doc](https://docs.google.com/document/d/1cgPLa6V26DEOppgDrKcIn8uaosUrQSEAcLYpinZXdHw/edit?usp=sharing)
+The skeleton Code will be accessible by accepting the invitation to the assignment through [https://classroom.github.com/a/-6w1WAXV](https://classroom.github.com/a/-6w1WAXV). If it's the first time using GitHub classroom, please refer to [this doc](https://docs.google.com/document/d/1JfHDe9qXMeuHlJpo9NxuOaXVW-0c07JG9_AWQG6yzg4/edit?tab=t.0)
 
 This will include the code used in this lab and run commands to run the simulation.
 A variety of applications are already written in Spatial. A tutorial, documentation, and other resources can be found at https://spatial-lang.org/.
@@ -404,7 +404,7 @@ Simulate the app using Scala simulation. Report the following measurements from 
 
 This can be found in `gen/CS217/Lab1Part2DramSramExample/info/PostExecution.html`. The three metrics can be found in the red boxes in this picture.
 
-<img src="img/PostExecution.jpg" alt="PostExecution.html" width="800"/>
+![PostExecution](./img/PostExecution.jpg)
 
 Reasoning this file will help you understand how to understand the throughput of your design. In the `Lab1Part2DramSramExample` function, there is a comment asking you to fill in these information. Please fill them in.
 
@@ -546,9 +546,17 @@ Compared to Foreach, Reduce and Fold allow users to write more precise code. Mor
 
 MemFold and MemReduce perform the same way as Fold and Reduce; however they are used to operate on on-chip memories. We will cover more details of these two controllers in the next lab.
 
-## Submission
+## Your Turn: summary
 * [Using Registers](./lab1_part1_spatial.md#using-registers): Modify this app so that it fetches three numbers from the CPU side and calculates their sum. You can assume that your user only enters integers. Leave your implementation in `Lab1Part1RegExample3`.
 * [Using DRAM and SRAM](./lab1_part1_spatial.md#using-dram-and-sram): Fill in the fields in `Lab1Part2DramSramExample` according to the instructions in [this section](./lab1_part1_spatial.md#your-turn-1).
-* [Using FIFO](./lab1_part1_spatial.md#using-fifo): Reimplement the example in Part 2 using FIFO. You can leave your implementation under Lab1Part4FIFOExample.
+* [Using FIFO](./lab1_part1_spatial.md#using-fifo): Reimplement the example in Part 2 using a FIFO. You can leave your implementation under Lab1Part4FIFOExample.
 * [Using Controllers](./lab1_part1_spatial.md#using-controllers): Use Fold controller to calculate the sum of an element. Leave your implementation in `Lab1Part6FoldExample`.
-* Gradescope: a doc with your commit ID & repo (for the entire lab1). Be sure to push all the changes required for submission (`src/test/scala/Lab1.scala` file for Lab 1 Part 1).
+
+
+# Submission:
+- Gradescope: a doc with your commit ID & repo
+- Lab 1 Part 1: Leave your implementation under **your Github Classroom repository's** `src/test/scala/Lab1.scala` file.
+- Lab 1 Part 2: 
+  - Lab1Part1RegExample, Lab1Part2DramSramExample, Lab1Part4FIFOExample and Lab1Part6ReduceExample: make sure the `logs` directory of each part contains: `gen_rtl.log.txt`, `hw_sim.log.txt` & `fpga_test.log.txt` in **your Github Classroom repository**.
+  - Make sure that **your Github Classroom repository's** `lab1_submit.md` file is filled in.
+
