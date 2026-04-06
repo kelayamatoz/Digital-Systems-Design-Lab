@@ -80,15 +80,15 @@ Default output format [None]: json
 S3 Bucket is used to upload and store the generated Amazon FPGA image (AFI). Please follow the steps below to create the S3 bucket.
 
 1. Add the following to the end of your bashrc file (`~/.bashrc`) and open a new terminal or run `source ~/.bashrc`
-```
+```bash
 export DCP_BUCKET_NAME=<SUNetID>
 export DCP_FOLDER_NAME=EE109_SPR2026
 export REGION=us-east-1
 export LOGS_FOLDER_NAME=logs_folder
 export LOGS_BUCKET_NAME=$DCP_BUCKET_NAME
 ```
-2. Run the following commands. If your chosen DCP_BUCKET_NAME gives you an error in creating the S3 bucket, use any unique ID.
-```
+2. Run the following commands. If your chosen `DCP_BUCKET_NAME` gives you an error in creating the S3 bucket, use any unique ID.
+```bash
 # Create an S3 bucket (choose a unique bucket name)
 aws s3 mb s3://${DCP_BUCKET_NAME} --region ${REGION}
 
