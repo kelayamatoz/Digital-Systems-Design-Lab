@@ -1,6 +1,7 @@
 theme: jekyll-theme-cayman
 title: Digital Systems Design Lab
 description: Labs
+markdown: GFM # to handle mismatches between website and github markdown
 
 footer-links:
   dribbble: 
