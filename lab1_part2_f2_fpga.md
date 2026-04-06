@@ -88,6 +88,7 @@ export LOGS_FOLDER_NAME=logs_folder
 export LOGS_BUCKET_NAME=$DCP_BUCKET_NAME
 ```
 2. Run the following commands. If your chosen `DCP_BUCKET_NAME` gives you an error in creating the S3 bucket, use any unique ID.
+
 ```bash
 # Create an S3 bucket (choose a unique bucket name)
 aws s3 mb s3://${DCP_BUCKET_NAME} --region ${REGION}
