@@ -174,7 +174,7 @@ As explained, this wrapper is responsible for implementing the expected `CL` int
 
 ## Running the AWS F2 HLS Flow
 
-0. Enter the lab directory and create the symlink.
+Enter the lab directory and create the symlink.
 
 ``` bash
 cd skeleton-lab-1
@@ -183,6 +183,7 @@ cd skeleton-lab-1
 ln -s ~/aws-fpga/hdk ./hdk
 ```
 1. Enter the part 1 directory.
+
 ``` bash
 cd Lab1Part1RedExample
 ```
