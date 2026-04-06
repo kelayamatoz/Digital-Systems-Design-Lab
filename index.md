@@ -20,7 +20,7 @@ The design of integrated digital systems encompassing both customized software a
 
 * Lab 1: Getting Started with Digital Systems Design
     * [Part1: Spatial](lab1_part1_spatial.md)
-    * [Part2: F1 FPGA](lab1_part2_f2_fpga.md)
+    * [Part2: F2 FPGA](lab1_part2_f2_fpga.md)
 
 * Lab 2: Using Controllers and Memories
 
