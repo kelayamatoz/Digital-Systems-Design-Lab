@@ -120,14 +120,24 @@ Credits are used based on the number of hours the instance is run. Always turn o
 ```bash
 cd ~/
 git clone https://github.com/aws/aws-fpga.git
+
+# Checkout this release because the newest one broke something :(
+cd aws-fpga/
+git checkout tags/v2.3.0
 ```
 
-2. Do this once: Download the following if not already installed
+2. Do this once: Download the following if not already installed.
 
 ```bash
 sudo apt-get install -y git-lfs
+```
+```bash
 sudo apt install -y jq
+```
+```bash
 sudo apt install -y python3-pip
+```
+```bash
 sudo apt install -y python3.8-venv
 ```
 
@@ -177,7 +187,7 @@ As explained, this wrapper is responsible for implementing the expected `CL` int
 Enter the lab directory and create the symlink.
 
 ``` bash
-cd skeleton-lab-1
+cd skeleton-lab-1/
 
 # Only run this once: Create a symlink to avoid a compilation path error.
 ln -s ~/aws-fpga/hdk ./hdk
@@ -185,7 +195,7 @@ ln -s ~/aws-fpga/hdk ./hdk
 1. Enter the part 1 directory.
 
 ``` bash
-cd Lab1Part1RedExample
+cd Lab1Part1RedExample/
 ```
 2. You can see this part's HLS source code under `src/vadd.cpp`. Inspect the source and answer the following short questions in `lab1_submit.md`.
     * What is the purpose `HLS INTERFACE` pragmas in the `vadd.cpp`?
@@ -195,7 +205,7 @@ cd Lab1Part1RedExample
 3. Lets generate RTL from this source code. Run the following:
 
 ```bash
-cd design_top
+cd design_top/
 source setup.sh
 make gen_rtl
 ```
