@@ -82,6 +82,17 @@ make run_fpga_test
 
 
 ## Submission
-* Make sure to commit your changes in `Lab2Part3BasicCondFSMAlt/src/vadd.cpp` and `Lab2Part4LUT/src/vadd.cpp`
-* If you decide do the extra credit, copy the respective `vadd.awsxclbin` to the folders `Lab2Part3BasicCondFSMAlt` and `Lab2Part4LUT`.
+### Part 1
+You should add the following implementation to each file and answer part 1 of `lab2_submit.md`
+* In `Lab2Part1.scala`: Fill in the commented `TODO` section in `Lab2Part2SimpleMemFold`. For more details, refer to [MemReduce, MemFold section](#your-turn)
+* In `Lab2Part3.scala`: Fill in the commented `TODO` section in `Lab2Part3BasicCondFSMAlt`. For more details, refer to [FSM section](#your-turn-1)
+* In `Lab2Part4.scala`: Fill the commented `TODO` section in `Lab2Part4LUT`. For more details, refer to [LUT section](#your-turn-2)
+* In `Lab2GEMM.scala`: Fill the commented `TODO` section in `Lab2Part5GEMM` and `Lab2Part6GEMM`. For more details, refer to [Lab2Part5GEMM](#your-turn-3), [Lab2Part6GEMM](#your-turn-4).
+
+### Part 2
+You shoud add the following implementation to each file and answer part 2 of `lab2_submit.md`
+* In `Lab2Part3BasicCondFSMAlt/src/vadd.cpp`: Fill in the commented TODO section.
+* In `Lab2Part4LUT/src/vadd.cpp`: Fill in the commented TODO section.
+
+### Gradescope
 * Gradescope: a doc with your commit ID & repo (for the entire lab2). Be sure to push all the changes required for submission (Part 1 and Part 2).
