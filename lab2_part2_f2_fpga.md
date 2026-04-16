@@ -79,6 +79,8 @@ make run_fpga_test
 
 
 ## Submission
+Make sure all the files below are included in **your Github Classroom repository**.
+
 ### Part 1
 You should add the following implementation to each file and answer part 1 of `lab2_submit.md`
 * In `Lab2Part1.scala`: Fill in the commented `TODO` section in `Lab2Part2SimpleMemFold`. For more details, refer to [MemReduce, MemFold section](#your-turn)
@@ -90,6 +92,7 @@ You should add the following implementation to each file and answer part 1 of `l
 You shoud add the following implementation to each file and answer part 2 of `lab2_submit.md`
 * In `Lab2Part3BasicCondFSMAlt/src/vadd.cpp`: Fill in the commented TODO section.
 * In `Lab2Part4LUT/src/vadd.cpp`: Fill in the commented TODO section.
+* Make sure the `logs` directory of each part contains: `gen_rtl.log.txt`, `hw_sim.log.txt` & `fpga_test.log.txt` in **your Github Classroom repository**.
 
 ### Gradescope
 * Gradescope: a doc with your commit ID & repo (for the entire lab2). Be sure to push all the changes required for submission (Part 1 and Part 2).

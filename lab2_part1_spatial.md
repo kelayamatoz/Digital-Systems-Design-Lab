@@ -485,6 +485,8 @@ data store output
 * In ``lab2_submit.md``, answer the questions based on the performence gain you observed in `PostExecution.html`.  The answers don't have to be lengthy. Just try to provide the information the questions ask.
 
 ## Submission
+Make sure all the files below are included in **your Github Classroom repository**.
+
 ### Part 1
 You should add the following implementation to each file and answer part 1 of `lab2_submit.md`
 * In `Lab2Part1.scala`: Fill in the commented `TODO` section in `Lab2Part2SimpleMemFold`. For more details, refer to [MemReduce, MemFold section](#your-turn)
@@ -496,6 +498,7 @@ You should add the following implementation to each file and answer part 1 of `l
 You shoud add the following implementation to each file and answer part 2 of `lab2_submit.md`
 * In `Lab2Part3BasicCondFSMAlt/src/vadd.cpp`: Fill in the commented TODO section.
 * In `Lab2Part4LUT/src/vadd.cpp`: Fill in the commented TODO section.
+* Make sure the `logs` directory of each part contains: `gen_rtl.log.txt`, `hw_sim.log.txt` & `fpga_test.log.txt`.
 
 ### Gradescope
 * Gradescope: a doc with your commit ID & repo (for the entire lab2). Be sure to push all the changes required for submission (Part 1 and Part 2).
